@@ -1,0 +1,1393 @@
+{
+  "playgrounds": [
+    {
+      "name": "Pastorijdreef woongroen",
+      "functions": [
+        ""
+      ],
+      "longitude": "3.66937721051786",
+      "latitude": "51.0214761248313"
+    },
+    {
+      "name": "Gentstraat woongroen",
+      "functions": [
+        ""
+      ],
+      "longitude": "3.75825340760958",
+      "latitude": "51.0847702313797"
+    },
+    {
+      "name": "Joannes Schinckdreef woongroen",
+      "functions": [
+        ""
+      ],
+      "longitude": "3.62054614115496",
+      "latitude": "51.0669488916854"
+    },
+    {
+      "name": "Pieter Huyssensplein woongroen",
+      "functions": [
+        ""
+      ],
+      "longitude": "3.72247637330076",
+      "latitude": "51.0209379361616"
+    },
+    {
+      "name": "Londenstraat voorhavenpark",
+      "functions": [
+        ""
+      ],
+      "longitude": "3.72849645110892",
+      "latitude": "51.0774369856824"
+    },
+    {
+      "name": "Adolf Lootensstraat petanque",
+      "functions": [
+        ""
+      ],
+      "longitude": "3.61455111210263",
+      "latitude": "51.052871161444"
+    },
+    {
+      "name": "Hondelee woongroen",
+      "functions": [
+        ""
+      ],
+      "longitude": "3.71582953408623",
+      "latitude": "50.9969573563993"
+    },
+    {
+      "name": "Esperantostraat woongroen",
+      "functions": [
+        ""
+      ],
+      "longitude": "3.76757854517545",
+      "latitude": "51.0710212825153"
+    },
+    {
+      "name": "Hogeweg petanque",
+      "functions": [
+        ""
+      ],
+      "longitude": "3.74574189033046",
+      "latitude": "51.0719390163172"
+    },
+    {
+      "name": "Antoon Catriestraat buurtpark",
+      "functions": [
+        "petanque"
+      ],
+      "longitude": "3.65784564160225",
+      "latitude": "51.0499614731148"
+    },
+    {
+      "name": "Keiskantstraat recreatieterrein Keiskant",
+      "functions": [
+        "skate",
+        "zandbak",
+        "voetbal",
+        "petanque",
+        "speeltoestellen"
+      ],
+      "longitude": "3.64134096341724",
+      "latitude": "51.0447889378917"
+    },
+    {
+      "name": "Pinguinstraat woongroen",
+      "functions": [
+        "zandbak",
+        "voetbal",
+        "petanque",
+        "speeltoestellen"
+      ],
+      "longitude": "3.76401321008773",
+      "latitude": "51.0273104926867"
+    },
+    {
+      "name": "Gustaaf Le Fevere de ten Hovelaan Frans Tochpark",
+      "functions": [
+        "avontuurlijk spelen",
+        "zandbak",
+        "speeltoestellen"
+      ],
+      "longitude": "3.76059581872221",
+      "latitude": "51.0385031149262"
+    },
+    {
+      "name": "Driebeekstraat recreatieterrein",
+      "functions": [
+        "voetbal",
+        "speeltoestellen"
+      ],
+      "longitude": "3.76834330842083",
+      "latitude": "51.0372784144127"
+    },
+    {
+      "name": "Kerkstraat Arbedpark Noord speelterrein",
+      "functions": [
+        "avontuurlijk spelen",
+        "voetbal",
+        "speeltoestellen",
+        "basketbal"
+      ],
+      "longitude": "3.75300786787443",
+      "latitude": "51.0444827086011"
+    },
+    {
+      "name": "Voordries speelterrein",
+      "functions": [
+        "zandbak",
+        "voetbal",
+        "speeltoestellen"
+      ],
+      "longitude": "3.76729549370251",
+      "latitude": "51.041521524895"
+    },
+    {
+      "name": "Platanendreef speelterrein",
+      "functions": [
+        "zandbak",
+        "speeltoestellen"
+      ],
+      "longitude": "3.76520109841706",
+      "latitude": "51.0441911179143"
+    },
+    {
+      "name": "Groeningestraat buurtpark",
+      "functions": [
+        "zandbak",
+        "speeltoestellen"
+      ],
+      "longitude": "3.77359959688527",
+      "latitude": "51.0425193133998"
+    },
+    {
+      "name": "Scheldekaai speelterrein",
+      "functions": [
+        ""
+      ],
+      "longitude": "3.74441469840111",
+      "latitude": "51.044856131964"
+    },
+    {
+      "name": "Bassijnstraat woongroen",
+      "functions": [
+        "petanque",
+        "speeltoestellen"
+      ],
+      "longitude": "3.74798524302874",
+      "latitude": "51.0453581532057"
+    },
+    {
+      "name": "Oude Brusselseweg speelterrein",
+      "functions": [
+        "avontuurlijk spelen",
+        "speeltoestellen"
+      ],
+      "longitude": "3.74885605389876",
+      "latitude": "51.0409965750995"
+    },
+    {
+      "name": "Meulestedesteenweg woongroen",
+      "functions": [
+        "voetbal"
+      ],
+      "longitude": "3.72727735890154",
+      "latitude": "51.0861283983962"
+    },
+    {
+      "name": "Meulesteedsesteenweg buurttuin t Postje",
+      "functions": [
+        "petanque",
+        "speeltoestellen"
+      ],
+      "longitude": "3.72685830529321",
+      "latitude": "51.0844967829468"
+    },
+    {
+      "name": "Marseillestraat woongroen",
+      "functions": [
+        "zandbak",
+        "speeltoestellen"
+      ],
+      "longitude": "3.7288593028865",
+      "latitude": "51.0845556038271"
+    },
+    {
+      "name": "Zuiderlaan recreatieterrein Blaarmeersen camping",
+      "functions": [
+        "zandbak",
+        "speeltoestellen"
+      ],
+      "longitude": "3.68110177267679",
+      "latitude": "51.0463665448533"
+    },
+    {
+      "name": "Zuiderlaan recreatieterrein Blaarmeersen skatezon",
+      "functions": [
+        "skate"
+      ],
+      "longitude": "3.68460167362438",
+      "latitude": "51.0470153253593"
+    },
+    {
+      "name": "Zuiderlaan recreatieterrein Blaarmeersen strandzon",
+      "functions": [
+        "zandbak"
+      ],
+      "longitude": "3.68752169522847",
+      "latitude": "51.043002534587"
+    },
+    {
+      "name": "Zuiderlaan recreatieterrein Blaarmeersen waterkant",
+      "functions": [
+        "avontuurlijk spelen",
+        "zandbak",
+        "petanque",
+        "speeltoestellen"
+      ],
+      "longitude": "3.69125885173317",
+      "latitude": "51.0419126204429"
+    },
+    {
+      "name": "Rerum Novarumplein multisportterrein en skatezone",
+      "functions": [
+        "skate",
+        "voetbal",
+        "basketbal"
+      ],
+      "longitude": "3.71785508624561",
+      "latitude": "51.022094262044"
+    },
+    {
+      "name": "Kikvorsstraat woongroen",
+      "functions": [
+        "zandbak",
+        "petanque",
+        "speeltoestellen"
+      ],
+      "longitude": "3.71602612092462",
+      "latitude": "51.0218119699794"
+    },
+    {
+      "name": "Steenakker recreatieterrein Henri Storyplein",
+      "functions": [
+        "zandbak",
+        "voetbal",
+        "speeltoestellen",
+        "basketbal"
+      ],
+      "longitude": "3.72531195231573",
+      "latitude": "51.0182229771328"
+    },
+    {
+      "name": "Dracenastraat recrea Jan Yoens skate en speelzone",
+      "functions": [
+        "skate",
+        "zandbak",
+        "speeltoestellen"
+      ],
+      "longitude": "3.71512590793684",
+      "latitude": "51.0760612474547"
+    },
+    {
+      "name": "Dracenastraat recrea Jan Yoens sport- en speelzone",
+      "functions": [
+        "zandbak",
+        "voetbal",
+        "petanque",
+        "speeltoestellen",
+        "basketbal"
+      ],
+      "longitude": "3.71389063865975",
+      "latitude": "51.0748021550376"
+    },
+    {
+      "name": "Limbastraat speelterrein",
+      "functions": [
+        "voetbal",
+        "speeltoestellen"
+      ],
+      "longitude": "3.72228149338003",
+      "latitude": "51.0762243065735"
+    },
+    {
+      "name": "Vorkstraat buurtpark",
+      "functions": [
+        "zandbak",
+        "speeltoestellen"
+      ],
+      "longitude": "3.73374457803447",
+      "latitude": "51.0750700761063"
+    },
+    {
+      "name": "Lübeckstraat buurtpark",
+      "functions": [
+        "zandbak",
+        "speeltoestellen"
+      ],
+      "longitude": "3.73912379488822",
+      "latitude": "51.0721537439981"
+    },
+    {
+      "name": "Scandinaviëstraat woongroen",
+      "functions": [
+        "avontuurlijk spelen",
+        "zandbak",
+        "voetbal",
+        "petanque",
+        "speeltoestellen"
+      ],
+      "longitude": "3.74012617039064",
+      "latitude": "51.070752960616"
+    },
+    {
+      "name": "Bevelandstraat speelterrein",
+      "functions": [
+        "zandbak",
+        "speeltoestellen"
+      ],
+      "longitude": "3.73004985907634",
+      "latitude": "51.0690018041452"
+    },
+    {
+      "name": "Bevelandstraat voetbalterrein",
+      "functions": [
+        "voetbal"
+      ],
+      "longitude": "3.73091244243767",
+      "latitude": "51.0685182564572"
+    },
+    {
+      "name": "Roggestraat buurtpark FNO-park",
+      "functions": [
+        "voetbal"
+      ],
+      "longitude": "3.7095827749148",
+      "latitude": "51.0675056680402"
+    },
+    {
+      "name": "Pioenstraat speelterrein",
+      "functions": [
+        "zandbak",
+        "speeltoestellen"
+      ],
+      "longitude": "3.70593207300555",
+      "latitude": "51.0695312531635"
+    },
+    {
+      "name": "Linnenstraat woongroen",
+      "functions": [
+        "speeltoestellen",
+        "basketbal"
+      ],
+      "longitude": "3.69416185995979",
+      "latitude": "51.0684808625624"
+    },
+    {
+      "name": "Spinnerijdoorgang woongroen",
+      "functions": [
+        "speeltoestellen"
+      ],
+      "longitude": "3.69116677636124",
+      "latitude": "51.0670903012731"
+    },
+    {
+      "name": "Fluweelstraat woongroen",
+      "functions": [
+        "voetbal",
+        "petanque",
+        "speeltoestellen"
+      ],
+      "longitude": "3.69268204265577",
+      "latitude": "51.0698092739567"
+    },
+    {
+      "name": "Wielewaalstraat buurtpark",
+      "functions": [
+        "avontuurlijk spelen",
+        "speeltoestellen"
+      ],
+      "longitude": "3.6953315996422",
+      "latitude": "51.0652052784037"
+    },
+    {
+      "name": "Oosteeklostraat woongroen",
+      "functions": [
+        "voetbal",
+        "speeltoestellen"
+      ],
+      "longitude": "3.71767182487446",
+      "latitude": "51.0657181487843"
+    },
+    {
+      "name": "Justus de Harduwijnlaan woongroen",
+      "functions": [
+        "speeltoestellen"
+      ],
+      "longitude": "3.72829742700141",
+      "latitude": "51.0671507364071"
+    },
+    {
+      "name": "Vogelenzangpark buurtpark",
+      "functions": [
+        "zandbak",
+        "speeltoestellen"
+      ],
+      "longitude": "3.72023603614537",
+      "latitude": "51.0648050595103"
+    },
+    {
+      "name": "Opgeëistenlaan wijkpark Rabotpark",
+      "functions": [
+        "basketbal"
+      ],
+      "longitude": "3.71685256512205",
+      "latitude": "51.064994258351"
+    },
+    {
+      "name": "Opgeëistenlaan speelterrein",
+      "functions": [
+        "zandbak",
+        "voetbal",
+        "speeltoestellen"
+      ],
+      "longitude": "3.71691668881783",
+      "latitude": "51.0630759481617"
+    },
+    {
+      "name": "Tolhuislaan recreatieterrein Tolhuis",
+      "functions": [
+        "zandbak",
+        "voetbal",
+        "speeltoestellen",
+        "basketbal"
+      ],
+      "longitude": "3.725600641654",
+      "latitude": "51.0644136073249"
+    },
+    {
+      "name": "Désiré Fiévéstraat woongroen",
+      "functions": [
+        "zandbak",
+        "speeltoestellen"
+      ],
+      "longitude": "3.73154221652161",
+      "latitude": "51.0624428081005"
+    },
+    {
+      "name": "Kolveniersgang woongroen",
+      "functions": [
+        "speeltoestellen"
+      ],
+      "longitude": "3.71436392845328",
+      "latitude": "51.0609785695053"
+    },
+    {
+      "name": "Gebroeders de Smetstraat speelterrein Zonnestraal",
+      "functions": [
+        "zandbak",
+        "voetbal",
+        "petanque",
+        "speeltoestellen",
+        "basketbal"
+      ],
+      "longitude": "3.70536432030596",
+      "latitude": "51.0631748435216"
+    },
+    {
+      "name": "Fonteineplein speelterrein",
+      "functions": [
+        "basketbal"
+      ],
+      "longitude": "3.69572244029425",
+      "latitude": "51.0617710608039"
+    },
+    {
+      "name": "Emilius Seghersplein buurtpark Luizengevecht",
+      "functions": [
+        "zandbak",
+        "voetbal",
+        "speeltoestellen"
+      ],
+      "longitude": "3.70369603937669",
+      "latitude": "51.0596136121939"
+    },
+    {
+      "name": "Filips van Cleeflaan woongroen",
+      "functions": [
+        "voetbal",
+        "petanque",
+        "speeltoestellen"
+      ],
+      "longitude": "3.71087549342385",
+      "latitude": "51.0605904386776"
+    },
+    {
+      "name": "Lodewijk van Malestraat woongroen",
+      "functions": [
+        "zandbak",
+        "speeltoestellen"
+      ],
+      "longitude": "3.71416945457724",
+      "latitude": "51.059035997872"
+    },
+    {
+      "name": "Rodelijvekensstraat woongroen",
+      "functions": [
+        ""
+      ],
+      "longitude": "3.72457789516578",
+      "latitude": "51.0613585826824"
+    },
+    {
+      "name": "Godshuishammeke speelterrein",
+      "functions": [
+        "zandbak",
+        "voetbal",
+        "speeltoestellen",
+        "basketbal"
+      ],
+      "longitude": "3.72747270145653",
+      "latitude": "51.0616578051901"
+    },
+    {
+      "name": "Ham speelloods",
+      "functions": [
+        ""
+      ],
+      "longitude": "3.73376390434703",
+      "latitude": "51.0607247886032"
+    },
+    {
+      "name": "Zondernaamstraat buurtpark",
+      "functions": [
+        "zandbak",
+        "voetbal",
+        "petanque",
+        "speeltoestellen"
+      ],
+      "longitude": "3.73444653267874",
+      "latitude": "51.0595326795386"
+    },
+    {
+      "name": "Bibliotheekstraat wijkpark Baudelohof",
+      "functions": [
+        "zandbak",
+        "speeltoestellen",
+        "basketbal"
+      ],
+      "longitude": "3.72922362311458",
+      "latitude": "51.0584686783356"
+    },
+    {
+      "name": "Boerderijstraat speelterrein",
+      "functions": [
+        "zandbak",
+        "voetbal",
+        "petanque",
+        "speeltoestellen",
+        "basketbal"
+      ],
+      "longitude": "3.6954076510603",
+      "latitude": "51.058727049631"
+    },
+    {
+      "name": "Ooievaarstraat buurtpark",
+      "functions": [
+        "zandbak",
+        "speeltoestellen"
+      ],
+      "longitude": "3.69876589992476",
+      "latitude": "51.0581039983547"
+    },
+    {
+      "name": "Nieuwewandeling wijkpark Groene Valleipark",
+      "functions": [
+        "avontuurlijk spelen",
+        "zandbak",
+        "voetbal",
+        "speeltoestellen",
+        "basketbal"
+      ],
+      "longitude": "3.70167313971685",
+      "latitude": "51.0538038368305"
+    },
+    {
+      "name": "Heldenplein woongroen",
+      "functions": [
+        "zandbak",
+        "speeltoestellen"
+      ],
+      "longitude": "3.6947735710048",
+      "latitude": "51.0528820220815"
+    },
+    {
+      "name": "Spaans Kasteelplein speelterrein",
+      "functions": [
+        "zandbak",
+        "speeltoestellen",
+        "basketbal"
+      ],
+      "longitude": "3.7370298597301",
+      "latitude": "51.0544255051629"
+    },
+    {
+      "name": "Ossenstraat buurtpark Rommelwaterpark",
+      "functions": [
+        "zandbak",
+        "voetbal",
+        "petanque",
+        "speeltoestellen"
+      ],
+      "longitude": "3.73990623183753",
+      "latitude": "51.0504909934605"
+    },
+    {
+      "name": "Ferdinand Lousbergkaai buurtpark Astridpark",
+      "functions": [
+        "zandbak",
+        "speeltoestellen"
+      ],
+      "longitude": "3.73754828314143",
+      "latitude": "51.0504754059369"
+    },
+    {
+      "name": "Wolterslaan buurtpark",
+      "functions": [
+        "zandbak",
+        "voetbal",
+        "petanque",
+        "speeltoestellen",
+        "basketbal"
+      ],
+      "longitude": "3.74560762143383",
+      "latitude": "51.0489596657593"
+    },
+    {
+      "name": "Nijverheidsstraat wijkpark Bijgaardepark",
+      "functions": [
+        "avontuurlijk spelen",
+        "zandbak",
+        "petanque",
+        "speeltoestellen"
+      ],
+      "longitude": "3.74483098262008",
+      "latitude": "51.0497617357261"
+    },
+    {
+      "name": "Snoekstraat speelterrein",
+      "functions": [
+        "zandbak",
+        "speeltoestellen"
+      ],
+      "longitude": "3.74219574063542",
+      "latitude": "51.0468776395502"
+    },
+    {
+      "name": "Zuidparklaan stadspark Koning Albertpark",
+      "functions": [
+        "skate",
+        "zandbak",
+        "speeltoestellen"
+      ],
+      "longitude": "3.7309825040801",
+      "latitude": "51.0459876591974"
+    },
+    {
+      "name": "Bijlokevest buurtpark",
+      "functions": [
+        "speeltoestellen"
+      ],
+      "longitude": "3.71072199828419",
+      "latitude": "51.0482567339365"
+    },
+    {
+      "name": "Landingsplein buurtpark",
+      "functions": [
+        "zandbak",
+        "voetbal",
+        "speeltoestellen"
+      ],
+      "longitude": "3.69642785436533",
+      "latitude": "51.0512031269259"
+    },
+    {
+      "name": "yachtdreef woongroen",
+      "functions": [
+        "petanque"
+      ],
+      "longitude": "3.70303710228007",
+      "latitude": "51.0463537940997"
+    },
+    {
+      "name": "Europalaan woongroen",
+      "functions": [
+        "basketbal"
+      ],
+      "longitude": "3.70103445806762",
+      "latitude": "51.0459143819692"
+    },
+    {
+      "name": "Verenigde Natielaan woongroen",
+      "functions": [
+        "speeltoestellen",
+        "basketbal"
+      ],
+      "longitude": "3.70499041289428",
+      "latitude": "51.0453195173728"
+    },
+    {
+      "name": "Belvédèreweg woongroen",
+      "functions": [
+        "zandbak",
+        "speeltoestellen",
+        "basketbal"
+      ],
+      "longitude": "3.69662169228477",
+      "latitude": "51.0474374089155"
+    },
+    {
+      "name": "Duifhuisstraat speelterrein",
+      "functions": [
+        "zandbak",
+        "speeltoestellen",
+        "basketbal"
+      ],
+      "longitude": "3.70228031250348",
+      "latitude": "51.0417651874177"
+    },
+    {
+      "name": "Handbalstraat speelterrein",
+      "functions": [
+        "speeltoestellen"
+      ],
+      "longitude": "3.70819476704611",
+      "latitude": "51.0405317772712"
+    },
+    {
+      "name": "Muinklaan stadspark Muinkpark",
+      "functions": [
+        "zandbak",
+        "speeltoestellen"
+      ],
+      "longitude": "3.7300160784301",
+      "latitude": "51.0429259310208"
+    },
+    {
+      "name": "Brusselsepoortstraat speelterrein Hollainhof",
+      "functions": [
+        "zandbak",
+        "speeltoestellen"
+      ],
+      "longitude": "3.7369702466959",
+      "latitude": "51.0442932905915"
+    },
+    {
+      "name": "Fam Van Rijsselberghedreef stadspark Citadelpark",
+      "functions": [
+        "zandbak",
+        "speeltoestellen"
+      ],
+      "longitude": "3.71956963881374",
+      "latitude": "51.0372292453044"
+    },
+    {
+      "name": "Flamingostraat speelterrein",
+      "functions": [
+        "skate",
+        "speeltoestellen",
+        "basketbal"
+      ],
+      "longitude": "3.70678334515616",
+      "latitude": "51.0292755344358"
+    },
+    {
+      "name": "Lucas de Heerestraat buurtpark",
+      "functions": [
+        "zandbak",
+        "petanque",
+        "speeltoestellen"
+      ],
+      "longitude": "3.7216617476021",
+      "latitude": "51.0334390359473"
+    },
+    {
+      "name": "Tarbotstraat buurtpark Lousbergspark",
+      "functions": [
+        "avontuurlijk spelen",
+        "zandbak",
+        "voetbal",
+        "speeltoestellen"
+      ],
+      "longitude": "3.74036281925376",
+      "latitude": "51.0472421204188"
+    },
+    {
+      "name": "Vuurkruisersstraat woongroen",
+      "functions": [
+        "zandbak",
+        "speeltoestellen"
+      ],
+      "longitude": "3.73521265073722",
+      "latitude": "51.0337379522208"
+    },
+    {
+      "name": "Gaston Crommenlaan buurtpark",
+      "functions": [
+        "zandbak",
+        "voetbal",
+        "speeltoestellen",
+        "basketbal"
+      ],
+      "longitude": "3.73632367443306",
+      "latitude": "51.0360552904653"
+    },
+    {
+      "name": "Centrumplein woongroen",
+      "functions": [
+        "zandbak",
+        "voetbal",
+        "speeltoestellen"
+      ],
+      "longitude": "3.74036915548791",
+      "latitude": "51.0353968929479"
+    },
+    {
+      "name": "Adolf Papeleupark woongroen",
+      "functions": [
+        "zandbak",
+        "voetbal",
+        "speeltoestellen"
+      ],
+      "longitude": "3.74952371634844",
+      "latitude": "51.0295946664866"
+    },
+    {
+      "name": "De Naeyerdreef De Vijvers stadsdeelpark",
+      "functions": [
+        "zandbak",
+        "speeltoestellen"
+      ],
+      "longitude": "3.74914648716435",
+      "latitude": "51.0357973123461"
+    },
+    {
+      "name": "Brusselsesteenweg Keizerpark wijkpark",
+      "functions": [
+        "skate",
+        "speeltoestellen",
+        "basketbal"
+      ],
+      "longitude": "3.74036532129385",
+      "latitude": "51.0418877293151"
+    },
+    {
+      "name": "Welpengang speelterrein",
+      "functions": [
+        "voetbal"
+      ],
+      "longitude": "3.68631786675429",
+      "latitude": "51.0850080618577"
+    },
+    {
+      "name": "Paul van Thieghem de Ten Berghe",
+      "functions": [
+        "zandbak",
+        "voetbal",
+        "speeltoestellen"
+      ],
+      "longitude": "3.67843567374723",
+      "latitude": "51.0790617098424"
+    },
+    {
+      "name": "Venusstraat woongroen",
+      "functions": [
+        "zandbak",
+        "voetbal",
+        "speeltoestellen"
+      ],
+      "longitude": "3.6652406377882",
+      "latitude": "51.0809150892247"
+    },
+    {
+      "name": "Mercuriusstraat woongroen",
+      "functions": [
+        "avontuurlijk spelen",
+        "zandbak",
+        "speeltoestellen"
+      ],
+      "longitude": "3.6665561096456",
+      "latitude": "51.0790933702005"
+    },
+    {
+      "name": "Claeys Bouüaertpark binnen",
+      "functions": [
+        "speeltoestellen"
+      ],
+      "longitude": "3.67599445075902",
+      "latitude": "51.0734799404074"
+    },
+    {
+      "name": "Claeys Bouüaertpark buiten",
+      "functions": [
+        "zandbak",
+        "speeltoestellen"
+      ],
+      "longitude": "3.67230804607947",
+      "latitude": "51.0762594065131"
+    },
+    {
+      "name": "Zandloperstraat speelterrein",
+      "functions": [
+        "speeltoestellen"
+      ],
+      "longitude": "3.67671065099635",
+      "latitude": "51.0710654310018"
+    },
+    {
+      "name": "Driepikkelstraat recreatieterrein",
+      "functions": [
+        "basketbal"
+      ],
+      "longitude": "3.68167989628118",
+      "latitude": "51.0670977857282"
+    },
+    {
+      "name": "Lusthoflaan recreatieterrein",
+      "functions": [
+        "basketbal"
+      ],
+      "longitude": "3.70011382104004",
+      "latitude": "51.0757731838936"
+    },
+    {
+      "name": "Mimosastraat woongroen",
+      "functions": [
+        "avontuurlijk spelen",
+        "zandbak"
+      ],
+      "longitude": "3.70206349480405",
+      "latitude": "51.0749634443752"
+    },
+    {
+      "name": "Ooistraat speelterrein",
+      "functions": [
+        "voetbal"
+      ],
+      "longitude": "3.7675083224854",
+      "latitude": "51.1050993111957"
+    },
+    {
+      "name": "Sint-Laurentiuslaan buurtpark",
+      "functions": [
+        "zandbak",
+        "petanque",
+        "speeltoestellen"
+      ],
+      "longitude": "3.7653445155417",
+      "latitude": "51.0984252404681"
+    },
+    {
+      "name": "Edmond Ronsestraat buurtpark",
+      "functions": [
+        "speeltoestellen"
+      ],
+      "longitude": "3.76747884106644",
+      "latitude": "51.0968474972439"
+    },
+    {
+      "name": "Wolfputstraat recreatieterrein",
+      "functions": [
+        "zandbak",
+        "voetbal",
+        "speeltoestellen",
+        "basketbal"
+      ],
+      "longitude": "3.76352418654783",
+      "latitude": "51.0931494139437"
+    },
+    {
+      "name": "Gentstraat slotendries",
+      "functions": [
+        "avontuurlijk spelen"
+      ],
+      "longitude": "3.75920470646782",
+      "latitude": "51.0832290681848"
+    },
+    {
+      "name": "Krijtekerkweg buurtpark",
+      "functions": [
+        "zandbak",
+        "petanque",
+        "speeltoestellen"
+      ],
+      "longitude": "3.77182831357602",
+      "latitude": "51.0840185992045"
+    },
+    {
+      "name": "Invalidenstraat speelterrein",
+      "functions": [
+        "basketbal"
+      ],
+      "longitude": "3.76211475480898",
+      "latitude": "51.0772114783355"
+    },
+    {
+      "name": "Wijnakker prettige wildernis",
+      "functions": [
+        "avontuurlijk spelen",
+        "zandbak",
+        "speeltoestellen"
+      ],
+      "longitude": "3.75806327989343",
+      "latitude": "51.0547977352906"
+    },
+    {
+      "name": "Jos Verdegemstraat speelterrein",
+      "functions": [
+        "avontuurlijk spelen",
+        "zandbak",
+        "speeltoestellen"
+      ],
+      "longitude": "3.75786688444418",
+      "latitude": "51.0562808171011"
+    },
+    {
+      "name": "Rozebroekslag recreatieterrein",
+      "functions": [
+        "zandbak",
+        "petanque",
+        "speeltoestellen"
+      ],
+      "longitude": "3.76011387852158",
+      "latitude": "51.0599912306271"
+    },
+    {
+      "name": "Heiveldstraat Potuit speelterrein",
+      "functions": [
+        "voetbal",
+        "petanque"
+      ],
+      "longitude": "3.75320241736926",
+      "latitude": "51.062808973282"
+    },
+    {
+      "name": "Biest buurtpark",
+      "functions": [
+        "zandbak",
+        "petanque",
+        "speeltoestellen"
+      ],
+      "longitude": "3.75382517811683",
+      "latitude": "51.0674610941994"
+    },
+    {
+      "name": "Heiveldstraat bibliotheek speelterrein",
+      "functions": [
+        "skate",
+        "voetbal",
+        "speeltoestellen",
+        "basketbal"
+      ],
+      "longitude": "3.77404120062431",
+      "latitude": "51.0671120515304"
+    },
+    {
+      "name": "Sleutelbloemstraat buurtpark",
+      "functions": [
+        "avontuurlijk spelen",
+        "voetbal",
+        "speeltoestellen"
+      ],
+      "longitude": "3.75273860695308",
+      "latitude": "51.0738944361372"
+    },
+    {
+      "name": "Serafijnstraat speelterrein",
+      "functions": [
+        "zandbak",
+        "speeltoestellen"
+      ],
+      "longitude": "3.74385644601244",
+      "latitude": "51.0619591251366"
+    },
+    {
+      "name": "Halvemaanstraat woongroen",
+      "functions": [
+        "zandbak",
+        "speeltoestellen"
+      ],
+      "longitude": "3.74502648150239",
+      "latitude": "51.0611997589446"
+    },
+    {
+      "name": "Azaleastraat buurtpark",
+      "functions": [
+        "zandbak",
+        "petanque",
+        "speeltoestellen",
+        "basketbal"
+      ],
+      "longitude": "3.75108454852241",
+      "latitude": "51.0599423037496"
+    },
+    {
+      "name": "Nieuwewijkstraat speelterrein",
+      "functions": [
+        "speeltoestellen"
+      ],
+      "longitude": "3.74333712121351",
+      "latitude": "51.0607563755129"
+    },
+    {
+      "name": "Wasstraat speelterrein",
+      "functions": [
+        "zandbak",
+        "voetbal",
+        "petanque",
+        "speeltoestellen",
+        "basketbal"
+      ],
+      "longitude": "3.74493059627661",
+      "latitude": "51.0554683401849"
+    },
+    {
+      "name": "Sint Bernadette Sapiniere",
+      "functions": [
+        "voetbal",
+        "speeltoestellen"
+      ],
+      "longitude": "3.75179232907234",
+      "latitude": "51.0717580045757"
+    },
+    {
+      "name": "Vennestraat speelterrein",
+      "functions": [
+        "zandbak",
+        "speeltoestellen"
+      ],
+      "longitude": "3.67059537760265",
+      "latitude": "51.0244610754636"
+    },
+    {
+      "name": "Krijzeltand speelterrein",
+      "functions": [
+        "basketbal"
+      ],
+      "longitude": "3.66922257174893",
+      "latitude": "51.0200367341923"
+    },
+    {
+      "name": "Tijgerlelielaan woongroen",
+      "functions": [
+        "zandbak",
+        "voetbal",
+        "speeltoestellen"
+      ],
+      "longitude": "3.67320802168986",
+      "latitude": "51.0223647767011"
+    },
+    {
+      "name": "Jozefienenstraat woongroen",
+      "functions": [
+        "zandbak",
+        "speeltoestellen"
+      ],
+      "longitude": "3.82781972550851",
+      "latitude": "51.1557045328293"
+    },
+    {
+      "name": "Spesbroekstraat speelbos",
+      "functions": [
+        "avontuurlijk spelen"
+      ],
+      "longitude": "3.71723225007609",
+      "latitude": "51.1015994957606"
+    },
+    {
+      "name": "Watersnepstraat speelterrein",
+      "functions": [
+        "zandbak",
+        "speeltoestellen",
+        "basketbal"
+      ],
+      "longitude": "3.71854231869042",
+      "latitude": "51.0928596035059"
+    },
+    {
+      "name": "Waterlelielaan speelterrein",
+      "functions": [
+        "speeltoestellen"
+      ],
+      "longitude": "3.71422496313555",
+      "latitude": "51.0908930487293"
+    },
+    {
+      "name": "Roodborstjesstraat speelterrein",
+      "functions": [
+        "basketbal"
+      ],
+      "longitude": "3.70621953248862",
+      "latitude": "51.0815221208853"
+    },
+    {
+      "name": "Botestraat stadsdeelpark Vyncke-Bovyn",
+      "functions": [
+        "voetbal",
+        "petanque",
+        "basketbal"
+      ],
+      "longitude": "3.69483818226341",
+      "latitude": "51.0835725464308"
+    },
+    {
+      "name": "Zandstraat woongroen",
+      "functions": [
+        "avontuurlijk spelen",
+        "zandbak",
+        "voetbal",
+        "speeltoestellen"
+      ],
+      "longitude": "3.70776166748873",
+      "latitude": "51.0768365432029"
+    },
+    {
+      "name": "Ter Linden recreatieterrein Hekers",
+      "functions": [
+        "zandbak",
+        "petanque",
+        "speeltoestellen"
+      ],
+      "longitude": "3.7110033671394",
+      "latitude": "51.002711246972"
+    },
+    {
+      "name": "Kortrijksesteenweg Maaltebruggepark stadspark",
+      "functions": [
+        "speeltoestellen"
+      ],
+      "longitude": "3.69973541179066",
+      "latitude": "51.0202324535226"
+    },
+    {
+      "name": "Buisstraat kapoenenpleintje",
+      "functions": [
+        ""
+      ],
+      "longitude": "3.64675303720464",
+      "latitude": "51.0425139317491"
+    },
+    {
+      "name": "Meierij speelterrein",
+      "functions": [
+        "zandbak",
+        "voetbal",
+        "speeltoestellen"
+      ],
+      "longitude": "3.73709086529254",
+      "latitude": "51.0317332480681"
+    },
+    {
+      "name": "New-Orleansstraat woongroen",
+      "functions": [
+        "speeltoestellen"
+      ],
+      "longitude": "3.73007053559841",
+      "latitude": "51.0814394300046"
+    },
+    {
+      "name": "Acaciastraat buurtpark",
+      "functions": [
+        "zandbak",
+        "speeltoestellen"
+      ],
+      "longitude": "3.69969049352961",
+      "latitude": "51.0615497443895"
+    },
+    {
+      "name": "Malpertuusplein buurtpark",
+      "functions": [
+        "avontuurlijk spelen",
+        "zandbak",
+        "speeltoestellen"
+      ],
+      "longitude": "3.68784886625829",
+      "latitude": "51.0666142677155"
+    },
+    {
+      "name": "Reinaertstraat Pierkespark",
+      "functions": [
+        "petanque"
+      ],
+      "longitude": "3.70110885167482",
+      "latitude": "51.0589527559785"
+    },
+    {
+      "name": "Zuidbroek Groene Velden",
+      "functions": [
+        "avontuurlijk spelen"
+      ],
+      "longitude": "3.66403435988384",
+      "latitude": "51.0767948634286"
+    },
+    {
+      "name": "Klaverdries woongroep",
+      "functions": [
+        "petanque",
+        "speeltoestellen"
+      ],
+      "longitude": "3.65918119702467",
+      "latitude": "51.0523037315531"
+    },
+    {
+      "name": "Leon Sarteelstraat woongroen",
+      "functions": [
+        "petanque"
+      ],
+      "longitude": "3.792552366996",
+      "latitude": "51.0690921176054"
+    },
+    {
+      "name": "Draverstraat woongroen",
+      "functions": [
+        "voetbal"
+      ],
+      "longitude": "3.76937811872723",
+      "latitude": "51.0679921015851"
+    },
+    {
+      "name": "Roerstraat woongroen",
+      "functions": [
+        "petanque"
+      ],
+      "longitude": "3.7313674658052",
+      "latitude": "51.0725944274038"
+    },
+    {
+      "name": "Gasthuisstraat woongroen",
+      "functions": [
+        "petanque"
+      ],
+      "longitude": "3.76520538501806",
+      "latitude": "51.1015703472281"
+    },
+    {
+      "name": "Hyacintstraat woongroen",
+      "functions": [
+        "petanque"
+      ],
+      "longitude": "3.7035092740816",
+      "latitude": "51.0704975611735"
+    },
+    {
+      "name": "Georges De Baetsplaats skatezone",
+      "functions": [
+        "skate",
+        "basketbal"
+      ],
+      "longitude": "3.81482503461247",
+      "latitude": "51.1565880034316"
+    }
+  ]
+}
