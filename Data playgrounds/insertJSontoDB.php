@@ -22,7 +22,7 @@
 	    $functions = $playground['functions'];
 	    $lat = $playground['latitude'];
 	    $long = $playground['longitude'];
-	    $sql = "INSERT INTO playfields( Name, Longitude, Latitude)
+	    $sql = "INSERT INTO Playgrounds( Name, Longitude, Latitude)
 		VALUES('$name', '$long', '$lat')";
 	    if (!mysqli_query($conn, $sql)) {
 		    echo "Error: " . $sql . "<br>" . mysqli_error($conn);
@@ -60,7 +60,7 @@
 				}
 			
 
-				$sql2 = "INSERT INTO Functions_has_Playfields( Functions_Id, Playfields_Id)
+				$sql2 = "INSERT INTO Functions_has_Playgrounds( Functions_Id, Playgrounds_Id)
 				VALUES('$id','$playgroundId')";
 			    if (!mysqli_query($conn, $sql2)) {
 				    echo "Error: " . $sql2 . "<br>" . mysqli_error($conn);

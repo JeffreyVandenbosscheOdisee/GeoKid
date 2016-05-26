@@ -1,0 +1,12 @@
+{
+    "require": {
+        "silex/silex": "~1.3",
+        "doctrine/dbal": "~2.2",
+        "knplabs/repository-service-provider": "dev-master"
+    },
+    "autoload": {
+    	"psr-0": {
+    		"skeleton": "src/"
+    	}
+    }
+}
