@@ -1,0 +1,46 @@
+<ion-view view-title="User {{ userId }} Wishes" cache-view="false">
+    <ion-content>
+
+        <!-- Ionic refresher => pull the search list down and it will refresh -->
+        <ion-refresher
+                pulling-icon="ion-loop"
+                pulling-text="refresh"
+                on-refresh="doRefresh()">
+        </ion-refresher>
+
+        <ion-list>
+            <ion-item
+                    ng-repeat="userWish in apiResult">
+
+                <h2>{{ userWish.product }}</h2>
+                <p>
+                    <span>
+                        <i class="ion ion-social-euro"></i>
+                        {{ userWish.price }}
+                    </span>
+                </p>
+                <p>
+                    <i class="ion ion-ios-information-outline"></i>
+                    {{ (userWish.gotit == 0) ? 'Still wants it' : 'Got it' }}
+                </p>
+
+                <!-- Option button => swift a search result to the left -->
+                <!--
+                <ion-option-button
+                        class="button-positive"
+                        ng-click="getDirections(cafe)">
+                    <i class="ion ion-map"></i>&nbsp;Navigate
+                </ion-option-button>
+                -->
+            </ion-item>
+        </ion-list>
+
+        <!-- Infinite scroll => go to the end of the search list -->
+        <ion-infinite-scroll
+                ng-if="apiService.hasMore"
+                immediate-check="false"
+                on-infinite="loadMore()">
+        </ion-infinite-scroll>
+
+    </ion-content>
+</ion-view>

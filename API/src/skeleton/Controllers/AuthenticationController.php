@@ -22,12 +22,11 @@ class AuthenticationController implements ControllerProviderInterface {
 
 		// Example routes
 		$controllers
-			->get('/login/', array($this, 'login'))
-			->method('GET|POST');
+			->post('/login/', array($this, 'login'));
 
 		$controllers
-			->get('/register/', array($this, 'register'))
-			->method('POST');
+			->match('/register/', array($this, 'register'))
+			->method('GET|POST');
 
 		return $controllers;
 	}
@@ -57,15 +56,24 @@ class AuthenticationController implements ControllerProviderInterface {
 	{
 		$email = $request->get('email');
 		$password = password_hash($request->get('password'),PASSWORD_DEFAULT);
-		$user = $app['db.masteraccounts']->findMasteraccount($email);	
+		$familyname = $request->get('familyname');
+		$streetnr = $request->get('streetnr');
+		$zipcode = $request->get('zipcode');
+		$city = $request->get('city');
 
+		$user = $app['db.masteraccounts']->findMasteraccount($email);	
 		if($user == false){
 			$data['Email']= $email;
 			$data['Password']= $password;
+			$data['FamilyName']= $familyname;
+			$data['Street_And_Nr'] = $streetnr;
+			$data['ZipCode'] = $zipcode;
+			$data['City'] = $city;
 			$userregister = $app['db.masteraccounts']->insert($data);
 			return new JsonResponse($userregister);
 		}
 		return new JsonResponse(null);
 		
 	}
+
 }

@@ -1,0 +1,45 @@
+<ion-view view-title="Registreren" >
+    <ion-content scroll="false">
+        <form name="registerform" novalidate>
+            <p ng-if="loginError" id="loginError" class="card error">{{ loginError }}</p>
+            <div class="list list-inset">
+                <label class="item item-input">
+                    <span class="input-label ">E-mail adres*</span>
+                    <input required type="email" name="email" placeholder="Emailadres" ng-model="data.email" form-validate-after>
+                    <!-- <p ng-show="loginform.email.$error.required">* emailadres is verplicht</p> -->
+                </label>
+                <label class="item item-input">
+                    <span class="input-label">Wachtwoord*</span>
+                    <input required type="password" name="password" placeholder="Wachtwoord" ng-model="data.password" form-validate-after>
+                    <!-- <p ng-show="loginform.password.$error.required">* Password is required</p> -->
+                </label>
+                <label class="item item-input">
+                    <span class="input-label">Herhaal wachtwoord*</span>
+                    <input required type="password" name="passwordRepeat" placeholder="Wachtwoord herhalen" ng-model="data.passwordRepeat" form-validate-after>
+                    <!-- <p ng-show="loginform.password.$error.required">* Password is required</p> -->
+                </label>
+                <label class="item item-input">
+                    <span class="input-label">Familienaam*</span>
+                    <input required type="text" name="Familyname" placeholder="Familienaam" ng-model="data.familyname" form-validate-after>
+                    <!-- <p ng-show="loginform.password.$error.required">* Password is required</p> -->
+                </label>
+                <label class="item item-input">
+                    <span class="input-label">Adres: Straat + nr*</span>
+                    <input required type="text" name="StreetNr" placeholder="Adres" ng-model="data.streetnr" form-validate-after>
+                    <!-- <p ng-show="loginform.password.$error.required">* Password is required</p> -->
+                </label>
+                <label class="item item-input">
+                    <span class="input-label">Postcode*</span>
+                    <input required type="number" name="zipcode" placeholder="Postcode" ng-model="data.zipcode" form-validate-after>
+                    <!-- <p ng-show="loginform.password.$error.required">* Password is required</p> -->
+                </label>
+                <label class="item item-input">
+                    <span class="input-label">Gemeente/stad*</span>
+                    <input required type="text" name="city" placeholder="gemeente/stad" ng-model="data.city" form-validate-after>
+                    <!-- <p ng-show="loginform.password.$error.required">* Password is required</p> -->
+                </label>
+            </div>
+            <button class="button button-large button-block icon-right button-calm button-login" ng-click="register(data)">Registeren</button>     
+        </form>
+    </ion-content>
+</ion-view>

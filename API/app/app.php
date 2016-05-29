@@ -43,17 +43,17 @@ $app->before(function(Request $request)
    if ($request->getMethod() === "OPTIONS") 
    {
        $response = new Response();
-       $response->headers->set("Access-Control-Allow-Origin","*");
+       // $response->headers->set("Access-Control-Allow-Origin","*");
        $response->headers->set("Access-Control-Allow-Methods","GET,POST,PUT,DELETE,OPTIONS");
        $response->headers->set("Access-Control-Allow-Headers","Content-Type");
        $response->setStatusCode(200);
-       return $response->send();
+       return $response;
    }
 }, Application::EARLY_EVENT);
 // CORS response
 $app->after(function(Request $request, Response $response) 
 {
-   // $response->headers->set("Access-Control-Allow-Origin","*");
+   $response->headers->set("Access-Control-Allow-Origin","*");
    $response->headers->set("Access-Control-Allow-Methods","GET,POST,PUT,DELETE,OPTIONS");
 });
 
