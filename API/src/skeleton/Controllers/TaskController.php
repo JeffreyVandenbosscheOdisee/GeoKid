@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 
-class ExampleController implements ControllerProviderInterface {
+class TaskController implements ControllerProviderInterface {
 	
 	/**
 	 * Returns routes to connect to the given application.
@@ -23,7 +23,8 @@ class ExampleController implements ControllerProviderInterface {
 
 		// Example routes
 		$controllers
-			->get('/', array($this, 'index'));
+			->match('/complete', array($this, 'completedtask'))
+			->method('GET|POST');
 
 		return $controllers;
 	}
@@ -33,12 +34,18 @@ class ExampleController implements ControllerProviderInterface {
 	 * @param  Application 	$app 	An Application instance
 	 * @return string           	A html string rendered by twig
 	 */
-	public function index(Application $app) 
+	public function completedtask(Application $app, Request $request) 
 	{
-		return new JsonResponse(array(
-			'example1123',
-			'example2'
-			)
-		);
+		$subaccountIds = $request->get('subaccountsId');
+		$playgroundId = $request->get('playgroundId');
+		$taskid = $request->get('taskId');
+		$data['Playgrounds_Id']= $playgroundId;
+		$data['Tasks_Id']= $taskid;
+
+		foreach ($subaccountIds as $value){
+			$data['SubAccounts_Id']= $value;
+			$done = $app['db.tasks']->insert($data);
+		}
+		return new JsonResponse();
 	}
 }

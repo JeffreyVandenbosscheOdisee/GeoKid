@@ -22,7 +22,6 @@ $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
 	)
 ));
 
-var_dump($config['repositories']);
 // Repository Service Provider Setup
 // @note: Install KNP RSP via Composer first!
 $app->register(new Knp\Provider\RepositoryServiceProvider(), array(

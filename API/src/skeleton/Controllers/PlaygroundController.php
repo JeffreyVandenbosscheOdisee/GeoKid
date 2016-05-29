@@ -6,6 +6,8 @@ use Silex\Application;
 use Silex\ControllerProviderInterface;
 use Silex\ControllerCollection;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+
 
 class PlaygroundController implements ControllerProviderInterface {
 	
@@ -27,6 +29,21 @@ class PlaygroundController implements ControllerProviderInterface {
 			->get('/{id}/', array($this, 'detail'))
 			->assert('id', '\d+');
 
+		$controllers
+			->match('/{id}/visit', array($this, 'visit'))
+			->method('GET|POST')
+			->assert('id', '\d+');
+
+		$controllers
+			->match('/{id}/favorite', array($this, 'favorite'))
+			->method('GET|POST')
+			->assert('id', '\d+');
+
+		$controllers
+			->match('/{id}/undofavorite', array($this, 'undofavorite'))
+			->method('GET|POST')
+			->assert('id', '\d+');
+
 		return $controllers;
 	}
 
@@ -39,8 +56,7 @@ class PlaygroundController implements ControllerProviderInterface {
 	{
 		$playgrounds = $app['db.playgrounds']->findAllPlaygrounds();
 		// var_dump($playgrounds);
-		return new JsonResponse($playgrounds
-		);
+		return new JsonResponse($playgrounds);
 	}
 
 	public function detail(Application $app, $id) 
@@ -48,5 +64,39 @@ class PlaygroundController implements ControllerProviderInterface {
 		$playground = $app['db.playgrounds']->findSpecficPlayground($id);
 		// var_dump($playgrounds);
 		return new JsonResponse($playground);
+	}
+
+	public function visit(Application $app, $id, Request $request) 
+	{
+		$masteraccId = $request->get('masteraccId');
+		$data['Playgrounds_Id'] = $id;
+		$data['MasterAccounts_Id'] = $masteraccId;
+
+		$playground = $app['db.Favorite_Parks_MasterAccount']->insert($data);
+		return new JsonResponse($playground);
+	}
+
+	public function favorite(Application $app, $id, Request $request) 
+	{
+		$masteraccId = $request->get('masteraccId');
+		$data['Playgrounds_Id'] = $id;
+		$data['MasterAccounts_Id'] = $masteraccId;
+
+		$playground = $app['db.Favorite_Parks_MasterAccount']->findVisitedPlayground($id, $masteraccId);
+		$playground['Favorite_playground'] = 1;
+		$data = $app['db.Favorite_Parks_MasterAccount']->update($playground, array('MasterAccounts_Id' => $masteraccId, 'Playgrounds_Id' => $id ));
+		return new JsonResponse($data);
+	}
+
+	public function undofavorite(Application $app, $id, Request $request) 
+	{
+		$masteraccId = $request->get('masteraccId');
+		$data['Playgrounds_Id'] = $id;
+		$data['MasterAccounts_Id'] = $masteraccId;
+
+		$playground = $app['db.Favorite_Parks_MasterAccount']->findVisitedPlayground($id, $masteraccId);
+		$playground['Favorite_playground'] = 0;
+		$data = $app['db.Favorite_Parks_MasterAccount']->update($playground, array('MasterAccounts_Id' => $masteraccId, 'Playgrounds_Id' => $id ));
+		return new JsonResponse($data);
 	}
 }

@@ -43,7 +43,7 @@ class PlaygroundRepository extends BaseRepository
 	 * @return [type]     [description]
 	 */
 	public function findFunctionsSpecificPlayground($id){
-		$functions = $this->db->fetchAll('SELECT Functions.Name as function FROM   functions_has_playgrounds JOIN functions ON functions.Id = functions_has_playgrounds.functions_id  WHERE  functions_has_playgrounds.playgrounds_Id = ?', array($id));
+		$functions = $this->db->fetchAll('SELECT functions.Name as function FROM   functions_has_playgrounds JOIN functions ON functions.Id = functions_has_playgrounds.functions_id  WHERE  functions_has_playgrounds.playgrounds_Id = ?', array($id));
 		$arrFunctions = [];
 		foreach ($functions as $key => $val) {
 			foreach ($val as $key1 => $value) {

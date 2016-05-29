@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Machine: 127.0.0.1
--- Gegenereerd op: 25 mei 2016 om 14:08
+-- Gegenereerd op: 28 mei 2016 om 15:20
 -- Serverversie: 5.6.17
 -- PHP-versie: 5.5.12
 
@@ -54,13 +54,25 @@ CREATE TABLE IF NOT EXISTS `achievements_has_subaccounts` (
 --
 
 CREATE TABLE IF NOT EXISTS `completed_tasks` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
   `SubAccounts_Id` int(11) NOT NULL,
   `Playgrounds_Id` int(11) NOT NULL,
   `Tasks_Id` int(11) NOT NULL,
-  PRIMARY KEY (`SubAccounts_Id`,`Playgrounds_Id`,`Tasks_Id`),
+  PRIMARY KEY (`Id`),
   KEY `fk_Completed_tasks_Playfields1_idx` (`Playgrounds_Id`),
-  KEY `fk_Completed_tasks_Tasks1_idx` (`Tasks_Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `fk_Completed_tasks_Tasks1_idx` (`Tasks_Id`),
+  KEY `fk_Completed_tasks_SubAccounts1` (`SubAccounts_Id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `completed_tasks`
+--
+
+INSERT INTO `completed_tasks` (`Id`, `SubAccounts_Id`, `Playgrounds_Id`, `Tasks_Id`) VALUES
+(1, 1, 5, 3),
+(2, 2, 5, 3),
+(3, 1, 5, 3),
+(4, 2, 5, 3);
 
 -- --------------------------------------------------------
 
@@ -71,10 +83,18 @@ CREATE TABLE IF NOT EXISTS `completed_tasks` (
 CREATE TABLE IF NOT EXISTS `favorite_parks_masteraccount` (
   `Playgrounds_Id` int(11) NOT NULL,
   `MasterAccounts_Id` int(11) NOT NULL,
+  `Favorite_playground` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`Playgrounds_Id`,`MasterAccounts_Id`),
   KEY `fk_Playfields_has_MasterAccounts_MasterAccounts1_idx` (`MasterAccounts_Id`),
   KEY `fk_Playfields_has_MasterAccounts_Playfields1_idx` (`Playgrounds_Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `favorite_parks_masteraccount`
+--
+
+INSERT INTO `favorite_parks_masteraccount` (`Playgrounds_Id`, `MasterAccounts_Id`, `Favorite_playground`) VALUES
+(150, 2, 0);
 
 -- --------------------------------------------------------
 
@@ -455,11 +475,18 @@ INSERT INTO `functions_has_playgrounds` (`Functions_Id`, `PlayGrounds_Id`) VALUE
 
 CREATE TABLE IF NOT EXISTS `masteraccounts` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `E-mail` varchar(150) NOT NULL,
-  `Password` varchar(45) NOT NULL,
+  `Email` varchar(150) NOT NULL,
+  `Password` varchar(255) NOT NULL,
   PRIMARY KEY (`Id`),
   UNIQUE KEY `Id_UNIQUE` (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `masteraccounts`
+--
+
+INSERT INTO `masteraccounts` (`Id`, `Email`, `Password`) VALUES
+(2, 'Jeffrey.vandenbossche@gmail.com', '$2y$10$9Na.//jmdDIb4P.9CGNjjOh1wTKF6dYWKURks9fET5rUpID2RzsZu');
 
 -- --------------------------------------------------------
 
@@ -645,7 +672,15 @@ CREATE TABLE IF NOT EXISTS `subaccounts` (
   PRIMARY KEY (`Id`,`MasterAccounts_Id`),
   UNIQUE KEY `Id_UNIQUE` (`Id`),
   KEY `fk_SubAccounts_MasterAccounts1_idx` (`MasterAccounts_Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `subaccounts`
+--
+
+INSERT INTO `subaccounts` (`Id`, `Name`, `MasterAccounts_Id`) VALUES
+(1, 'Jeffrey', 2),
+(2, 'Elin', 2);
 
 -- --------------------------------------------------------
 
@@ -659,7 +694,36 @@ CREATE TABLE IF NOT EXISTS `tasks` (
   `Tag` enum('skate','voetbal','zandbak','speeltoestellen','Avontuurlijk') DEFAULT NULL,
   PRIMARY KEY (`Id`),
   UNIQUE KEY `Id_UNIQUE` (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=24 ;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `tasks`
+--
+
+INSERT INTO `tasks` (`Id`, `Name`, `Tag`) VALUES
+(1, 'Tel 10 bomen', NULL),
+(2, 'Zoek 5 takken', NULL),
+(3, 'Zoek het basketbalveld', ''),
+(4, 'Scoor 5 doelpunten', 'voetbal'),
+(5, 'Ga 4 keer van de glijbaan', 'speeltoestellen'),
+(6, 'Tel hoeveel skaters er zijn', 'skate'),
+(7, 'Speel 5 minuten in de zandbak', 'zandbak'),
+(8, 'Loop 4 rondjes rond minstens 10 bomen', NULL),
+(9, 'Beklim een boomstam ', 'Avontuurlijk'),
+(10, 'Zoek 5 verschillende bloemen', NULL),
+(11, 'Tel 10 vogels', NULL),
+(12, 'Schommel 3 minuten', 'speeltoestellen'),
+(13, 'Maak een zandkasteel', 'zandbak'),
+(14, 'Speel een spelletje petanque', ''),
+(15, 'maak een selfie met een random iemand', NULL),
+(16, 'Maak een tekening in het zand', 'zandbak'),
+(17, 'Zoek een spin en kom ze tonen', NULL),
+(18, 'Maak een kroon uit natuurmateriaal', NULL),
+(19, 'Hoeveel banken staan er in het park', NULL),
+(20, 'Doe 5 koprollen', NULL),
+(21, 'Spring 20 keer in de lucht', NULL),
+(22, 'Zoen een boom', NULL),
+(23, 'Pluk 20 grassprietjes en sorteer deze van klein naar groot', NULL);
 
 --
 -- Beperkingen voor geëxporteerde tabellen

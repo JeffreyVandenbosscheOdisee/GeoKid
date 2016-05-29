@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 // == Set environment
-$environment = 'dev';
+$environment = 'prod';
 
 // == Set Defaults
 date_default_timezone_set('Europe/Brussels');
