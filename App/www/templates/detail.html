@@ -1,46 +1,31 @@
 <ion-view view-title="User {{ userId }} Wishes" cache-view="false">
     <ion-content>
-
-        <!-- Ionic refresher => pull the search list down and it will refresh -->
-        <ion-refresher
-                pulling-icon="ion-loop"
-                pulling-text="refresh"
-                on-refresh="doRefresh()">
-        </ion-refresher>
-
-        <ion-list>
-            <ion-item
-                    ng-repeat="userWish in apiResult">
-
-                <h2>{{ userWish.product }}</h2>
-                <p>
-                    <span>
-                        <i class="ion ion-social-euro"></i>
-                        {{ userWish.price }}
-                    </span>
-                </p>
-                <p>
-                    <i class="ion ion-ios-information-outline"></i>
-                    {{ (userWish.gotit == 0) ? 'Still wants it' : 'Got it' }}
-                </p>
-
-                <!-- Option button => swift a search result to the left -->
-                <!--
-                <ion-option-button
-                        class="button-positive"
-                        ng-click="getDirections(cafe)">
-                    <i class="ion ion-map"></i>&nbsp;Navigate
-                </ion-option-button>
-                -->
-            </ion-item>
-        </ion-list>
-
-        <!-- Infinite scroll => go to the end of the search list -->
-        <ion-infinite-scroll
-                ng-if="apiService.hasMore"
-                immediate-check="false"
-                on-infinite="loadMore()">
-        </ion-infinite-scroll>
-
+        <div>
+            <img ng-if="apiResult.photo == null" src="images/help1.png">
+            <img ng-if="apiResult.photo != null" src="{{ ApiUrl + subaccount.photo.url }}">
+        </div>
+        <div>
+            <h2>{{ apiResult.Name }}</h2>
+            <a href="#/account/{{apiResult.Id}}/edit" class="ion-edit " title=""></a>
+            <div>
+                <h3>Bezochte speelpleinen:</h3>
+                <ion-list>
+                    <ion-item ng-repeat="playground in apiResultplaygrounds">
+                    <p>{{ playground.Name }}</p>
+                    </ion-item>
+                </ion-list>
+            </div>
+        </div>
+        <div>
+            <h2>Verzamelde badges</h2>
+            <ion-list>
+                <ion-item >
+                </ion-item>
+            </ion-list>
+        </div>
+        <a href="#/subaccounts" title="">Terug naar subaccounts.</a>
+        <a href="#/account/{{apiResult.Id}}/delete" title="">
+            <p>Profiel verwijderen?</p>
+        </a>
     </ion-content>
 </ion-view>

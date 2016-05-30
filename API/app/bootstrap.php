@@ -28,3 +28,8 @@ $app->register(new Knp\Provider\RepositoryServiceProvider(), array(
 	'repository.repositories' => $config['repositories']
 	)
 );
+
+$app['photoSubaccount.base_path'] = __DIR__ . DIRECTORY_SEPARATOR . '../public_html/assets/public/img/subaccounts';
+$app['photoSubaccount.base_url'] = '/assets/public/img/subaccounts';
+$app['photoPlayground.base_path'] = __DIR__ . DIRECTORY_SEPARATOR . '../public_html/assets/public/img/playgrounds';
+$app['photoPlayground.base_url'] = '/assets/public/img/playgrounds';

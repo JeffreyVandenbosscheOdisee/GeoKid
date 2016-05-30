@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <widget id="com.ionicframework.starter" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-  <name>Find My Coffee</name>
+  <name>GeoKid</name>
   <description>
-        Find the nearest coffee bar!
+        Geokid
     </description>
-  <author email="davy.dewinne@odisee.be" href="http://ikdoeict.be">
-      Davy De Winne
+  <author email="jeffrey.vandenbossche@gmail.com" href="http://ikdoeict.be">
+      Jeffrey Vandenbossche
     </author>
   <content src="index.html"/>
   <access origin="*"/>

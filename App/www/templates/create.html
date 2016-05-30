@@ -1,0 +1,26 @@
+<ion-view view-title="SubAccount aanmaken">
+    <ion-content scroll="false">
+        <form name="createform" novalidate>
+            <p ng-if="loginError" id="loginError" class="card error">{{ loginError }}</p>
+            <div class="list list-inset">
+                <label class="item item-input">
+                    <span class="input-label ">Naam*</span>
+                    <input type="text" name="name" ng-model="data.name">
+                </label>
+                <!-- <button class="button button-positive" ng-click="showAction()">
+                    Add Photo
+                </button> -->
+            </div>
+            <button class="button button-large button-block icon-right button-calm button-login" ng-click="create(data)">SubAccount aanmaken</button>
+        </form>
+        <!-- <h1><i class="mdi-image-camera-alt small"></i><br />INSERT PHOTO</h1>
+        <div class="button-bar"> <a class="button" ng-click="takePicture();">Take photo</a> <a class="button" ng-click="selectPicture()">Choice photo</a> <a class="button" ng-click="viewPictures();">View loaded</a> </div>
+        <div ng-show="picData" class="item item-image">When pics loaded click to upload!<img id="myImage" class="item" ng-src="{{picData}}" ng-click="uploadPicture()" style="height:200px;" /></div>
+        <div class="home-sq" ng-show=photos>
+            <p><i class="icon ion-alert-circled" style="color:#F60"></i> Click to set photo like avatar, or lon click to delete!
+                <p>
+                    <div ng-repeat="photo in photos track by $index" ng-click="setPhoto($index, photo.name, profilo.user_id)" on-hold="delPhoto($index, photo.name)" style="background-image:url({{photo.file}});background-size:120% auto"> </div>
+        </div>
+        </div> -->
+    </ion-content>
+</ion-view>

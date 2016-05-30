@@ -1,4 +1,7 @@
 var app = angular.module('GeoKidApp', ['ionic','ngCordova','GeoKidApp.services', 'GeoKidApp.controllers', 'GeoKidApp.filters']);
+var baseUri = 'https://api.jeffreyvdb.be';
+// var baseUri = 'http://localhost:8000';
+
 
 // === Basic Setup
 app.run(
@@ -35,19 +38,38 @@ app.config(
                 controller: 'OverviewCtrl'
             })
 
-            .state('detail', {
+            .state('detailsub', {
                 url: '/detail/:userId',
                 templateUrl: 'templates/detail.html',
-                controller: 'DetailCtrl'
+                controller: 'DetailSubaccCtrl'
             })
 
-            .state('new', {
-                'url': '/new',
-                'templateUrl': 'templates/new.html',
-                'controller': 'NewCtrl'
-            });
+            .state('createsub', {
+              url: '/subaccounts/create',
+              templateUrl: 'templates/create.html',
+              controller: 'CreateSubCtrl'
+            })
+
+            .state('editsub', {
+              url: '/account/:userId/edit',
+              templateUrl: 'templates/create.html',
+              controller: 'EditsubCtrl'
+            })
+
+            .state('deletesub', {
+              url: '/account/:userId/delete',
+              controller: 'DeletesubCtrl'
+            })
+
+            .state('subaccounts', {
+                'url': '/subaccounts',
+                'templateUrl': 'templates/subacc.html',
+                'controller': 'SubAccCtrl'
+            })
+            ;
 
         // if none of the above states are matched, use this as the fallback
+        // $urlRouterProvider.otherwise('/subaccounts/create');
         $urlRouterProvider.otherwise('/login');
     }
 );

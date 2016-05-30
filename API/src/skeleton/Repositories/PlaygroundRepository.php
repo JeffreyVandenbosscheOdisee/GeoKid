@@ -65,4 +65,6 @@ class PlaygroundRepository extends BaseRepository
 		$tasks = $this->db->fetchAll('SELECT * FROM tasks WHERE tag IN('. $comma_separated .') or tag is NULL ORDER BY rand() LIMIT 5');
 		return $tasks;
 	}
+
+	
 }

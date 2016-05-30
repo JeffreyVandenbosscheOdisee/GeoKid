@@ -1,4 +1,6 @@
 var baseUri = 'https://api.jeffreyvdb.be';
+// var baseUri = 'http://localhost:8000';
+
 var headers = {
     'Accept': 'application/json;'
 };

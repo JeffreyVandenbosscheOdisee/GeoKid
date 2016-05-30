@@ -35,6 +35,11 @@ class PlaygroundController implements ControllerProviderInterface {
 			->assert('id', '\d+');
 
 		$controllers
+			->match('/visitedplaygrounds', array($this, 'visitedplaygrounds'))
+			->method('GET|POST')
+			->assert('id', '\d+');
+
+		$controllers
 			->match('/{id}/favorite', array($this, 'favorite'))
 			->method('GET|POST')
 			->assert('id', '\d+');
@@ -73,6 +78,15 @@ class PlaygroundController implements ControllerProviderInterface {
 		$data['MasterAccounts_Id'] = $masteraccId;
 
 		$playground = $app['db.Favorite_Parks_MasterAccount']->insert($data);
+		return new JsonResponse($playground);
+	}
+
+	public function visitedplaygrounds(Application $app, Request $request) 
+	{
+		$masteraccId = $request->get('masteraccId');
+
+
+		$playground = $app['db.Favorite_Parks_MasterAccount']->findallVisitedPlayground($masteraccId);
 		return new JsonResponse($playground);
 	}
 

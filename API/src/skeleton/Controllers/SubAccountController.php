@@ -46,6 +46,10 @@ class SubAccountController implements ControllerProviderInterface {
 			->assert('masteraccId','\d+')
 			->assert('id','\d+');
 
+		$controllers
+			->get('/{id}/uploadpic', array($this, 'uploadpic'))
+			->assert('masteraccId','\d+')
+			->assert('id','\d+');
 
 		return $controllers;
 	}
@@ -56,7 +60,27 @@ class SubAccountController implements ControllerProviderInterface {
 		$user = $app['db.masteraccounts']->findMasteraccountOnId($masteraccId);
 		if($user != false){
 			$subaccounts = $app['db.subaccounts']->findAllSubAccounts($masteraccId);
-			return new JsonResponse($subaccounts);
+			$subaccounts2 = [];
+			foreach ($subaccounts as $subaccount) {
+				$photos= null;
+				$di = new \DirectoryIterator($app['photoSubaccount.base_path']);
+				foreach ($di as $file) {
+
+					if ($file->getExtension() == 'jpg') {
+						if($subaccount['Id'] == current(explode('-', $file->getFileName()))){
+							$photos = array(
+								'url' => $app['photoSubaccount.base_url'] . '/' . $file,
+								'title' => $file->getFileName()
+							);
+							
+						}
+					}
+				};
+				$subaccount['photo']= $photos;
+				array_push($subaccounts2, $subaccount);
+
+			}
+			return new JsonResponse($subaccounts2);
 		}
 		return new JsonResponse(null);
 		
@@ -73,8 +97,61 @@ class SubAccountController implements ControllerProviderInterface {
 			$data['Name']= $name;
 			$data['MasterAccounts_Id']= $masteraccId;
 			$subaccount = $app['db.subaccounts']->insert($data);
+			
+			// $file = $request -> files -> get('photo');
+
+			// // foreach($files as $x => $file) {
+			//     if ($file != null) {
+			// 		$SubAccountId = $subaccount;
+			//         $date = (new\ DateTime('now', new\ DateTimeZone('UTC'))) -> format('dmY_His');
+			//         $filename =$SubAccountId . '-' .substr($file->getClientOriginalName(), 0, (strlen($file->getClientOriginalName()) -4)). '-' . $date;
+
+
+			//         $file -> move($app['photoSubaccount.base_path'], $filename.
+			//             '.jpg');
+			//     }
+			// // }
 			return new JsonResponse($subaccount);
+
 		}
+		return new JsonResponse(null);
+		
+	}
+
+
+	public function uploadpic(Request $request, Application $app) 
+	{
+		$masteraccId = $request->get('masteraccId');
+		$subaccId = $request->get('id');
+
+		$location = $_POST['directory'];
+		$uploadfile = $_POST['fileName'];
+		$uploadfilename = $_FILES['file']['tmp_name'];
+ 		var_dump($location);
+ 		var_dump($uploadfile);
+ 		var_dump($uploadfilename);
+ 		exit();
+
+		if(move_uploaded_file($uploadfilename, $location.'/'.$uploadfile)){
+        		echo 'File successfully uploaded!';
+		} else {
+        		echo 'Upload error!';
+		}
+			
+			$file = $request -> files -> get('photo');
+
+			// foreach($files as $x => $file) {
+			    if ($file != null) {
+					$SubAccountId = $subaccount;
+			        $date = (new\ DateTime('now', new\ DateTimeZone('UTC'))) -> format('dmY_His');
+			        $filename =$SubAccountId . '-' .substr($file->getClientOriginalName(), 0, (strlen($file->getClientOriginalName()) -4)). '-' . $date;
+
+
+			        $file -> move($app['photoSubaccount.base_path'], $filename.
+			            '.jpg');
+			    }
+			// }
+
 		return new JsonResponse(null);
 		
 	}
@@ -86,8 +163,25 @@ class SubAccountController implements ControllerProviderInterface {
 
 		$subaccount = $app['db.subaccounts']->findSubAccount($masteraccId, $subaccId);
 		if($subaccount != false){
+			$photos = null;
+			$di = new \DirectoryIterator($app['photoSubaccount.base_path']);
+			foreach ($di as $file) {
+
+				if ($file->getExtension() == 'jpg') {
+					if($subaccId == current(explode('-', $file->getFileName()))){		
+						$photos = array(
+							'url' => $app['photoSubaccount.base_url'] . '/' . $file,
+							'title' => $file->getFileName()
+						);
+						
+					}
+				}
+			};
+			$subaccount['photo']= $photos;
+			
 			return new JsonResponse($subaccount);
 		}
+
 		return new JsonResponse(null);
 		
 	}

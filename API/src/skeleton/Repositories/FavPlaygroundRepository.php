@@ -18,4 +18,10 @@ class FavPlaygroundRepository extends BaseRepository
 		$playground = $this->db->fetchAssoc('SELECT ' . $this->getTableName() .'.* FROM '. $this->getTableName() . ' WHERE Playgrounds_Id = ? AND 	MasterAccounts_Id=?', array($id, $masteraccId));
 		return $playground;
 	}
+
+	public function findallVisitedPlayground($masteraccId){
+		//SELECT playgrounds.Name FROM `favorite_parks_masteraccount` JOIN playgrounds ON playgrounds.Id = favorite_parks_masteraccount.Playgrounds_Id  WHERE MasterAccounts_Id=6
+		$playground = $this->db->fetchAll('SELECT playgrounds.Name FROM '. $this->getTableName() . ' JOIN playgrounds ON playgrounds.Id = favorite_parks_masteraccount.Playgrounds_Id WHERE MasterAccounts_Id = ? ', array($masteraccId));
+		return $playground;
+	}
 }
