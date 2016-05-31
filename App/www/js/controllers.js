@@ -58,7 +58,7 @@ mod.controller('MapOverviewCtrl', function($scope, ApiService, $cordovaGeolocati
                 title: info.Name,
                 icon: image
             });
-        
+
 
             google.maps.event.addListener(marker, 'click', function() {
                 var currentMarker = Map.currentMarker || false;
@@ -90,59 +90,76 @@ mod.controller('NavCtrl', function($scope, ApiService, $cordovaGeolocation) {
 
     var latitude = window.localStorage['latitude'];
     var longitude = window.localStorage['longitude'];
+    var options = { timeout: 10000, enableHighAccuracy: true };
+
+
 
 
     $scope.initialise = function() {
 
-        var myLatlng = new google.maps.LatLng(37.3000, -120.4833);
-        var mapOptions = {
-            center: myLatlng,
-            zoom: 16,
-            disableDefaultUI: true,
-            mapTypeId: google.maps.MapTypeId.ROADMAP,
-            styles: [{ "featureType": "water", "elementType": "all", "stylers": [{ "hue": "#7fc8ed" }, { "saturation": 55 }, { "lightness": -6 }, { "visibility": "on" }] }, { "featureType": "water", "elementType": "labels", "stylers": [{ "hue": "#7fc8ed" }, { "saturation": 55 }, { "lightness": -6 }, { "visibility": "off" }] }, { "featureType": "poi.park", "elementType": "geometry", "stylers": [{ "hue": "#83cead" }, { "saturation": 1 }, { "lightness": -15 }, { "visibility": "on" }] }, { "featureType": "landscape", "elementType": "geometry", "stylers": [{ "hue": "#f3f4f4" }, { "saturation": -84 }, { "lightness": 59 }, { "visibility": "on" }] }, { "featureType": "landscape", "elementType": "labels", "stylers": [{ "hue": "#ffffff" }, { "saturation": -100 }, { "lightness": 100 }, { "visibility": "off" }] }, { "featureType": "road", "elementType": "geometry", "stylers": [{ "hue": "#ffffff" }, { "saturation": -100 }, { "lightness": 100 }, { "visibility": "on" }] }, { "featureType": "road", "elementType": "labels", "stylers": [{ "hue": "#bbbbbb" }, { "saturation": -100 }, { "lightness": 26 }, { "visibility": "on" }] }, { "featureType": "road.arterial", "elementType": "geometry", "stylers": [{ "hue": "#ffcc00" }, { "saturation": 100 }, { "lightness": -35 }, { "visibility": "simplified" }] }, { "featureType": "road.highway", "elementType": "geometry", "stylers": [{ "hue": "#ffcc00" }, { "saturation": 100 }, { "lightness": -22 }, { "visibility": "on" }] }, { "featureType": "poi.school", "elementType": "all", "stylers": [{ "hue": "#d7e4e4" }, { "saturation": -60 }, { "lightness": 23 }, { "visibility": "on" }] }]
-        };
-        var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
         // Geo Location /
-        navigator.geolocation.getCurrentPosition(function(pos) {
-            map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+        $cordovaGeolocation.getCurrentPosition(options).then(function(position) {
 
-            var image = {
-                url: 'images/markergroup.png',
-                size: new google.maps.Size(30, 40)
+            var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                    console.log(position);
 
+            var mapOptions = {
+                center: latLng,
+                zoom: 15,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
             };
-            var myLocation = new google.maps.Marker({
-                position: new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude),
-                map: map,
-                animation: google.maps.Animation.DROP,
-                title: "My Location",
-                icon: image
-            });
 
+            $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
+            var watchOptions = {
+                timeout: 1000,
+                enableHighAccuracy: true // may cause errors if true
+            };
+
+            var watch = $cordovaGeolocation.watchPosition(watchOptions);
+            watch.then(null, function(err) {
+                    console.log("error watcher werkt niet");
+                },
+                function(position) {
+                    //update larker
+                    var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                    console.log(position);
+                    google.maps.event.addListenerOnce($scope.map, 'idle', function() {
+
+                        var marker = new google.maps.Marker({
+                            map: $scope.map,
+                            animation: google.maps.Animation.DROP,
+                            position: latLng
+                        });
+
+                    });
+                });
+
+
+        }, function(error) {
+            console.log("Could not get location");
         });
-        $scope.map = map;
-        // Additional Markers //
-        $scope.markers = [];
-        var infoWindow = new google.maps.InfoWindow();
-        var createMarker = function(longitude, latitude) {
-            var image = {
-                url: 'images/pin.png',
-                size: new google.maps.Size(32, 40)
 
-            };
-            var marker = new google.maps.Marker({
-                position: new google.maps.LatLng(latitude, longitude),
-                map: $scope.map,
-                // animation: google.maps.Animation.DROP,
-                
-                icon: image
-            });
-        
+        // $scope.markers = [];
+        // var createMarker = function(longitude, latitude) {
+        //     var image = {
+        //         url: 'images/pin.png',
+        //         size: new google.maps.Size(32, 40)
 
-            $scope.markers.push(marker);
-        }
-        createMarker(longitude, latitude);
+        //     };
+        //     google.maps.event.addListenerOnce($scope.map, 'idle', function() {
+        //         var marker = new google.maps.Marker({
+        //             position: new google.maps.LatLng(latitude, longitude),
+        //             map: $scope.map,
+        //             // animation: google.maps.Animation.DROP,
+
+        //             icon: image
+        //         });
+
+        //     });
+        //     $scope.markers.push(marker);
+        // }
+        // createMarker(longitude, latitude);
     };
 
     google.maps.event.addDomListener(document.getElementById("map"), 'load', $scope.initialise());
@@ -210,13 +227,12 @@ mod.controller('LoginCtrl', function($scope, ApiService, $state, $window) {
                 ApiService.post('/auth/login/', { email: data.email, password: data.password }).then(function(result) {
                     // We've got a result
                     console.log(result.succesLogin);
-                    if (result.succesLogin){
+                    if (result.succesLogin) {
                         window.localStorage['masteraccId'] = result.MasteraccountId;
                         $window.location.reload();
 
                         $state.go('subaccounts');
-                    }
-                    else {
+                    } else {
                         showError('Ongeldige inloggegevens!');
                     }
                 });
