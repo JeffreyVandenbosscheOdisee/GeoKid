@@ -32,10 +32,10 @@ app.config(
               templateUrl: 'templates/register.html',
               controller: 'RegisterCtrl'
             })
-            .state('overview', {
-                url: '/overview',
-                templateUrl: 'templates/overview.html',
-                controller: 'OverviewCtrl'
+            .state('mapoverview', {
+                url: '/mapoverview',
+                templateUrl: 'templates/mapoverview.html',
+                controller: 'MapOverviewCtrl'
             })
 
             .state('detailsub', {
