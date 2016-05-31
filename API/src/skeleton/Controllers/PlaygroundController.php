@@ -26,6 +26,10 @@ class PlaygroundController implements ControllerProviderInterface {
 			->get('/', array($this, 'index'));
 
 		$controllers
+			->get('/{id}/tasks', array($this, 'detailtasks'))
+			->assert('id', '\d+');
+
+		$controllers
 			->get('/{id}/', array($this, 'detail'))
 			->assert('id', '\d+');
 
@@ -62,6 +66,13 @@ class PlaygroundController implements ControllerProviderInterface {
 		$playgrounds = $app['db.playgrounds']->findAllPlaygrounds();
 		// var_dump($playgrounds);
 		return new JsonResponse($playgrounds);
+	}
+
+	public function detailtasks(Application $app, $id) 
+	{
+		$playground = $app['db.playgrounds']->findSpecficPlaygroundWithTasks($id);
+		// var_dump($playgrounds);
+		return new JsonResponse($playground);
 	}
 
 	public function detail(Application $app, $id) 

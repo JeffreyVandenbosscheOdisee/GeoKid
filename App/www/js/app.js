@@ -38,6 +38,12 @@ app.config(
                 controller: 'MapOverviewCtrl'
             })
 
+            .state('navigation', {
+                url: '/navigation',
+                templateUrl: 'templates/navigate.html',
+                controller: 'NavCtrl'
+            })
+
             .state('detailsub', {
                 url: '/detail/:userId',
                 templateUrl: 'templates/detail.html',
@@ -65,8 +71,7 @@ app.config(
                 'url': '/subaccounts',
                 'templateUrl': 'templates/subacc.html',
                 'controller': 'SubAccCtrl'
-            })
-            ;
+            });
 
         // if none of the above states are matched, use this as the fallback
         // $urlRouterProvider.otherwise('/subaccounts/create');

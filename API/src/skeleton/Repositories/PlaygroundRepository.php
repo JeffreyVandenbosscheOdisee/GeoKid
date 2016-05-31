@@ -28,12 +28,19 @@ class PlaygroundRepository extends BaseRepository
 	 * @param  [type] $id [description]
 	 * @return [type]     [description]
 	 */
-	public function findSpecficPlayground($id){
+	public function findSpecficPlaygroundWithTasks($id){
 		$playground = $this->db->fetchAssoc('SELECT ' . $this->getTableName() .'.* FROM '. $this->getTableName() . ' WHERE '. $this->getTableName() .'.id = ?', array($id));
 		$functions =  $this->findFunctionsSpecificPlayground($id);
 		$tasks = $this->findTasksForPlayground($functions);
 		$playground['functions'] = $functions;
 		$playground['tasks'] = $tasks;
+		return $playground;
+	}
+
+	public function findSpecficPlayground($id){
+		$playground = $this->db->fetchAssoc('SELECT ' . $this->getTableName() .'.* FROM '. $this->getTableName() . ' WHERE '. $this->getTableName() .'.id = ?', array($id));
+		$functions =  $this->findFunctionsSpecificPlayground($id);
+		$playground['functions'] = $functions;
 		return $playground;
 	}
 
