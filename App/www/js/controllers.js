@@ -44,7 +44,8 @@ mod.controller('DetailSubaccCtrl', function($scope, ApiService, $stateParams) {
     });
 });
 
-mod.controller('SubAccCtrl', function($scope, ApiService, $stateParams) {
+mod.controller('SubAccCtrl', function($scope, ApiService, $stateParams, $window) {
+
     masteraccId = 3;
     $scope.ApiUrl = baseUri;
     ApiService.get('/account/' + masteraccId + '/subaccounts').then(function(result) {
@@ -130,21 +131,21 @@ mod.controller('RegisterCtrl', function($scope, ApiService, $state) {
     }
 });
 
-mod.controller('DeletesubCtrl', function($scope, ApiService, $state, $stateParams) {
+mod.controller('DeletesubCtrl', function($window, $scope, ApiService, $state, $stateParams) {
     masteraccId = 3;
     subaccId = $stateParams.userId;
     ApiService.get('/account/' + masteraccId + '/subaccounts/' + $stateParams.userId + '/delete').then(function(result) {
         // We've got a result
         console.log(result);
-       
 
+            $window.location.reload();
         $state.go('subaccounts');
     });
 
 });
 
 
-mod.controller('EditsubCtrl', function($scope, ApiService, $state, $cordovaCapture, $cordovaImagePicker, $ionicActionSheet, Photo, $stateParams) {
+mod.controller('EditsubCtrl', function($window, $scope, ApiService, $state, $cordovaCapture, $cordovaImagePicker, $ionicActionSheet, Photo, $stateParams) {
     $scope.loginError = '';
     masteraccId = 3;
     subaccId = $stateParams.userId;
@@ -169,6 +170,8 @@ mod.controller('EditsubCtrl', function($scope, ApiService, $state, $cordovaCaptu
                     $scope.send();
 
                 }
+                // $state.go($state.current, {}, {reload: true});
+                $window.location.reload();
 
                 $state.go('subaccounts');
             });
@@ -180,7 +183,7 @@ mod.controller('EditsubCtrl', function($scope, ApiService, $state, $cordovaCaptu
     }
 
 })
-mod.controller('CreateSubCtrl', function($scope, ApiService, $state, $cordovaCapture, $cordovaImagePicker, $ionicActionSheet, Photo) {
+mod.controller('CreateSubCtrl', function($window, $scope, ApiService, $state, $cordovaCapture, $cordovaImagePicker, $ionicActionSheet, Photo) {
     $scope.loginError = '';
     masteraccId = 3;
     subaccId = null;
@@ -207,7 +210,7 @@ mod.controller('CreateSubCtrl', function($scope, ApiService, $state, $cordovaCap
                     $scope.send();
 
                 }
-
+                $window.location.reload();
                 $state.go('subaccounts');
             });
 
