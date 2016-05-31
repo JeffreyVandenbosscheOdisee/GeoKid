@@ -64,6 +64,7 @@ mod.controller('MapOverviewCtrl', function($scope, ApiService, $cordovaGeolocati
     });
     $scope.initialise = function() {
 
+        $scope.playgroundactive = false;
 
         var myLatlng = new google.maps.LatLng(37.3000, -120.4833);
         var mapOptions = {
@@ -71,58 +72,67 @@ mod.controller('MapOverviewCtrl', function($scope, ApiService, $cordovaGeolocati
             zoom: 14,
             disableDefaultUI: true,
             mapTypeId: google.maps.MapTypeId.ROADMAP,
-            styles: [{"featureType":"water","elementType":"all","stylers":[{"hue":"#7fc8ed"},{"saturation":55},{"lightness":-6},{"visibility":"on"}]},{"featureType":"water","elementType":"labels","stylers":[{"hue":"#7fc8ed"},{"saturation":55},{"lightness":-6},{"visibility":"off"}]},{"featureType":"poi.park","elementType":"geometry","stylers":[{"hue":"#83cead"},{"saturation":1},{"lightness":-15},{"visibility":"on"}]},{"featureType":"landscape","elementType":"geometry","stylers":[{"hue":"#f3f4f4"},{"saturation":-84},{"lightness":59},{"visibility":"on"}]},{"featureType":"landscape","elementType":"labels","stylers":[{"hue":"#ffffff"},{"saturation":-100},{"lightness":100},{"visibility":"off"}]},{"featureType":"road","elementType":"geometry","stylers":[{"hue":"#ffffff"},{"saturation":-100},{"lightness":100},{"visibility":"on"}]},{"featureType":"road","elementType":"labels","stylers":[{"hue":"#bbbbbb"},{"saturation":-100},{"lightness":26},{"visibility":"on"}]},{"featureType":"road.arterial","elementType":"geometry","stylers":[{"hue":"#ffcc00"},{"saturation":100},{"lightness":-35},{"visibility":"simplified"}]},{"featureType":"road.highway","elementType":"geometry","stylers":[{"hue":"#ffcc00"},{"saturation":100},{"lightness":-22},{"visibility":"on"}]},{"featureType":"poi.school","elementType":"all","stylers":[{"hue":"#d7e4e4"},{"saturation":-60},{"lightness":23},{"visibility":"on"}]}]
-};
-var map = new google.maps.Map(document.getElementById("map"), mapOptions);
-// Geo Location /
-navigator.geolocation.getCurrentPosition(function(pos) {
-    map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+            styles: [{ "featureType": "water", "elementType": "all", "stylers": [{ "hue": "#7fc8ed" }, { "saturation": 55 }, { "lightness": -6 }, { "visibility": "on" }] }, { "featureType": "water", "elementType": "labels", "stylers": [{ "hue": "#7fc8ed" }, { "saturation": 55 }, { "lightness": -6 }, { "visibility": "off" }] }, { "featureType": "poi.park", "elementType": "geometry", "stylers": [{ "hue": "#83cead" }, { "saturation": 1 }, { "lightness": -15 }, { "visibility": "on" }] }, { "featureType": "landscape", "elementType": "geometry", "stylers": [{ "hue": "#f3f4f4" }, { "saturation": -84 }, { "lightness": 59 }, { "visibility": "on" }] }, { "featureType": "landscape", "elementType": "labels", "stylers": [{ "hue": "#ffffff" }, { "saturation": -100 }, { "lightness": 100 }, { "visibility": "off" }] }, { "featureType": "road", "elementType": "geometry", "stylers": [{ "hue": "#ffffff" }, { "saturation": -100 }, { "lightness": 100 }, { "visibility": "on" }] }, { "featureType": "road", "elementType": "labels", "stylers": [{ "hue": "#bbbbbb" }, { "saturation": -100 }, { "lightness": 26 }, { "visibility": "on" }] }, { "featureType": "road.arterial", "elementType": "geometry", "stylers": [{ "hue": "#ffcc00" }, { "saturation": 100 }, { "lightness": -35 }, { "visibility": "simplified" }] }, { "featureType": "road.highway", "elementType": "geometry", "stylers": [{ "hue": "#ffcc00" }, { "saturation": 100 }, { "lightness": -22 }, { "visibility": "on" }] }, { "featureType": "poi.school", "elementType": "all", "stylers": [{ "hue": "#d7e4e4" }, { "saturation": -60 }, { "lightness": 23 }, { "visibility": "on" }] }]
+        };
+        var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+        // Geo Location /
+        navigator.geolocation.getCurrentPosition(function(pos) {
+            map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
 
-    var image = {
-        url: 'images/markergroup.png',
-        size: new google.maps.Size(30, 40)
+            var image = {
+                url: 'images/markergroup.png',
+                size: new google.maps.Size(30, 40)
 
+            };
+            var myLocation = new google.maps.Marker({
+                position: new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude),
+                map: map,
+                animation: google.maps.Animation.DROP,
+                title: "My Location",
+                icon: image
+            });
+
+        });
+        $scope.map = map;
+        // Additional Markers //
+        $scope.markers = [];
+        var infoWindow = new google.maps.InfoWindow();
+        var createMarker = function(info) {
+            var image = {
+                url: 'images/pin.png',
+                size: new google.maps.Size(32, 40)
+
+            };
+            var marker = new google.maps.Marker({
+                position: new google.maps.LatLng(info.Latitude, info.Longitude),
+                map: $scope.map,
+                // animation: google.maps.Animation.DROP,
+                title: info.Name,
+                icon: image
+            });
+            marker.content = '<div class="infoWindowContent">' + info.Name + '</div>';
+
+            google.maps.event.addListener(marker, 'click', function() {
+                var currentMarker = Map.currentMarker || false;
+                ApiService.get('/playgrounds/' + info.Id).then(function(result) {
+                    $scope.playgroundInfo = result;
+                    $scope.playgroundactive = true;
+
+                    console.log(result);
+                });
+                if (currentMarker != false) {
+                    currentMarker.setIcon('images/pin.png');
+                }
+                marker.setIcon('images/pinactive.png');
+                // map.setCenter(marker.getPosition());
+                Map.currentMarker = marker;
+            });
+            $scope.markers.push(marker);
+        }
+        for (i = 0; i < $scope.apiResult.length; i++) {
+            createMarker($scope.apiResult[i]);
+        }
     };
-    var myLocation = new google.maps.Marker({
-        position: new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude),
-        map: map,
-        animation: google.maps.Animation.DROP,
-        title: "My Location",
-        icon: image
-    });
-
-}); $scope.map = map;
-// Additional Markers //
-$scope.markers = [];
-var infoWindow = new google.maps.InfoWindow();
-var createMarker = function(info) {
-    var image = {
-        url: 'images/pin.png',
-        size: new google.maps.Size(32, 40)
-
-    };
-    var marker = new google.maps.Marker({
-        position: new google.maps.LatLng(info.Latitude, info.Longitude),
-        map: $scope.map,
-        // animation: google.maps.Animation.DROP,
-        title: info.Name,
-        icon: image
-    });
-    marker.content = '<div class="infoWindowContent">' + info.Name + '</div>';
-    // google.maps.event.addListener(marker, 'click', function() {
-    //     infoWindow.setContent('<h2>' + marker.title + '</h2>' + marker.content);
-    //     infoWindow.open($scope.map, marker);
-    // });
-    google.maps.event.addListener(marker, 'click', function() {
-        marker.setIcon('images/markergroup.png');                               
-        map.setCenter(marker.getPosition());
-    });
-    $scope.markers.push(marker);
-}
-for (i = 0; i < $scope.apiResult.length; i++) {
-    createMarker($scope.apiResult[i]);
-}
-};
 
 });
 

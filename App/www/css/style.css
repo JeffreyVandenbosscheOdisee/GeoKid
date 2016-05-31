@@ -82,3 +82,24 @@
     width: 100%;
     height: 100%;
 }
+
+.divmap{
+  width: 70%;
+  height: 100%;
+  float: left;
+}
+
+.divmapfull{
+  width: 100%;
+  height: 100%;
+  float: left;
+}
+
+.infoplayground{
+  width: 30%;
+  float:left;
+}
+
+.hidden{
+  display: none;
+}

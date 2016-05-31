@@ -1,7 +1,20 @@
 <ion-view view-title="User Overview" cache-view="false">
     <ion-content>
-
-         <div id="map" data-tap-disabled="true"></div>
-
+        <div ng-show="playgroundactive" class="infoplayground">
+            <div>
+                <h2>{{ playgroundInfo.Name }}</h2>
+                <div>
+                    <h3>Functies: {{ playgroundInfo.functies }}</h3>
+                    <ion-list>
+                        <ion-item ng-repeat="functions in playgroundInfo.functions">
+                            <p>{{ functions }}</p>
+                        </ion-item>
+                    </ion-list>
+                </div>
+            </div>
+        </div>
+        <div ng-class="{divmapfull: !playgroundactive, divmap: playgroundactive}">
+            <div id="map" data-tap-disabled="true"></div>
+        </div>
     </ion-content>
 </ion-view>
