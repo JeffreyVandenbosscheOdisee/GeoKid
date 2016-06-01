@@ -1,9 +1,14 @@
 var mod = angular.module('GeoKidApp.controllers', []);
 var ActivePlayers = [];
 
-// OverviewController
-mod.controller('MapOverviewCtrl', function($scope, ApiService, $cordovaGeolocation) {
 
+
+// OverviewController
+mod.controller('MapOverviewCtrl', function($scope, $rootScope, ApiService, CheckInternet, $cordovaGeolocation, $window, $state, $ionicPlatform) {
+    // $ionicPlatform.ready(function() {
+    CheckInternet.getConnection($rootScope);
+
+    // });
     ApiService.get('/playgrounds/').then(function(result) {
 
         $scope.apiResult = result;
@@ -14,7 +19,8 @@ mod.controller('MapOverviewCtrl', function($scope, ApiService, $cordovaGeolocati
 
         $scope.playgroundactive = false;
 
-        var myLatlng = new google.maps.LatLng(37.3000, -120.4833);
+        var myLatlng = new google.maps.LatLng(51.05460, 3.72178);
+
         var mapOptions = {
             center: myLatlng,
             zoom: 14,
@@ -65,8 +71,9 @@ mod.controller('MapOverviewCtrl', function($scope, ApiService, $cordovaGeolocati
                 ApiService.get('/playgrounds/' + info.Id).then(function(result) {
                     $scope.playgroundInfo = result;
                     $scope.playgroundactive = true;
-                    window.localStorage['longitude'] = result.Longitude;
-                    window.localStorage['latitude'] = result.Latitude;
+                    console.log(result);
+                    window.localStorage['playground'] = JSON.stringify(result);
+
 
                     console.log(result.Longitude);
                 });
@@ -84,91 +91,136 @@ mod.controller('MapOverviewCtrl', function($scope, ApiService, $cordovaGeolocati
         }
     };
 
+    $scope.gotoNav = function() {
+        $state.go('navigation');
+
+        $window.location.reload();
+
+    }
+
 });
 
-mod.controller('NavCtrl', function($scope, ApiService, $cordovaGeolocation) {
-
-    var latitude = window.localStorage['latitude'];
-    var longitude = window.localStorage['longitude'];
-    var options = { timeout: 10000, enableHighAccuracy: true };
-
-
-
+mod.controller('NavCtrl', function($scope, $rootScope, CheckInternet, ApiService, $state, $window) {
+    CheckInternet.getConnection($rootScope);
+    var playground = JSON.parse(window.localStorage['playground']);
+    console.log(playground);
+    var id, target, options;
 
     $scope.initialise = function() {
 
+        var myLatlng = new google.maps.LatLng(51.05460, 3.72178);
 
-        // Geo Location /
-        $cordovaGeolocation.getCurrentPosition(options).then(function(position) {
+        var mapOptions = {
+            center: myLatlng,
+            zoom: 17,
+            disableDefaultUI: true,
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            styles: [{ "featureType": "water", "elementType": "all", "stylers": [{ "hue": "#7fc8ed" }, { "saturation": 55 }, { "lightness": -6 }, { "visibility": "on" }] }, { "featureType": "water", "elementType": "labels", "stylers": [{ "hue": "#7fc8ed" }, { "saturation": 55 }, { "lightness": -6 }, { "visibility": "off" }] }, { "featureType": "poi.park", "elementType": "geometry", "stylers": [{ "hue": "#83cead" }, { "saturation": 1 }, { "lightness": -15 }, { "visibility": "on" }] }, { "featureType": "landscape", "elementType": "geometry", "stylers": [{ "hue": "#f3f4f4" }, { "saturation": -84 }, { "lightness": 59 }, { "visibility": "on" }] }, { "featureType": "landscape", "elementType": "labels", "stylers": [{ "hue": "#ffffff" }, { "saturation": -100 }, { "lightness": 100 }, { "visibility": "off" }] }, { "featureType": "road", "elementType": "geometry", "stylers": [{ "hue": "#ffffff" }, { "saturation": -100 }, { "lightness": 100 }, { "visibility": "on" }] }, { "featureType": "road", "elementType": "labels", "stylers": [{ "hue": "#bbbbbb" }, { "saturation": -100 }, { "lightness": 26 }, { "visibility": "on" }] }, { "featureType": "road.arterial", "elementType": "geometry", "stylers": [{ "hue": "#ffcc00" }, { "saturation": 100 }, { "lightness": -35 }, { "visibility": "simplified" }] }, { "featureType": "road.highway", "elementType": "geometry", "stylers": [{ "hue": "#ffcc00" }, { "saturation": 100 }, { "lightness": -22 }, { "visibility": "on" }] }, { "featureType": "poi.school", "elementType": "all", "stylers": [{ "hue": "#d7e4e4" }, { "saturation": -60 }, { "lightness": 23 }, { "visibility": "on" }] }]
+        };
 
-            var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-                    console.log(position);
+        var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+        google.maps.event.addListenerOnce(map, 'idle', function() {
+            $scope.map = map;
 
-            var mapOptions = {
-                center: latLng,
-                zoom: 15,
-                mapTypeId: google.maps.MapTypeId.ROADMAP
-            };
-
-            $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
-            var watchOptions = {
-                timeout: 1000,
-                enableHighAccuracy: true // may cause errors if true
-            };
-
-            var watch = $cordovaGeolocation.watchPosition(watchOptions);
-            watch.then(null, function(err) {
-                    console.log("error watcher werkt niet");
-                },
-                function(position) {
-                    //update larker
-                    var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-                    console.log(position);
-                    google.maps.event.addListenerOnce($scope.map, 'idle', function() {
-
-                        var marker = new google.maps.Marker({
-                            map: $scope.map,
-                            animation: google.maps.Animation.DROP,
-                            position: latLng
-                        });
-
-                    });
-                });
-
-
-        }, function(error) {
-            console.log("Could not get location");
+            loadMarkers();
+            // enableMap();
         });
 
-        // $scope.markers = [];
-        // var createMarker = function(longitude, latitude) {
-        //     var image = {
-        //         url: 'images/pin.png',
-        //         size: new google.maps.Size(32, 40)
 
-        //     };
-        //     google.maps.event.addListenerOnce($scope.map, 'idle', function() {
-        //         var marker = new google.maps.Marker({
-        //             position: new google.maps.LatLng(latitude, longitude),
-        //             map: $scope.map,
-        //             // animation: google.maps.Animation.DROP,
+    };
+    var loadMarkers = function() {
 
-        //             icon: image
-        //         });
+        navigator.geolocation.getCurrentPosition(function(pos) {
+            $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
 
-        //     });
-        //     $scope.markers.push(marker);
-        // }
-        // createMarker(longitude, latitude);
+            var markerpos = null;
+            var image = {
+                url: 'images/markergroup.png',
+                size: new google.maps.Size(30, 40)
+
+            };
+            var markerpos = new google.maps.Marker({
+                position: new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude),
+                map: $scope.map,
+                // animation: google.maps.Animation.DROP,
+                title: "My Location",
+                icon: image
+            });
+
+
+
+            function success(pos) {
+
+                var crd = pos.coords;
+                console.log(crd);
+                console.log(playground.Latitude, playground.Longitude);
+                var image = {
+                    url: 'images/markergroup.png',
+                    size: new google.maps.Size(30, 40)
+
+                };
+
+                if (markerpos == null) {
+                    $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+                    markerpos = new google.maps.Marker({
+                        position: new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude),
+                        icon: image,
+                        map: $scope.map,
+                        title: 'Click to zoom'
+                    });
+                } else {
+                    markerpos.setPosition(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+                    $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+                }
+
+                if (parseFloat(playground.Latitude) === crd.latitude && parseFloat(playground.Longitude) === crd.longitude) {
+                    console.log('Congratulations, you reached the target');
+                    navigator.geolocation.clearWatch(id);
+                    console
+                    $state.go('detailplayground', { playgroundId: playground.Id });
+                }
+            }
+
+            function error(err) {
+                console.warn('ERROR(' + err.code + '): ' + err.message);
+            }
+
+
+            options = {
+                enableHighAccuracy: false,
+                timeout: 5000,
+                maximumAge: 0
+            };
+            id = navigator.geolocation.watchPosition(success, error, options);
+        });
+        var image = {
+            url: 'images/pin.png',
+            size: new google.maps.Size(32, 40)
+
+        };
+        var marker = new google.maps.Marker({
+            position: new google.maps.LatLng(playground.Latitude, playground.Longitude),
+            map: $scope.map,
+            // animation: google.maps.Animation.DROP,
+            title: "Destination",
+            icon: image
+        });
     };
 
-    google.maps.event.addDomListener(document.getElementById("map"), 'load', $scope.initialise());
+    $scope.gotoMap = function() {
+        navigator.geolocation.clearWatch(id);
+        $state.go('mapoverview');
 
+        $window.location.reload();
+
+    }
+    google.maps.event.addDomListener(document.getElementById("map"), 'load', $scope.initialise());
 
 });
 
 // DetailController
-mod.controller('DetailSubaccCtrl', function($scope, ApiService, $stateParams) {
+mod.controller('DetailSubaccCtrl', function($scope, $rootScope, CheckInternet, ApiService, $stateParams) {
+    CheckInternet.getConnection($rootScope);
     console.log($stateParams.userId);
     masteraccId = window.localStorage['masteraccId'];
     ApiService.get('/account/' + masteraccId + '/subaccounts/' + $stateParams.userId).then(function(result) {
@@ -180,8 +232,61 @@ mod.controller('DetailSubaccCtrl', function($scope, ApiService, $stateParams) {
     });
 });
 
-mod.controller('SubAccCtrl', function($scope, ApiService, $stateParams, $window) {
+mod.controller('DetailPlayCtrl', function($scope, $rootScope, CheckInternet, ApiService, $stateParams, $ionicPopup) {
+    var internet = CheckInternet.getConnection($rootScope);
+    console.log($stateParams);
+    var checkeditems = 0;
+    var ActivePlayers = JSON.parse(window.localStorage['ActivePlayers']);
+    console.log(ActivePlayers);
+    $scope.ApiUrl = baseUri;
 
+    var getPlayground = function() {
+        masteraccId = window.localStorage['masteraccId'];
+        ApiService.get('/playgrounds/' + $stateParams.playgroundId + '/tasks').then(function(result) {
+            console.log(result);
+            $scope.playground = result;
+            ApiService.post('/playgrounds/' + $stateParams.playgroundId + '/visit', { masteraccId: masteraccId }).then(function(result) {
+                console.log(result);
+            });
+            var alertPopup = $ionicPopup.alert({
+                title: 'Don\'t eat that!',
+                template: 'It might taste good'
+            });
+
+            alertPopup.then(function(res) {
+                console.log('Thank you for not eating my delicious ice cream cone');
+            });
+        });
+    }
+
+    $scope.clickItem = function(task) {
+        if (task.checked) {
+
+            ApiService.post('/task/complete', { playgroundId: $stateParams.playgroundId, taskId: task.Id, subaccountsId: ActivePlayers }).then(function(result) {
+                console.log(result);
+                checkeditems++;
+                console.log(checkeditems);
+                if (checkeditems == 5) {
+
+                }
+            });
+        } else {
+            ApiService.post('/task/uncomplete', { playgroundId: $stateParams.playgroundId, taskId: task.Id, subaccountsId: ActivePlayers }).then(function(result) {
+                console.log(result);
+                checkeditems--;
+                console.log(checkeditems);
+
+            });
+        }
+    }
+    if (internet)
+        getPlayground();
+
+});
+
+
+mod.controller('SubAccCtrl', function($scope, $rootScope, ApiService, CheckInternet, $stateParams, $window) {
+    CheckInternet.getConnection($rootScope);
     masteraccId = window.localStorage['masteraccId'];
     console.log(masteraccId);
     $scope.ApiUrl = baseUri;
@@ -199,14 +304,14 @@ mod.controller('SubAccCtrl', function($scope, ApiService, $stateParams, $window)
         }
         console.log("subaccountId", subaccId);
         console.log("ActivePlayers", ActivePlayers);
-
+        window.localStorage['ActivePlayers'] = JSON.stringify(ActivePlayers);
 
     }
 });
 
-mod.controller('LoginCtrl', function($scope, ApiService, $state, $window) {
-    $scope.WrongCred = false;
+mod.controller('LoginCtrl', function($scope, ApiService, CheckInternet, $state, $window, $rootScope) {
 
+    CheckInternet.getConnection($rootScope);
     $scope.loginError = '';
 
     function showError(text) {
@@ -243,8 +348,9 @@ mod.controller('LoginCtrl', function($scope, ApiService, $state, $window) {
     }
 });
 
-mod.controller('RegisterCtrl', function($scope, ApiService, $state) {
+mod.controller('RegisterCtrl', function($scope, ApiService, $state, $rootScope, CheckInternet) {
     $scope.loginError = '';
+    CheckInternet.getConnection($rootScope);
 
     function showError(text) {
         $scope.loginError = text;
@@ -284,7 +390,8 @@ mod.controller('RegisterCtrl', function($scope, ApiService, $state) {
     }
 });
 
-mod.controller('DeletesubCtrl', function($window, $scope, ApiService, $state, $stateParams) {
+mod.controller('DeletesubCtrl', function($rootScope, CheckInternet, $window, $scope, ApiService, $state, $stateParams) {
+    CheckInternet.getConnection($rootScope);
     masteraccId = window.localStorage['masteraccId'];
     subaccId = $stateParams.userId;
     ApiService.get('/account/' + masteraccId + '/subaccounts/' + $stateParams.userId + '/delete').then(function(result) {
@@ -298,7 +405,8 @@ mod.controller('DeletesubCtrl', function($window, $scope, ApiService, $state, $s
 });
 
 
-mod.controller('EditsubCtrl', function($window, $scope, ApiService, $state, $cordovaCapture, $cordovaImagePicker, $ionicActionSheet, Photo, $stateParams) {
+mod.controller('EditsubCtrl', function($window, $scope, $rootScope, CheckInternet, ApiService, $state, $cordovaCapture, $cordovaImagePicker, $ionicActionSheet, Photo, $stateParams) {
+    CheckInternet.getConnection($rootScope);
     $scope.loginError = '';
     masteraccId = window.localStorage['masteraccId'];
     subaccId = $stateParams.userId;
@@ -335,8 +443,9 @@ mod.controller('EditsubCtrl', function($window, $scope, ApiService, $state, $cor
 
     }
 
-})
-mod.controller('CreateSubCtrl', function($window, $scope, ApiService, $state, $cordovaCapture, $cordovaImagePicker, $ionicActionSheet, Photo) {
+});
+mod.controller('CreateSubCtrl', function($window, $scope, $rootScope, CheckInternet, ApiService, $state, $cordovaCapture, $cordovaImagePicker, $ionicActionSheet, Photo) {
+    CheckInternet.getConnection($rootScope);
     $scope.loginError = '';
     masteraccId = window.localStorage['masteraccId'];
     subaccId = null;
@@ -523,10 +632,10 @@ mod.controller('CreateSubCtrl', function($window, $scope, ApiService, $state, $c
         })
     };
 
-})
+});
 
 // factory
-.factory('Photo', function() {
+mod.factory('Photo', function() {
     return {
 
         convertImageToBase64: function(url, callback, output) {

@@ -13,4 +13,8 @@ class TaskRepository extends BaseRepository
 	public function getTableName() {
 		return 'completed_tasks';
 	}
+
+	public function findCompleteTask($taskId, $playgroundId, $subaccId) {
+		return $this->db->fetchAssoc('SELECT * FROM '. $this->getTableName() . ' WHERE Tasks_Id = ? AND Playgrounds_Id = ? AND SubAccounts_Id = ?', array($taskId, $playgroundId, $subaccId));
+	}
 }

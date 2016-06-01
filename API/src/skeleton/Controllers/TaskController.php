@@ -26,6 +26,10 @@ class TaskController implements ControllerProviderInterface {
 			->match('/complete', array($this, 'completedtask'))
 			->method('GET|POST');
 
+		$controllers
+			->match('/uncomplete', array($this, 'uncompletedtask'))
+			->method('GET|POST');
+
 		return $controllers;
 	}
 
@@ -45,6 +49,20 @@ class TaskController implements ControllerProviderInterface {
 		foreach ($subaccountIds as $value){
 			$data['SubAccounts_Id']= $value;
 			$done = $app['db.tasks']->insert($data);
+		}
+		return new JsonResponse();
+	}
+
+	public function uncompletedtask(Application $app, Request $request) 
+	{
+		$subaccountIds = $request->get('subaccountsId');
+		$playgroundId = $request->get('playgroundId');
+		$taskid = $request->get('taskId');
+
+
+		foreach ($subaccountIds as $value){
+			$task = $app['db.tasks']->findCompleteTask($taskid, $playgroundId, $value);
+			$data = $app['db.tasks']->delete( array('id' => $task['Id']));
 		}
 		return new JsonResponse();
 	}

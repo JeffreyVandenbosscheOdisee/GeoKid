@@ -1,4 +1,4 @@
-var app = angular.module('GeoKidApp', ['ionic','ngCordova','GeoKidApp.services', 'GeoKidApp.controllers', 'GeoKidApp.filters']);
+var app = angular.module('GeoKidApp', ['ionic','ngCordova','GeoKidApp.services', 'GeoKidApp.controllers', 'GeoKidApp.filters', 'GeoKidApp.factories']);
 var baseUri = 'https://api.jeffreyvdb.be';
 // var baseUri = 'http://localhost:8000';
 
@@ -43,6 +43,14 @@ app.config(
                 templateUrl: 'templates/navigate.html',
                 controller: 'NavCtrl'
             })
+
+            .state('detailplayground', {
+                url: '/detailplayground/:playgroundId',
+                templateUrl: 'templates/detailplayground.html',
+                params:{playgroundId: null},
+                controller: 'DetailPlayCtrl'
+            })
+
 
             .state('detailsub', {
                 url: '/detail/:userId',

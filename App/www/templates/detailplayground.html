@@ -1,0 +1,26 @@
+<ion-view view-title="detail playground" cache-view="false">
+    <ion-content>
+        <div>
+            <img class="testImage" src="{{ ApiUrl + playground.photo.url }}">
+        </div>
+        <div>
+            <h2>{{ playground.Name }}</h2>
+            <div>
+                <h3>Functies:</h3>
+                <ion-list>
+                    <ion-item ng-repeat="function in playground.functions"  ng-model="function.checked" ng-checked="function.checked">
+                        <p>{{ function }}</p>
+                    </<ion-item>
+                </ion-list>
+            </div>
+        </div>
+        <div>
+            <h2>Opdrachten</h2>
+            <ion-list>
+                <ion-checkbox ng-repeat="task in playground.tasks" ng-model="task.checked" ng-checked="task.checked" ng-click="clickItem(task); $event.stopPropagation();">
+                    <p>{{ task.Name }}</p>
+                </ion-checkbox>
+            </ion-list>
+        </div>
+    </ion-content>
+</ion-view>

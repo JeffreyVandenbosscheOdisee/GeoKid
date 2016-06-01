@@ -4,14 +4,14 @@
             <div>
                 <h2>{{ playgroundInfo.Name }}</h2>
                 <div>
-                    <h3>Functies: {{ playgroundInfo.functies }}</h3>
+                    <h3>Functies:</h3>
                     <ion-list>
                         <ion-item ng-repeat="functions in playgroundInfo.functions">
                             <p>{{ functions }}</p>
                         </ion-item>
                     </ion-list>
                 </div>
-                <a href="#/navigation" title="">Navigeer naar dit park!</a>
+                <a ng-click="gotoNav()" title="">Navigeer naar dit park!</a>
             </div>
         </div>
         <div ng-class="{divmapfull: !playgroundactive, divmap: playgroundactive}">

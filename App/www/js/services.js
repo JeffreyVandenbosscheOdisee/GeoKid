@@ -7,7 +7,7 @@ var headers = {
 
 var mod = angular.module('GeoKidApp.services', []);
 
-mod.service('ApiService', function ($q, $http){
+mod.service('ApiService', function($q, $http) {
     var self = {
         'call': function(apiUri, method, headers, data) {
             console.log('call');
@@ -22,31 +22,30 @@ mod.service('ApiService', function ($q, $http){
             };
 
             console.log(req);
-            $http(req).then(function (response) {
-                    console.log(response);
-                    // Retrieve result
-                    var result = response.data;
-                    console.log('Api Service Result: ' + result);
+            $http(req).then(function(response) {
+                console.log(response);
+                // Retrieve result
+                var result = response.data;
+                console.log('Api Service Result: ' + result);
 
-                    // Resolve promise
-                    deferred.resolve(result); 
-                }, function (response) {
-                    console.log(response);
-                    console.error("Error - API call went wrong");
-                    console.error('Error: ' + JSON.stringify(response));
-                    deferred.reject(response); // Dispatch the failure of the api call
-                }
-            );
+                // Resolve promise
+                deferred.resolve(result);
+            }, function(response) {
+                console.log(response);
+                console.error("Error - API call went wrong");
+                console.error('Error: ' + JSON.stringify(response));
+                deferred.reject(response); // Dispatch the failure of the api call
+            });
 
             return deferred.promise;
         },
-        'get': function(apiUri) {        
+        'get': function(apiUri) {
             var deferred = $q.defer();
 
-            self.call(apiUri, 'GET', headers, null).then(function (result) {
+            self.call(apiUri, 'GET', headers, null).then(function(result) {
 
                 deferred.resolve(result);
-            }, function (response) {
+            }, function(response) {
                 console.log(result);
                 deferred.reject(response); // RIP
             });
@@ -57,9 +56,9 @@ mod.service('ApiService', function ($q, $http){
         'post': function(apiUri, data) {
             var deferred = $q.defer();
 
-            self.call(apiUri, 'POST', headers, data).then(function (result) {
+            self.call(apiUri, 'POST', headers, data).then(function(result) {
                 deferred.resolve(result);
-            }, function (response) {
+            }, function(response) {
                 deferred.reject(response); // RIP
             });
 
@@ -69,9 +68,9 @@ mod.service('ApiService', function ($q, $http){
         'delete': function(apiUri) {
             var deferred = $q.defer();
 
-            self.call(apiUri, 'DELETE', headers, null).then(function (result) {
+            self.call(apiUri, 'DELETE', headers, null).then(function(result) {
                 deferred.resolve(result);
-            }, function (response) {
+            }, function(response) {
                 deferred.reject(response); // RIP
             });
 
@@ -81,9 +80,9 @@ mod.service('ApiService', function ($q, $http){
         'put': function(apiUri, data) {
             var deferred = $q.defer();
 
-            self.call(apiUri, 'PUT', headers, data).then(function (result) {
+            self.call(apiUri, 'PUT', headers, data).then(function(result) {
                 deferred.resolve(result);
-            }, function (response) {
+            }, function(response) {
                 deferred.reject(response); // RIP
             });
 
@@ -91,5 +90,53 @@ mod.service('ApiService', function ($q, $http){
         },
     };
 
+    return self;
+});
+
+mod.service('CheckInternet', function($rootScope) {
+    var self = {
+        'getConnection': function() {
+            console.log(typeof(navigator.connection));
+
+            if (typeof(navigator.connection) != 'undefined') {
+                console.log("This platform doesn't support online and offline events");
+
+                function start() {
+                    if (navigator.connection['type'] == 'none') {
+                        onOffline();
+                    } else {
+                        onOnline();
+                    }
+                }
+                start();
+
+                document.addEventListener("offline", onOffline, false);
+
+                function onOffline() {
+                    $rootScope.internet = false;
+                console.log("No INternet");
+
+                    return false;
+                }
+
+                document.addEventListener("online", onOnline, false);
+
+                function onOnline() {
+                    $rootScope.internet = true;
+                    console.log("INternet");
+
+                    return true;
+
+                    //updatePlayer();
+                }
+            } else {
+                $rootScope.internet = true;
+                console.log("This platform doesn't support online and offline events");
+
+                return true;
+                //updatePlayer();
+            }
+        }
+    };
     return self;
 });

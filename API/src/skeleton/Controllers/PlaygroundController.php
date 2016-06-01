@@ -72,6 +72,17 @@ class PlaygroundController implements ControllerProviderInterface {
 	{
 		$playground = $app['db.playgrounds']->findSpecficPlaygroundWithTasks($id);
 		// var_dump($playgrounds);
+		$di = new \DirectoryIterator($app['photoPlayground.base_path']);
+		$photos = null;
+		foreach ($di as $file) {
+			if ($file->getExtension() == 'jpg') {
+				$photos = array(
+					'url' => $app['photoPlayground.base_url'] . '/' . $file,
+					'title' => $file->getFileName()
+				);
+			}
+		}
+		$playground['photo'] = $photos;
 		return new JsonResponse($playground);
 	}
 
@@ -87,8 +98,11 @@ class PlaygroundController implements ControllerProviderInterface {
 		$masteraccId = $request->get('masteraccId');
 		$data['Playgrounds_Id'] = $id;
 		$data['MasterAccounts_Id'] = $masteraccId;
-
-		$playground = $app['db.Favorite_Parks_MasterAccount']->insert($data);
+		$InDB = $app['db.Favorite_Parks_MasterAccount']-> findVisitedPlayground($id, $masteraccId);
+		$playground = null;
+		if(!$InDB){
+			$playground = $app['db.Favorite_Parks_MasterAccount']->insert($data);
+		}
 		return new JsonResponse($playground);
 	}
 
