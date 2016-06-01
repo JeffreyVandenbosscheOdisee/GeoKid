@@ -232,7 +232,7 @@ mod.controller('DetailSubaccCtrl', function($scope, $rootScope, CheckInternet, A
     });
 });
 
-mod.controller('DetailPlayCtrl', function($scope, $rootScope, CheckInternet, ApiService, $stateParams, $ionicPopup) {
+mod.controller('DetailPlayCtrl', function($scope, $rootScope, CheckInternet, ApiService, $stateParams, $ionicPopup, $state) {
     var internet = CheckInternet.getConnection($rootScope);
     console.log($stateParams);
     var checkeditems = 0;
@@ -248,14 +248,7 @@ mod.controller('DetailPlayCtrl', function($scope, $rootScope, CheckInternet, Api
             ApiService.post('/playgrounds/' + $stateParams.playgroundId + '/visit', { masteraccId: masteraccId }).then(function(result) {
                 console.log(result);
             });
-            var alertPopup = $ionicPopup.alert({
-                title: 'Don\'t eat that!',
-                template: 'It might taste good'
-            });
 
-            alertPopup.then(function(res) {
-                console.log('Thank you for not eating my delicious ice cream cone');
-            });
         });
     }
 
@@ -267,7 +260,19 @@ mod.controller('DetailPlayCtrl', function($scope, $rootScope, CheckInternet, Api
                 checkeditems++;
                 console.log(checkeditems);
                 if (checkeditems == 5) {
-
+                    var alertPopup = $ionicPopup.alert({
+                        title: 'Proficiat!',
+                        template: 'Je hebt alle opdrachten voltooid',
+                        buttons: [{ // Array[Object] (optional). Buttons to place in the popup footer.
+                            text: 'Een nieuwe locatie kiezen',
+                            type: 'button-positive',
+                            onTap: function(e) {
+                                // e.preventDefault() will stop the popup from closing when tapped.
+                                // e.preventDefault();
+                                $state.go('mapoverview');
+                            }
+                        }]
+                    });
                 }
             });
         } else {
