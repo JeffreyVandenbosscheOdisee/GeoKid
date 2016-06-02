@@ -101,7 +101,7 @@ mod.controller('MapOverviewCtrl', function($scope, $rootScope, ApiService, Check
             $window.location.reload();
 
         }
-         $scope.gotosub = function() {
+        $scope.gotosub = function() {
 
             $state.go('subaccounts');
         }
@@ -381,22 +381,22 @@ mod.controller('SubAccCtrl', function($document, $state, $scope, $rootScope, Api
             index = ActivePlayers.indexOf(subaccId);
             if (index == -1) {
                 ActivePlayers.push(subaccId);
-               var result = document.getElementById(subaccId);
-               var wrappedResult = angular.element(result);
-               wrappedResult.addClass('active');
+                var result = document.getElementById(subaccId);
+                var wrappedResult = angular.element(result);
+                wrappedResult.addClass('active');
             } else {
                 ActivePlayers.splice(index, 1);
                 var result = document.getElementById(subaccId);
-               var wrappedResult = angular.element(result);
-               wrappedResult.removeClass('active');
+                var wrappedResult = angular.element(result);
+                wrappedResult.removeClass('active');
             }
-            if(ActivePlayers.length > 0){
+            if (ActivePlayers.length > 0) {
                 $scope.Start = true;
-            }else{
+            } else {
                 $scope.Start = false;
 
             }
-        console.log(ActivePlayers.length);
+            console.log(ActivePlayers.length);
 
             console.log("subaccountId", subaccId);
             console.log("ActivePlayers", ActivePlayers);
@@ -496,9 +496,6 @@ mod.controller('RegisterCtrl', function($ionicLoading, $scope, ApiService, $stat
 
         });
     }
-
-
-
 });
 
 mod.controller('DeletesubCtrl', function($ionicLoading, $rootScope, CheckInternet, $window, $scope, ApiService, $state, $stateParams) {
@@ -572,6 +569,7 @@ mod.controller('CreateSubCtrl', function($ionicLoading, $window, $scope, $rootSc
         $state.go('login');
 
     } else {
+        var imgPath = null;
         CheckInternet.getConnection($rootScope);
         $scope.buttonText = "Aanmaken";
         $scope.Title = "Nieuw subaccount aanmaken";
@@ -579,64 +577,105 @@ mod.controller('CreateSubCtrl', function($ionicLoading, $window, $scope, $rootSc
         subaccId = null;
 
 
-        $scope.create = function(data) {
-            console.log(data);
-            $ionicLoading.show({
-                template: 'Creëren...'
-            });
-            console.log($scope.formData.photo);
-            console.log(($scope.picData != undefined));
-            // debugger;
+        $scope.takePhoto = function() {
+                navigator.camera.getPicture(function(imgData) {
+                    imgPath = imgData;
+                    //show after users capture photo
+                    document.getElementById("image-preview").src = imgData;
+                    document.getElementById("upload-btn").style.display = "block";
+                    document.getElementById("image-preview").style.display = "block";
+                    document.getElementById("description").style.display = "block";
+                }, function(error) {
+                    alert(error);
+                }, {
+                    quality: 90,
+                    destinationType: Camera.DestinationType.FILE_URI,
+                    correctOrientation: true
+                });
+            },
+            $scope.create = function(data) {
+                console.log(data);
+                $ionicLoading.show({
+                    template: 'Creëren...'
+                });
+                console.log($scope.formData.photo);
+                console.log(($scope.picData != undefined));
+                // debugger;
 
 
-            ApiService.post('/account/' + masteraccId + '/subaccounts/create', { name: data.name }).then(function(result) {
-                // We've got a result
-                console.log(result);
-                subaccId = result;
-                if ($scope.picData != undefined) {
-                    $scope.send();
+                ApiService.post('/account/' + masteraccId + '/subaccounts/create', { name: data.name }).then(function(result) {
+                    // We've got a result
+                    console.log(result);
+                    subaccId = result;
+                    if (imgPath != null) {
+                        $scope.uploadPhoto();
 
-                }
-                $ionicLoading.hide();
-                $window.location.reload();
-                $state.go('subaccounts');
-            });
+                    }
+                    $ionicLoading.hide();
+                    $window.location.reload();
+                    $state.go('subaccounts');
+                });
 
 
 
-        }
-
-        $scope.takePic = function() {
-            var options = {
-                quality: 50,
-                destinationType: Camera.DestinationType.FILE_URI,
-                sourceType: 1, // 0:Photo Library, 1=Camera, 2=Saved Photo Album
-                encodingType: 0 // 0=JPG 1=PNG
             }
-            navigator.camera.getPicture(onSuccess, onFail, options);
-        }
-        var onSuccess = function(FILE_URI) {
-            console.log(FILE_URI);
-            $scope.picData = FILE_URI;
-            $scope.$apply();
-        };
-        var onFail = function(e) {
-            console.log("On fail " + e);
-        }
-        $scope.send = function() {
-            console.log("dssds");
-            var myImg = $scope.picData;
+        $scope.uploadPhoto = function() {
             var options = new FileUploadOptions();
-            options.fileKey = "post";
-            options.chunkedMode = false;
-            var params = {};
-            // params.user_token = localStorage.getItem('auth_token');
-            // params.user_email = localStorage.getItem('email');
-            options.params = params;
-            var ft = new FileTransfer();
+            options.fileKey = "photo";
+            options.fileName = imgPath;
+            options.mimeType = "image/jpeg";
+            options.params = {
+                subaccId: subaccId
+                // description: document.getElementById("description").value
+            };
 
-            ft.upload(myImg, encodeURI(baseUri + '/account/' + masteraccId + '/' + subaccId + '/uploadpic'), onUploadSuccess, onUploadFail, options);
+            //set file transfer
+            var fileTransfer = new FileTransfer();
+            //show loading bar when upload on progress
+            
+
+var destinationUrl = "http://api.jeffreyvdb.be/account/10/subaccounts/uploadpic";
+
+            //upload file
+            fileTransfer.upload(imgPath, destinationUrl, function(response) {
+                //on success
+                alert(response.response);
+            }, function(error) {
+                //on failed
+                alert("An error has occured: Code=" + error.code);
+            }, options);
         }
+        // $scope.takePic = function() {
+        //     var options = {
+        //         quality: 50,
+        //         destinationType: Camera.DestinationType.FILE_URI,
+        //         sourceType: 1, // 0:Photo Library, 1=Camera, 2=Saved Photo Album
+        //         encodingType: 0 // 0=JPG 1=PNG
+        //     }
+        //     navigator.camera.getPicture(onSuccess, onFail, options);
+        // }
+        // var onSuccess = function(FILE_URI) {
+        //     console.log(FILE_URI);
+        //     $scope.picData = FILE_URI;
+        //     $scope.$apply();
+        // };
+        // var onFail = function(e) {
+        //     console.log("On fail " + e);
+        // }
+        // $scope.send = function() {
+        //     console.log("dssds");
+        //     var myImg = $scope.picData;
+        //     var options = new FileUploadOptions();
+        //     options.fileKey = "post";
+        //     options.chunkedMode = false;
+        //     var params = {};
+        //     // params.user_token = localStorage.getItem('auth_token');
+        //     // params.user_email = localStorage.getItem('email');
+        //     options.params = params;
+        //     var ft = new FileTransfer();
+
+        //     ft.upload(myImg, encodeURI(baseUri + '/account/' + masteraccId + '/' + subaccId + '/uploadpic'), onUploadSuccess, onUploadFail, options);
+        // }
 
         // $scope.data = { "ImageURI": "Select Image" };
 

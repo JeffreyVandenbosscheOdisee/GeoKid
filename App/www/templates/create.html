@@ -1,5 +1,5 @@
 <ion-view view-title="SubAccount aanmaken">
-    <ion-content scroll="false">
+    <ion-content scroll="true">
     <h2>{{ Title }}</h2>
         <form name="createform" novalidate ng-submit="create(data)">
             <div class="list list-inset">
@@ -7,9 +7,8 @@
                     <span class="input-label ">Naam*</span>
                     <input required type="text" name="name" placeholder="Naam" ng-model="data.name" ng-class="{ 'has-errors' : createform.name.$invalid && !createform.name.$pristine, 'no-errors' : createform.name.$valid && !createform.name.$pristine } ">
                 </label>
-                <!-- <button class="button button-positive" ng-click="showAction()">
-                    Add Photo
-                </button> -->
+                 <button type="button" ng-click="takePhoto()" id="take-btn">Take a Photo</button>
+                   <img src="" id="image-preview" width="100%">
             </div>
             <button class="btn btn-primary"  ng-disabled="createform.$invalid" type="submit">{{ buttonText }}</button>
         </form>

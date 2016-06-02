@@ -47,7 +47,7 @@ class SubAccountController implements ControllerProviderInterface {
 			->assert('id','\d+');
 
 		$controllers
-			->get('/{id}/uploadpic', array($this, 'uploadpic'))
+			->post('/uploadpic', array($this, 'uploadpic'))
 			->assert('masteraccId','\d+')
 			->assert('id','\d+');
 
@@ -97,20 +97,7 @@ class SubAccountController implements ControllerProviderInterface {
 			$data['Name']= $name;
 			$data['MasterAccounts_Id']= $masteraccId;
 			$subaccount = $app['db.subaccounts']->insert($data);
-			
-			// $file = $request -> files -> get('photo');
 
-			// // foreach($files as $x => $file) {
-			//     if ($file != null) {
-			// 		$SubAccountId = $subaccount;
-			//         $date = (new\ DateTime('now', new\ DateTimeZone('UTC'))) -> format('dmY_His');
-			//         $filename =$SubAccountId . '-' .substr($file->getClientOriginalName(), 0, (strlen($file->getClientOriginalName()) -4)). '-' . $date;
-
-
-			//         $file -> move($app['photoSubaccount.base_path'], $filename.
-			//             '.jpg');
-			//     }
-			// // }
 			return new JsonResponse($subaccount);
 
 		}
@@ -121,38 +108,22 @@ class SubAccountController implements ControllerProviderInterface {
 
 	public function uploadpic(Request $request, Application $app) 
 	{
-		$masteraccId = $request->get('masteraccId');
-		$subaccId = $request->get('id');
 
-		$location = $_POST['directory'];
-		$uploadfile = $_POST['fileName'];
-		$uploadfilename = $_FILES['file']['tmp_name'];
- 		var_dump($location);
- 		var_dump($uploadfile);
- 		var_dump($uploadfilename);
- 		exit();
+		if(isset($_FILES['photo'])){
+			$subaccId = $_POST['subaccId'];
+		 	$date = (new\ DateTime('now', new\ DateTimeZone('UTC'))) -> format('dmY_His');
+		    $temp = explode(".", $_FILES["photo"]["name"]);
+			$filename = $subaccId.'-'.$date . '.' . end($temp);
+			var_dump($filename);
+		    // $filename = $_FILES['photo']['name'];
 
-		if(move_uploaded_file($uploadfilename, $location.'/'.$uploadfile)){
-        		echo 'File successfully uploaded!';
-		} else {
-        		echo 'Upload error!';
+		    move_uploaded_file($_FILES['photo']['tmp_name'], 'assets/public/img/subaccounts/'.$filename);
+		 
+		   
+		}else{
+		    echo "No File!";
 		}
-			
-			$file = $request -> files -> get('photo');
-
-			// foreach($files as $x => $file) {
-			    if ($file != null) {
-					$SubAccountId = $subaccount;
-			        $date = (new\ DateTime('now', new\ DateTimeZone('UTC'))) -> format('dmY_His');
-			        $filename =$SubAccountId . '-' .substr($file->getClientOriginalName(), 0, (strlen($file->getClientOriginalName()) -4)). '-' . $date;
-
-
-			        $file -> move($app['photoSubaccount.base_path'], $filename.
-			            '.jpg');
-			    }
-			// }
-
-		return new JsonResponse(null);
+				return new JsonResponse(null);
 		
 	}
 
