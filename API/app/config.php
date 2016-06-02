@@ -29,6 +29,9 @@ $config['repositories'] = array(
 	'db.subaccounts' => 'skeleton\\Repositories\\SubAccountRepository',
 	'db.tasks' => 'skeleton\\Repositories\\TaskRepository',
 	'db.Favorite_Parks_MasterAccount' => 'skeleton\\Repositories\\FavPlaygroundRepository',
+	'db.playgrounds_has_subaccounts'  => 'skeleton\\Repositories\\SubaccPlaygroundRepository',
+	'db.achievements' => 'skeleton\\Repositories\\AchievementRepository',
+	'db.achievements_has_subaccounts' => 'skeleton\\Repositories\\AchievementSubaccRepository',
 
 	'db.examples' => 'skeleton\\Repositories\\ExampleRepository'
 );

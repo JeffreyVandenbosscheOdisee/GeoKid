@@ -226,7 +226,7 @@ mod.controller('DetailSubaccCtrl', function($scope, $rootScope, CheckInternet, A
     ApiService.get('/account/' + masteraccId + '/subaccounts/' + $stateParams.userId).then(function(result) {
         console.log(result);
         $scope.apiResult = result;
-        ApiService.post('/playgrounds/visitedplaygrounds', { masteraccId: result.MasterAccounts_Id }).then(function(result) {
+        ApiService.post('/playgrounds/visitedplaygrounds', { subaccountsId: $stateParams.userId }).then(function(result) {
             $scope.apiResultplaygrounds = result;
         });
     });
@@ -245,8 +245,31 @@ mod.controller('DetailPlayCtrl', function($scope, $rootScope, CheckInternet, Api
         ApiService.get('/playgrounds/' + $stateParams.playgroundId + '/tasks').then(function(result) {
             console.log(result);
             $scope.playground = result;
-            ApiService.post('/playgrounds/' + $stateParams.playgroundId + '/visit', { masteraccId: masteraccId }).then(function(result) {
+            ApiService.post('/playgrounds/' + $stateParams.playgroundId + '/visit', { subaccountsId: ActivePlayers }).then(function(result) {
                 console.log(result);
+                //Checken nieuwe achievements
+                for (var i = 0; i <= ActivePlayers.length; i++) {
+                    ApiService.post('/achievements/check', { subaccountsId: ActivePlayers[i], type: "Playgrounds" }).then(function(result) {
+                        console.log(result);
+                        if (result != false) {
+                            var alertPopup = $ionicPopup.alert({
+                                title: 'Proficiat ' + result.NameUser + ', je hebt een achievement gewonnen!',
+                                // template: 'Je hebt de achievement "' + result.Name  + '"" vrijgespeeld',
+                                template: '<div><img src="' + baseUri + result.photo.url +  '">This is the right format</div>',
+                                buttons: [{
+                                    text: 'Ok',
+                                    type: 'button-positive',
+                                    onTap: function(e) {
+                                       
+                                    }
+                                }]
+                            });
+
+                        }
+                    });
+                }
+
+
             });
 
         });
@@ -259,16 +282,34 @@ mod.controller('DetailPlayCtrl', function($scope, $rootScope, CheckInternet, Api
                 console.log(result);
                 checkeditems++;
                 console.log(checkeditems);
+                for (var i = 0; i <= ActivePlayers.length; i++) {
+                    ApiService.post('/achievements/check', { subaccountsId: ActivePlayers[i], type: "Tasks" }).then(function(result) {
+                        console.log(result);
+                        if (result != false) {
+                            var alertPopup = $ionicPopup.alert({
+                                title: 'Proficiat ' + result.NameUser + ', je hebt een achievement gewonnen!',
+                                // template: 'Je hebt de achievement "' + result.Name  + '"" vrijgespeeld',
+                                template: '<div><img src="' + baseUri + result.photo.url +  '"></div>',
+                                buttons: [{
+                                    text: 'Ok',
+                                    type: 'button-positive',
+                                    onTap: function(e) {
+                                       
+                                    }
+                                }]
+                            });
+
+                        }
+                    });
+                }
                 if (checkeditems == 5) {
                     var alertPopup = $ionicPopup.alert({
                         title: 'Proficiat!',
                         template: 'Je hebt alle opdrachten voltooid',
-                        buttons: [{ // Array[Object] (optional). Buttons to place in the popup footer.
+                        buttons: [{
                             text: 'Een nieuwe locatie kiezen',
                             type: 'button-positive',
                             onTap: function(e) {
-                                // e.preventDefault() will stop the popup from closing when tapped.
-                                // e.preventDefault();
                                 $state.go('mapoverview');
                             }
                         }]
@@ -395,9 +436,9 @@ mod.controller('RegisterCtrl', function($ionicLoading, $scope, ApiService, $stat
 });
 
 mod.controller('DeletesubCtrl', function($ionicLoading, $rootScope, CheckInternet, $window, $scope, ApiService, $state, $stateParams) {
-     $ionicLoading.show({
-            template: 'Verwijderen...'
-        });
+    $ionicLoading.show({
+        template: 'Verwijderen...'
+    });
     CheckInternet.getConnection($rootScope);
     masteraccId = window.localStorage['masteraccId'];
     subaccId = $stateParams.userId;

@@ -17,7 +17,7 @@ class SubAccountRepository extends BaseRepository
 		return $this->db->fetchAll('SELECT * FROM '. $this->getTableName() . ' WHERE MasterAccounts_Id = ?', array($id));
 	}
 
-	public function findSubAccount($masteraccId, $subaccId) {
-		return $this->db->fetchAssoc('SELECT * FROM '. $this->getTableName() . ' WHERE MasterAccounts_Id = ? AND Id = ?', array($masteraccId, $subaccId));
+	public function findSubAccount($subaccId) {
+		return $this->db->fetchAssoc('SELECT * FROM '. $this->getTableName() . ' WHERE  Id = ?', array($subaccId));
 	}
 }

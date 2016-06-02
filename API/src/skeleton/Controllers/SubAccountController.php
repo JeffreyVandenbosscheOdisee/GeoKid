@@ -161,7 +161,7 @@ class SubAccountController implements ControllerProviderInterface {
 		$masteraccId = $request->get('masteraccId');
 		$subaccId = $request->get('id');
 
-		$subaccount = $app['db.subaccounts']->findSubAccount($masteraccId, $subaccId);
+		$subaccount = $app['db.subaccounts']->findSubAccount($subaccId);
 		if($subaccount != false){
 			$photos = null;
 			$di = new \DirectoryIterator($app['photoSubaccount.base_path']);

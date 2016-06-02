@@ -33,3 +33,6 @@ $app['photoSubaccount.base_path'] = __DIR__ . DIRECTORY_SEPARATOR . '../public_h
 $app['photoSubaccount.base_url'] = '/assets/public/img/subaccounts';
 $app['photoPlayground.base_path'] = __DIR__ . DIRECTORY_SEPARATOR . '../public_html/assets/public/img/playgrounds';
 $app['photoPlayground.base_url'] = '/assets/public/img/playgrounds';
+
+$app['achievements.base_path'] = __DIR__ . DIRECTORY_SEPARATOR . '../public_html/assets/public/img/achievements';
+$app['achievements.base_url'] = '/assets/public/img/achievements';

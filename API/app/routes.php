@@ -9,3 +9,4 @@ $routes['/auth'] = new skeleton\Controllers\AuthenticationController();
 $routes['/account/{masteraccId}'] = new skeleton\Controllers\AccountController();
 $routes['/account/{masteraccId}/subaccounts'] = new skeleton\Controllers\SubAccountController();
 $routes['/task'] = new skeleton\Controllers\TaskController();
+$routes['/achievements'] = new skeleton\Controllers\AchievementsController();
