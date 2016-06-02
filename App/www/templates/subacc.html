@@ -1,7 +1,7 @@
 <ion-view view-title="User Overview">
     <ion-content>
         <!-- <ion-list> -->
-            <div ng-repeat="subaccount in apiResult" class="item item-thumbnail-left">
+            <div ng-repeat="subaccount in apiResult" class="item item-thumbnail-left" id="{{ subaccount.Id }}">
 <!--                 <p>
                     <p class="solved" ng-if="problem.solvedDate != undefined"><i class="ion ion-checkmark"></i>Fixed </p>
                     <p ng-if="problem.solvedDate == undefined" class="notsolved"><i class="ion ion-close-round"></i> Not yet fixed</p>
@@ -16,12 +16,12 @@
                     <p class="solved" ng-if="problem.solvedDate != undefined"><i class="ion ion-checkmark"></i>Fixed </p>
                     <p ng-if="problem.solvedDate == undefined" class="notsolved"><i class="ion ion-close-round"></i> Not yet fixed</p>
                 </p> -->
-                <p> + </p>
+                <p> +</p>
                 <h2>Toevoegen</h2>
             </div></a>
         <!-- </ion-list> -->
         <div>
-                <a href="#/mapoverview">Vertrekken</a>
+                <a href="#/mapoverview" ng-show="Start">Vertrekken</a>
         </div>
     </ion-content>
 </ion-view>

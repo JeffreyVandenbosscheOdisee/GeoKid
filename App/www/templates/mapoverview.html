@@ -17,5 +17,8 @@
         <div ng-class="{divmapfull: !playgroundactive, divmap: playgroundactive}">
             <div id="map" data-tap-disabled="true"></div>
         </div>
+        <div ng-class="{navigationbuttonstop: !playgroundactive, navigationbuttonstopoverlay: playgroundactive}">
+            <a class="ion-ios-people" ng-click="gotosub()" title=""></a>
+        </div>
     </ion-content>
 </ion-view>

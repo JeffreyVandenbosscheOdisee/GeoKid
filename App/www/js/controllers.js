@@ -5,409 +5,475 @@ var ActivePlayers = [];
 
 // OverviewController
 mod.controller('MapOverviewCtrl', function($scope, $rootScope, ApiService, CheckInternet, $cordovaGeolocation, $window, $state, $ionicPlatform) {
-    // $ionicPlatform.ready(function() {
-    CheckInternet.getConnection($rootScope);
+    if (window.localStorage['masteraccId'] == null) {
+        $state.go('login');
 
-    // });
-    ApiService.get('/playgrounds/').then(function(result) {
+    } else {
+        // $ionicPlatform.ready(function() {
+        CheckInternet.getConnection($rootScope);
 
-        $scope.apiResult = result;
-        google.maps.event.addDomListener(document.getElementById("map"), 'load', $scope.initialise());
+        // });
+        ApiService.get('/playgrounds/').then(function(result) {
 
-    });
-    $scope.initialise = function() {
-
-        $scope.playgroundactive = false;
-
-        var myLatlng = new google.maps.LatLng(51.05460, 3.72178);
-
-        var mapOptions = {
-            center: myLatlng,
-            zoom: 14,
-            disableDefaultUI: true,
-            mapTypeId: google.maps.MapTypeId.ROADMAP,
-            styles: [{ "featureType": "water", "elementType": "all", "stylers": [{ "hue": "#7fc8ed" }, { "saturation": 55 }, { "lightness": -6 }, { "visibility": "on" }] }, { "featureType": "water", "elementType": "labels", "stylers": [{ "hue": "#7fc8ed" }, { "saturation": 55 }, { "lightness": -6 }, { "visibility": "off" }] }, { "featureType": "poi.park", "elementType": "geometry", "stylers": [{ "hue": "#83cead" }, { "saturation": 1 }, { "lightness": -15 }, { "visibility": "on" }] }, { "featureType": "landscape", "elementType": "geometry", "stylers": [{ "hue": "#f3f4f4" }, { "saturation": -84 }, { "lightness": 59 }, { "visibility": "on" }] }, { "featureType": "landscape", "elementType": "labels", "stylers": [{ "hue": "#ffffff" }, { "saturation": -100 }, { "lightness": 100 }, { "visibility": "off" }] }, { "featureType": "road", "elementType": "geometry", "stylers": [{ "hue": "#ffffff" }, { "saturation": -100 }, { "lightness": 100 }, { "visibility": "on" }] }, { "featureType": "road", "elementType": "labels", "stylers": [{ "hue": "#bbbbbb" }, { "saturation": -100 }, { "lightness": 26 }, { "visibility": "on" }] }, { "featureType": "road.arterial", "elementType": "geometry", "stylers": [{ "hue": "#ffcc00" }, { "saturation": 100 }, { "lightness": -35 }, { "visibility": "simplified" }] }, { "featureType": "road.highway", "elementType": "geometry", "stylers": [{ "hue": "#ffcc00" }, { "saturation": 100 }, { "lightness": -22 }, { "visibility": "on" }] }, { "featureType": "poi.school", "elementType": "all", "stylers": [{ "hue": "#d7e4e4" }, { "saturation": -60 }, { "lightness": 23 }, { "visibility": "on" }] }]
-        };
-        var map = new google.maps.Map(document.getElementById("map"), mapOptions);
-        // Geo Location /
-        navigator.geolocation.getCurrentPosition(function(pos) {
-            map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
-
-            var image = {
-                url: 'images/markergroup.png',
-                size: new google.maps.Size(30, 40)
-
-            };
-            var myLocation = new google.maps.Marker({
-                position: new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude),
-                map: map,
-                animation: google.maps.Animation.DROP,
-                title: "My Location",
-                icon: image
-            });
+            $scope.apiResult = result;
+            google.maps.event.addDomListener(document.getElementById("map"), 'load', $scope.initialise());
 
         });
-        $scope.map = map;
-        // Additional Markers //
-        $scope.markers = [];
-        var infoWindow = new google.maps.InfoWindow();
-        var createMarker = function(info) {
+        $scope.initialise = function() {
+
+            $scope.playgroundactive = false;
+
+            var myLatlng = new google.maps.LatLng(51.05460, 3.72178);
+
+            var mapOptions = {
+                center: myLatlng,
+                zoom: 14,
+                disableDefaultUI: true,
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                styles: [{ "featureType": "water", "elementType": "all", "stylers": [{ "hue": "#7fc8ed" }, { "saturation": 55 }, { "lightness": -6 }, { "visibility": "on" }] }, { "featureType": "water", "elementType": "labels", "stylers": [{ "hue": "#7fc8ed" }, { "saturation": 55 }, { "lightness": -6 }, { "visibility": "off" }] }, { "featureType": "poi.park", "elementType": "geometry", "stylers": [{ "hue": "#83cead" }, { "saturation": 1 }, { "lightness": -15 }, { "visibility": "on" }] }, { "featureType": "landscape", "elementType": "geometry", "stylers": [{ "hue": "#f3f4f4" }, { "saturation": -84 }, { "lightness": 59 }, { "visibility": "on" }] }, { "featureType": "landscape", "elementType": "labels", "stylers": [{ "hue": "#ffffff" }, { "saturation": -100 }, { "lightness": 100 }, { "visibility": "off" }] }, { "featureType": "road", "elementType": "geometry", "stylers": [{ "hue": "#ffffff" }, { "saturation": -100 }, { "lightness": 100 }, { "visibility": "on" }] }, { "featureType": "road", "elementType": "labels", "stylers": [{ "hue": "#bbbbbb" }, { "saturation": -100 }, { "lightness": 26 }, { "visibility": "on" }] }, { "featureType": "road.arterial", "elementType": "geometry", "stylers": [{ "hue": "#ffcc00" }, { "saturation": 100 }, { "lightness": -35 }, { "visibility": "simplified" }] }, { "featureType": "road.highway", "elementType": "geometry", "stylers": [{ "hue": "#ffcc00" }, { "saturation": 100 }, { "lightness": -22 }, { "visibility": "on" }] }, { "featureType": "poi.school", "elementType": "all", "stylers": [{ "hue": "#d7e4e4" }, { "saturation": -60 }, { "lightness": 23 }, { "visibility": "on" }] }]
+            };
+            var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+            // Geo Location /
+            navigator.geolocation.getCurrentPosition(function(pos) {
+                map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+
+                var image = {
+                    url: 'images/markergroup.png',
+                    size: new google.maps.Size(30, 40)
+
+                };
+                var myLocation = new google.maps.Marker({
+                    position: new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude),
+                    map: map,
+                    animation: google.maps.Animation.DROP,
+                    title: "My Location",
+                    icon: image
+                });
+
+            });
+            $scope.map = map;
+            // Additional Markers //
+            $scope.markers = [];
+            var infoWindow = new google.maps.InfoWindow();
+            var createMarker = function(info) {
+                var image = {
+                    url: 'images/pin.png',
+                    size: new google.maps.Size(32, 40)
+
+                };
+                var marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(info.Latitude, info.Longitude),
+                    map: $scope.map,
+                    // animation: google.maps.Animation.DROP,
+                    title: info.Name,
+                    icon: image
+                });
+
+
+                google.maps.event.addListener(marker, 'click', function() {
+                    var currentMarker = Map.currentMarker || false;
+                    ApiService.get('/playgrounds/' + info.Id).then(function(result) {
+                        $scope.playgroundInfo = result;
+                        $scope.playgroundactive = true;
+                        console.log(result);
+                        window.localStorage['playground'] = JSON.stringify(result);
+
+
+                        console.log(result.Longitude);
+                    });
+                    if (currentMarker != false) {
+                        currentMarker.setIcon('images/pin.png');
+                    }
+                    marker.setIcon('images/pinactive.png');
+                    // map.setCenter(marker.getPosition());
+                    Map.currentMarker = marker;
+                });
+                $scope.markers.push(marker);
+            }
+            for (i = 0; i < $scope.apiResult.length; i++) {
+                createMarker($scope.apiResult[i]);
+            }
+        };
+
+        $scope.gotoNav = function() {
+            $state.go('navigation');
+
+            $window.location.reload();
+
+        }
+         $scope.gotosub = function() {
+
+            $state.go('subaccounts');
+        }
+
+
+    }
+});
+
+mod.controller('NavCtrl', function($scope, $rootScope, CheckInternet, ApiService, $state, $window) {
+    if (window.localStorage['masteraccId'] == null) {
+        $state.go('login');
+
+    } else {
+        CheckInternet.getConnection($rootScope);
+        var playground = JSON.parse(window.localStorage['playground']);
+        console.log(playground);
+        var id, target, options;
+
+        $scope.initialise = function() {
+
+            var myLatlng = new google.maps.LatLng(51.05460, 3.72178);
+
+            var mapOptions = {
+                center: myLatlng,
+                zoom: 17,
+                disableDefaultUI: true,
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                styles: [{ "featureType": "water", "elementType": "all", "stylers": [{ "hue": "#7fc8ed" }, { "saturation": 55 }, { "lightness": -6 }, { "visibility": "on" }] }, { "featureType": "water", "elementType": "labels", "stylers": [{ "hue": "#7fc8ed" }, { "saturation": 55 }, { "lightness": -6 }, { "visibility": "off" }] }, { "featureType": "poi.park", "elementType": "geometry", "stylers": [{ "hue": "#83cead" }, { "saturation": 1 }, { "lightness": -15 }, { "visibility": "on" }] }, { "featureType": "landscape", "elementType": "geometry", "stylers": [{ "hue": "#f3f4f4" }, { "saturation": -84 }, { "lightness": 59 }, { "visibility": "on" }] }, { "featureType": "landscape", "elementType": "labels", "stylers": [{ "hue": "#ffffff" }, { "saturation": -100 }, { "lightness": 100 }, { "visibility": "off" }] }, { "featureType": "road", "elementType": "geometry", "stylers": [{ "hue": "#ffffff" }, { "saturation": -100 }, { "lightness": 100 }, { "visibility": "on" }] }, { "featureType": "road", "elementType": "labels", "stylers": [{ "hue": "#bbbbbb" }, { "saturation": -100 }, { "lightness": 26 }, { "visibility": "on" }] }, { "featureType": "road.arterial", "elementType": "geometry", "stylers": [{ "hue": "#ffcc00" }, { "saturation": 100 }, { "lightness": -35 }, { "visibility": "simplified" }] }, { "featureType": "road.highway", "elementType": "geometry", "stylers": [{ "hue": "#ffcc00" }, { "saturation": 100 }, { "lightness": -22 }, { "visibility": "on" }] }, { "featureType": "poi.school", "elementType": "all", "stylers": [{ "hue": "#d7e4e4" }, { "saturation": -60 }, { "lightness": 23 }, { "visibility": "on" }] }]
+            };
+
+            var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+            google.maps.event.addListenerOnce(map, 'idle', function() {
+                $scope.map = map;
+
+                loadMarkers();
+                // enableMap();
+            });
+
+
+        };
+        var loadMarkers = function() {
+
+            navigator.geolocation.getCurrentPosition(function(pos) {
+                $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+
+                var markerpos = null;
+                var image = {
+                    url: 'images/markergroup.png',
+                    size: new google.maps.Size(30, 40)
+
+                };
+                var markerpos = new google.maps.Marker({
+                    position: new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude),
+                    map: $scope.map,
+                    // animation: google.maps.Animation.DROP,
+                    title: "My Location",
+                    icon: image
+                });
+
+
+
+                function success(pos) {
+
+                    var crd = pos.coords;
+                    console.log(crd);
+                    console.log(playground.Latitude, playground.Longitude);
+                    var image = {
+                        url: 'images/markergroup.png',
+                        size: new google.maps.Size(30, 40)
+
+                    };
+
+                    if (markerpos == null) {
+                        $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+                        markerpos = new google.maps.Marker({
+                            position: new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude),
+                            icon: image,
+                            map: $scope.map,
+                            title: 'Click to zoom'
+                        });
+                    } else {
+                        markerpos.setPosition(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+                        $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+                    }
+
+                    if (parseFloat(playground.Latitude) === crd.latitude && parseFloat(playground.Longitude) === crd.longitude) {
+                        console.log('Congratulations, you reached the target');
+                        navigator.geolocation.clearWatch(id);
+                        console
+                        $state.go('detailplayground', { playgroundId: playground.Id });
+                    }
+                }
+
+                function error(err) {
+                    console.warn('ERROR(' + err.code + '): ' + err.message);
+                }
+
+
+                options = {
+                    enableHighAccuracy: false,
+                    timeout: 5000,
+                    maximumAge: 0
+                };
+                id = navigator.geolocation.watchPosition(success, error, options);
+            });
             var image = {
                 url: 'images/pin.png',
                 size: new google.maps.Size(32, 40)
 
             };
             var marker = new google.maps.Marker({
-                position: new google.maps.LatLng(info.Latitude, info.Longitude),
+                position: new google.maps.LatLng(playground.Latitude, playground.Longitude),
                 map: $scope.map,
                 // animation: google.maps.Animation.DROP,
-                title: info.Name,
+                title: "Destination",
                 icon: image
             });
-
-
-            google.maps.event.addListener(marker, 'click', function() {
-                var currentMarker = Map.currentMarker || false;
-                ApiService.get('/playgrounds/' + info.Id).then(function(result) {
-                    $scope.playgroundInfo = result;
-                    $scope.playgroundactive = true;
-                    console.log(result);
-                    window.localStorage['playground'] = JSON.stringify(result);
-
-
-                    console.log(result.Longitude);
-                });
-                if (currentMarker != false) {
-                    currentMarker.setIcon('images/pin.png');
-                }
-                marker.setIcon('images/pinactive.png');
-                // map.setCenter(marker.getPosition());
-                Map.currentMarker = marker;
-            });
-            $scope.markers.push(marker);
-        }
-        for (i = 0; i < $scope.apiResult.length; i++) {
-            createMarker($scope.apiResult[i]);
-        }
-    };
-
-    $scope.gotoNav = function() {
-        $state.go('navigation');
-
-        $window.location.reload();
-
-    }
-
-});
-
-mod.controller('NavCtrl', function($scope, $rootScope, CheckInternet, ApiService, $state, $window) {
-    CheckInternet.getConnection($rootScope);
-    var playground = JSON.parse(window.localStorage['playground']);
-    console.log(playground);
-    var id, target, options;
-
-    $scope.initialise = function() {
-
-        var myLatlng = new google.maps.LatLng(51.05460, 3.72178);
-
-        var mapOptions = {
-            center: myLatlng,
-            zoom: 17,
-            disableDefaultUI: true,
-            mapTypeId: google.maps.MapTypeId.ROADMAP,
-            styles: [{ "featureType": "water", "elementType": "all", "stylers": [{ "hue": "#7fc8ed" }, { "saturation": 55 }, { "lightness": -6 }, { "visibility": "on" }] }, { "featureType": "water", "elementType": "labels", "stylers": [{ "hue": "#7fc8ed" }, { "saturation": 55 }, { "lightness": -6 }, { "visibility": "off" }] }, { "featureType": "poi.park", "elementType": "geometry", "stylers": [{ "hue": "#83cead" }, { "saturation": 1 }, { "lightness": -15 }, { "visibility": "on" }] }, { "featureType": "landscape", "elementType": "geometry", "stylers": [{ "hue": "#f3f4f4" }, { "saturation": -84 }, { "lightness": 59 }, { "visibility": "on" }] }, { "featureType": "landscape", "elementType": "labels", "stylers": [{ "hue": "#ffffff" }, { "saturation": -100 }, { "lightness": 100 }, { "visibility": "off" }] }, { "featureType": "road", "elementType": "geometry", "stylers": [{ "hue": "#ffffff" }, { "saturation": -100 }, { "lightness": 100 }, { "visibility": "on" }] }, { "featureType": "road", "elementType": "labels", "stylers": [{ "hue": "#bbbbbb" }, { "saturation": -100 }, { "lightness": 26 }, { "visibility": "on" }] }, { "featureType": "road.arterial", "elementType": "geometry", "stylers": [{ "hue": "#ffcc00" }, { "saturation": 100 }, { "lightness": -35 }, { "visibility": "simplified" }] }, { "featureType": "road.highway", "elementType": "geometry", "stylers": [{ "hue": "#ffcc00" }, { "saturation": 100 }, { "lightness": -22 }, { "visibility": "on" }] }, { "featureType": "poi.school", "elementType": "all", "stylers": [{ "hue": "#d7e4e4" }, { "saturation": -60 }, { "lightness": 23 }, { "visibility": "on" }] }]
         };
 
-        var map = new google.maps.Map(document.getElementById("map"), mapOptions);
-        google.maps.event.addListenerOnce(map, 'idle', function() {
-            $scope.map = map;
+        $scope.gotoMap = function() {
+            navigator.geolocation.clearWatch(id);
+            $state.go('mapoverview');
 
-            loadMarkers();
-            // enableMap();
-        });
+            $window.location.reload();
 
-
-    };
-    var loadMarkers = function() {
-
-        navigator.geolocation.getCurrentPosition(function(pos) {
-            $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
-
-            var markerpos = null;
-            var image = {
-                url: 'images/markergroup.png',
-                size: new google.maps.Size(30, 40)
-
-            };
-            var markerpos = new google.maps.Marker({
-                position: new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude),
-                map: $scope.map,
-                // animation: google.maps.Animation.DROP,
-                title: "My Location",
-                icon: image
-            });
-
-
-
-            function success(pos) {
-
-                var crd = pos.coords;
-                console.log(crd);
-                console.log(playground.Latitude, playground.Longitude);
-                var image = {
-                    url: 'images/markergroup.png',
-                    size: new google.maps.Size(30, 40)
-
-                };
-
-                if (markerpos == null) {
-                    $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
-                    markerpos = new google.maps.Marker({
-                        position: new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude),
-                        icon: image,
-                        map: $scope.map,
-                        title: 'Click to zoom'
-                    });
-                } else {
-                    markerpos.setPosition(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
-                    $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
-                }
-
-                if (parseFloat(playground.Latitude) === crd.latitude && parseFloat(playground.Longitude) === crd.longitude) {
-                    console.log('Congratulations, you reached the target');
-                    navigator.geolocation.clearWatch(id);
-                    console
-                    $state.go('detailplayground', { playgroundId: playground.Id });
-                }
-            }
-
-            function error(err) {
-                console.warn('ERROR(' + err.code + '): ' + err.message);
-            }
-
-
-            options = {
-                enableHighAccuracy: false,
-                timeout: 5000,
-                maximumAge: 0
-            };
-            id = navigator.geolocation.watchPosition(success, error, options);
-        });
-        var image = {
-            url: 'images/pin.png',
-            size: new google.maps.Size(32, 40)
-
-        };
-        var marker = new google.maps.Marker({
-            position: new google.maps.LatLng(playground.Latitude, playground.Longitude),
-            map: $scope.map,
-            // animation: google.maps.Animation.DROP,
-            title: "Destination",
-            icon: image
-        });
-    };
-
-    $scope.gotoMap = function() {
-        navigator.geolocation.clearWatch(id);
-        $state.go('mapoverview');
-
-        $window.location.reload();
-
+        }
+        google.maps.event.addDomListener(document.getElementById("map"), 'load', $scope.initialise());
     }
-    google.maps.event.addDomListener(document.getElementById("map"), 'load', $scope.initialise());
-
 });
 
 // DetailController
 mod.controller('DetailSubaccCtrl', function($scope, $rootScope, CheckInternet, ApiService, $stateParams) {
-    CheckInternet.getConnection($rootScope);
-    console.log($stateParams.userId);
-    masteraccId = window.localStorage['masteraccId'];
-    ApiService.get('/account/' + masteraccId + '/subaccounts/' + $stateParams.userId).then(function(result) {
-        console.log(result);
-        $scope.apiResult = result;
-        ApiService.post('/playgrounds/visitedplaygrounds', { subaccountsId: $stateParams.userId }).then(function(result) {
-            $scope.apiResultplaygrounds = result;
+    if (window.localStorage['masteraccId'] == null) {
+        $state.go('login');
+
+    } else {
+        CheckInternet.getConnection($rootScope);
+        console.log($stateParams.userId);
+        $scope.ApiUrl = baseUri;
+
+        masteraccId = window.localStorage['masteraccId'];
+        ApiService.get('/account/' + masteraccId + '/subaccounts/' + $stateParams.userId).then(function(result) {
+            console.log(result);
+            $scope.apiResult = result;
+            ApiService.post('/playgrounds/visitedplaygrounds', { subaccountsId: $stateParams.userId }).then(function(result) {
+                $scope.apiResultplaygrounds = result;
+            });
+            ApiService.post('/achievements/get', { subaccountId: $stateParams.userId }).then(function(result) {
+                $scope.apiResultachievement = result;
+            });
         });
-    });
+    }
 });
 
 mod.controller('DetailPlayCtrl', function($scope, $rootScope, CheckInternet, ApiService, $stateParams, $ionicPopup, $state) {
-    var internet = CheckInternet.getConnection($rootScope);
-    console.log($stateParams);
-    var checkeditems = 0;
-    var ActivePlayers = JSON.parse(window.localStorage['ActivePlayers']);
-    console.log(ActivePlayers);
-    $scope.ApiUrl = baseUri;
+    if (window.localStorage['masteraccId'] == null) {
+        $state.go('login');
 
-    var getPlayground = function() {
-        masteraccId = window.localStorage['masteraccId'];
-        ApiService.get('/playgrounds/' + $stateParams.playgroundId + '/tasks').then(function(result) {
-            console.log(result);
-            $scope.playground = result;
-            ApiService.post('/playgrounds/' + $stateParams.playgroundId + '/visit', { subaccountsId: ActivePlayers }).then(function(result) {
+    } else {
+        var internet = CheckInternet.getConnection($rootScope);
+        console.log($stateParams);
+        var checkeditems = 0;
+        var ActivePlayers = JSON.parse(window.localStorage['ActivePlayers']);
+        console.log(ActivePlayers);
+        $scope.ApiUrl = baseUri;
+
+        var getPlayground = function() {
+            masteraccId = window.localStorage['masteraccId'];
+            ApiService.get('/playgrounds/' + $stateParams.playgroundId + '/tasks').then(function(result) {
                 console.log(result);
-                //Checken nieuwe achievements
-                for (var i = 0; i <= ActivePlayers.length; i++) {
-                    ApiService.post('/achievements/check', { subaccountsId: ActivePlayers[i], type: "Playgrounds" }).then(function(result) {
-                        console.log(result);
-                        if (result != false) {
-                            var alertPopup = $ionicPopup.alert({
-                                title: 'Proficiat ' + result.NameUser + ', je hebt een achievement gewonnen!',
-                                // template: 'Je hebt de achievement "' + result.Name  + '"" vrijgespeeld',
-                                template: '<div><img src="' + baseUri + result.photo.url +  '">This is the right format</div>',
-                                buttons: [{
-                                    text: 'Ok',
-                                    type: 'button-positive',
-                                    onTap: function(e) {
-                                       
-                                    }
-                                }]
-                            });
+                $scope.playground = result;
+                ApiService.post('/playgrounds/' + $stateParams.playgroundId + '/visit', { subaccountsId: ActivePlayers }).then(function(result) {
+                    console.log(result);
+                    //Checken nieuwe achievements
+                    for (var i = 0; i <= ActivePlayers.length; i++) {
+                        ApiService.post('/achievements/check', { subaccountsId: ActivePlayers[i], type: "Playgrounds" }).then(function(result) {
+                            console.log(result);
+                            if (result != false) {
+                                var alertPopup = $ionicPopup.alert({
+                                    title: 'Proficiat ' + result.NameUser + ', je hebt een achievement gewonnen!',
+                                    // template: 'Je hebt de achievement "' + result.Name  + '"" vrijgespeeld',
+                                    template: '<div><img src="' + baseUri + result.photo.url + '">This is the right format</div>',
+                                    buttons: [{
+                                        text: 'Ok',
+                                        type: 'button-positive',
+                                        onTap: function(e) {
 
-                        }
-                    });
-                }
+                                        }
+                                    }]
+                                });
 
-
-            });
-
-        });
-    }
-
-    $scope.clickItem = function(task) {
-        if (task.checked) {
-
-            ApiService.post('/task/complete', { playgroundId: $stateParams.playgroundId, taskId: task.Id, subaccountsId: ActivePlayers }).then(function(result) {
-                console.log(result);
-                checkeditems++;
-                console.log(checkeditems);
-                for (var i = 0; i <= ActivePlayers.length; i++) {
-                    ApiService.post('/achievements/check', { subaccountsId: ActivePlayers[i], type: "Tasks" }).then(function(result) {
-                        console.log(result);
-                        if (result != false) {
-                            var alertPopup = $ionicPopup.alert({
-                                title: 'Proficiat ' + result.NameUser + ', je hebt een achievement gewonnen!',
-                                // template: 'Je hebt de achievement "' + result.Name  + '"" vrijgespeeld',
-                                template: '<div><img src="' + baseUri + result.photo.url +  '"></div>',
-                                buttons: [{
-                                    text: 'Ok',
-                                    type: 'button-positive',
-                                    onTap: function(e) {
-                                       
-                                    }
-                                }]
-                            });
-
-                        }
-                    });
-                }
-                if (checkeditems == 5) {
-                    var alertPopup = $ionicPopup.alert({
-                        title: 'Proficiat!',
-                        template: 'Je hebt alle opdrachten voltooid',
-                        buttons: [{
-                            text: 'Een nieuwe locatie kiezen',
-                            type: 'button-positive',
-                            onTap: function(e) {
-                                $state.go('mapoverview');
                             }
-                        }]
-                    });
-                }
-            });
-        } else {
-            ApiService.post('/task/uncomplete', { playgroundId: $stateParams.playgroundId, taskId: task.Id, subaccountsId: ActivePlayers }).then(function(result) {
-                console.log(result);
-                checkeditems--;
-                console.log(checkeditems);
+                        });
+                    }
+
+
+                });
 
             });
         }
-    }
-    if (internet)
-        getPlayground();
 
+        $scope.clickItem = function(task) {
+            if (task.checked) {
+
+                ApiService.post('/task/complete', { playgroundId: $stateParams.playgroundId, taskId: task.Id, subaccountsId: ActivePlayers }).then(function(result) {
+                    console.log(result);
+                    checkeditems++;
+                    console.log(checkeditems);
+                    for (var i = 0; i <= ActivePlayers.length; i++) {
+                        ApiService.post('/achievements/check', { subaccountsId: ActivePlayers[i], type: "Tasks" }).then(function(result) {
+                            console.log(result);
+                            if (result != false) {
+                                var alertPopup = $ionicPopup.alert({
+                                    title: 'Proficiat ' + result.NameUser + ', je hebt een achievement gewonnen!',
+                                    // template: 'Je hebt de achievement "' + result.Name  + '"" vrijgespeeld',
+                                    template: '<div><img src="' + baseUri + result.photo.url + '"></div>',
+                                    buttons: [{
+                                        text: 'Ok',
+                                        type: 'button-positive',
+                                        onTap: function(e) {
+
+                                        }
+                                    }]
+                                });
+
+                            }
+                        });
+                    }
+                    if (checkeditems == 5) {
+                        var alertPopup = $ionicPopup.alert({
+                            title: 'Proficiat!',
+                            template: 'Je hebt alle opdrachten voltooid',
+                            buttons: [{
+                                text: 'Een nieuwe locatie kiezen',
+                                type: 'button-positive',
+                                onTap: function(e) {
+                                    $state.go('mapoverview');
+                                }
+                            }]
+                        });
+                    }
+                });
+            } else {
+                ApiService.post('/task/uncomplete', { playgroundId: $stateParams.playgroundId, taskId: task.Id, subaccountsId: ActivePlayers }).then(function(result) {
+                    console.log(result);
+                    checkeditems--;
+                    console.log(checkeditems);
+
+                });
+            }
+        }
+        if (internet)
+            getPlayground();
+    }
 });
 
 
-mod.controller('SubAccCtrl', function($scope, $rootScope, ApiService, CheckInternet, $stateParams, $window) {
-    CheckInternet.getConnection($rootScope);
-    masteraccId = window.localStorage['masteraccId'];
-    console.log(masteraccId);
-    $scope.ApiUrl = baseUri;
-    ApiService.get('/account/' + masteraccId + '/subaccounts').then(function(result) {
-        console.log(result);
-        $scope.apiResult = result;
-    });
-    $scope.ChoosePlayer = function(subaccId) {
-        console.log();
-        index = ActivePlayers.indexOf(subaccId);
-        if (index == -1) {
-            ActivePlayers.push(subaccId);
-        } else {
-            ActivePlayers.splice(index, 1);
-        }
-        console.log("subaccountId", subaccId);
-        console.log("ActivePlayers", ActivePlayers);
-        window.localStorage['ActivePlayers'] = JSON.stringify(ActivePlayers);
+mod.controller('SubAccCtrl', function($document, $state, $scope, $rootScope, ApiService, CheckInternet, $stateParams, $window) {
+    if (window.localStorage['masteraccId'] == null) {
+        $state.go('login');
 
+    } else {
+
+        localStorage.removeItem("ActivePlayers");
+        $scope.Start = false;
+
+        CheckInternet.getConnection($rootScope);
+        masteraccId = window.localStorage['masteraccId'];
+        console.log(ActivePlayers.length);
+        $scope.ApiUrl = baseUri;
+        ApiService.get('/account/' + masteraccId + '/subaccounts').then(function(result) {
+            console.log(result);
+            $scope.apiResult = result;
+        });
+        $scope.ChoosePlayer = function(subaccId) {
+            console.log();
+            index = ActivePlayers.indexOf(subaccId);
+            if (index == -1) {
+                ActivePlayers.push(subaccId);
+               var result = document.getElementById(subaccId);
+               var wrappedResult = angular.element(result);
+               wrappedResult.addClass('active');
+            } else {
+                ActivePlayers.splice(index, 1);
+                var result = document.getElementById(subaccId);
+               var wrappedResult = angular.element(result);
+               wrappedResult.removeClass('active');
+            }
+            if(ActivePlayers.length > 0){
+                $scope.Start = true;
+            }else{
+                $scope.Start = false;
+
+            }
+        console.log(ActivePlayers.length);
+
+            console.log("subaccountId", subaccId);
+            console.log("ActivePlayers", ActivePlayers);
+            window.localStorage['ActivePlayers'] = JSON.stringify(ActivePlayers);
+
+        }
     }
 });
 
 mod.controller('LoginCtrl', function($ionicLoading, $scope, ApiService, CheckInternet, $state, $window, $rootScope) {
+    $rootScope.login = true;
+    console.log(window.localStorage['masteraccId']);
+    if (window.localStorage['masteraccId'] != null) {
+        $state.go('subaccounts');
 
-    CheckInternet.getConnection($rootScope);
-    $scope.loginError = '';
+    } else {
+        CheckInternet.getConnection($rootScope);
+        $scope.loginError = '';
 
-    function showError(text) {
-        $scope.loginError = text;
-    }
+        function showError(text) {
+            $scope.loginError = text;
+        }
 
-    // Handle login
-    $scope.login = function(data) {
-        $ionicLoading.show({
-            template: 'Inloggen...'
-        });
-        console.log(data);
-        var regexMail = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
-        if (data != null) {
-            console.log(data.password);
-            if ((data.password) == undefined || (data.email) == undefined) {
-                $ionicLoading.hide();
-                showError("Email en/of wachtwoord mogen niet leeg zijn!");
-            } else if (!regexMail.test(data.email)) {
-                $ionicLoading.hide();
-                showError("Ongeldig email formaat!");
+        // Handle login
+        $scope.login = function(data) {
+            $ionicLoading.show({
+                template: 'Inloggen...'
+            });
+            console.log(data);
+            var regexMail = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+            if (data != null) {
+                console.log(data.password);
+                if ((data.password) == undefined || (data.email) == undefined) {
+                    $ionicLoading.hide();
+                    showError("Email en/of wachtwoord mogen niet leeg zijn!");
+                } else if (!regexMail.test(data.email)) {
+                    $ionicLoading.hide();
+                    showError("Ongeldig email formaat!");
+                } else {
+                    ApiService.post('/auth/login/', { email: data.email, password: data.password }).then(function(result) {
+                        // We've got a result
+                        console.log(result.succesLogin);
+                        if (result.succesLogin) {
+                            window.localStorage['masteraccId'] = result.MasteraccountId;
+                            $rootScope.login = false;
+                            $window.location.reload();
+
+                            $state.go('subaccounts');
+                        } else {
+                            $ionicLoading.hide();
+                            showError('Ongeldige inloggegevens!');
+                        }
+                    });
+                }
             } else {
-                ApiService.post('/auth/login/', { email: data.email, password: data.password }).then(function(result) {
-                    // We've got a result
-                    console.log(result.succesLogin);
-                    if (result.succesLogin) {
-                        window.localStorage['masteraccId'] = result.MasteraccountId;
-                        $window.location.reload();
-
-                        $state.go('subaccounts');
-                    } else {
-                        $ionicLoading.hide();
-                        showError('Ongeldige inloggegevens!');
-                    }
-                });
+                showError("Email en/of wachtwoord mogen niet leeg zijn!");
             }
-        } else {
-            showError("Email en/of wachtwoord mogen niet leeg zijn!");
         }
     }
-});
 
+});
+mod.controller('LogoutCtrl', function($scope, $window, $state, $ionicLoading) {
+    $ionicLoading.show({
+        template: 'Uitloggen...'
+    });
+    console.log("logout");
+    window.localStorage.clear();
+    // window.rem
+    $window.location.reload();
+    $ionicLoading.hide();
+    $state.go('login');
+
+});
 mod.controller('RegisterCtrl', function($ionicLoading, $scope, ApiService, $state, $rootScope, CheckInternet) {
 
-    $scope.loginError = '';
+    $rootScope.login = true;
     CheckInternet.getConnection($rootScope);
-
-    function showError(text) {
-        $scope.loginError = text;
-    }
 
     $scope.register = function(data) {
         $ionicLoading.show({
@@ -417,7 +483,7 @@ mod.controller('RegisterCtrl', function($ionicLoading, $scope, ApiService, $stat
 
         ApiService.post('/auth/register/', { email: data.email, password: data.password, familyname: data.familyname, streetnr: data.streetnr, zipcode: data.zipcode, city: data.city }).then(function(result) {
             if (result == false) {
-                showError("Dit email adres is al geregistreerd ga naar <a href='#/login'> inloggen </a> om met dit e-mail adres in te loggen!");
+                $scope.loginError = true;
                 $ionicLoading.hide();
 
             } else {
@@ -436,248 +502,260 @@ mod.controller('RegisterCtrl', function($ionicLoading, $scope, ApiService, $stat
 });
 
 mod.controller('DeletesubCtrl', function($ionicLoading, $rootScope, CheckInternet, $window, $scope, ApiService, $state, $stateParams) {
-    $ionicLoading.show({
-        template: 'Verwijderen...'
-    });
-    CheckInternet.getConnection($rootScope);
-    masteraccId = window.localStorage['masteraccId'];
-    subaccId = $stateParams.userId;
-    ApiService.get('/account/' + masteraccId + '/subaccounts/' + $stateParams.userId + '/delete').then(function(result) {
-        // We've got a result
-        console.log(result);
-        $ionicLoading.hide();
-        $window.location.reload();
-        $state.go('subaccounts');
-    });
+    if (window.localStorage['masteraccId'] == null) {
+        $state.go('login');
 
+    } else {
+        $ionicLoading.show({
+            template: 'Verwijderen...'
+        });
+        CheckInternet.getConnection($rootScope);
+        masteraccId = window.localStorage['masteraccId'];
+        subaccId = $stateParams.userId;
+        ApiService.get('/account/' + masteraccId + '/subaccounts/' + $stateParams.userId + '/delete').then(function(result) {
+            // We've got a result
+            console.log(result);
+            $ionicLoading.hide();
+            $window.location.reload();
+            $state.go('subaccounts');
+        });
+    }
 });
 
 
 mod.controller('EditsubCtrl', function($ionicLoading, $window, $scope, $rootScope, CheckInternet, ApiService, $state, $cordovaCapture, $cordovaImagePicker, $ionicActionSheet, Photo, $stateParams) {
-    $scope.buttonText = "Aanpassen";
+    if (window.localStorage['masteraccId'] == null) {
+        $state.go('login');
 
-    CheckInternet.getConnection($rootScope);
-    masteraccId = window.localStorage['masteraccId'];
-    subaccId = $stateParams.userId;
+    } else {
+        $scope.buttonText = "Aanpassen";
 
-
-    ApiService.get('/account/' + masteraccId + '/subaccounts/' + $stateParams.userId).then(function(result) {
-        console.log(result);
-        $scope.data = { name: result.Name };
-        $scope.Title = "Subaccount: " + result.Name + " aanpassen";
-    });
-
-    $scope.create = function(data) {
-        $ionicLoading.show({
-            template: 'Aanpassen...'
-        });
+        CheckInternet.getConnection($rootScope);
+        masteraccId = window.localStorage['masteraccId'];
+        subaccId = $stateParams.userId;
 
 
-        ApiService.post('/account/' + masteraccId + '/subaccounts/' + $stateParams.userId + '/change', { name: data.name }).then(function(result) {
-            // We've got a result
+        ApiService.get('/account/' + masteraccId + '/subaccounts/' + $stateParams.userId).then(function(result) {
             console.log(result);
-            subaccId = result;
-            if ($scope.picData != undefined) {
-                $scope.send();
-
-            }
-            $ionicLoading.hide();
-            // $state.go($state.current, {}, {reload: true});
-            $window.location.reload();
-
-            $state.go('subaccounts');
+            $scope.data = { name: result.Name };
+            $scope.Title = "Subaccount: " + result.Name + " aanpassen";
         });
 
+        $scope.create = function(data) {
+            $ionicLoading.show({
+                template: 'Aanpassen...'
+            });
 
 
+            ApiService.post('/account/' + masteraccId + '/subaccounts/' + $stateParams.userId + '/change', { name: data.name }).then(function(result) {
+                // We've got a result
+                console.log(result);
+                subaccId = result;
+                if ($scope.picData != undefined) {
+                    $scope.send();
+
+                }
+                $ionicLoading.hide();
+                // $state.go($state.current, {}, {reload: true});
+                $window.location.reload();
+
+                $state.go('subaccounts');
+            });
+
+
+
+        }
     }
-
 });
 mod.controller('CreateSubCtrl', function($ionicLoading, $window, $scope, $rootScope, CheckInternet, ApiService, $state, $cordovaCapture, $cordovaImagePicker, $ionicActionSheet, Photo) {
-    CheckInternet.getConnection($rootScope);
-    $scope.buttonText = "Aanmaken";
-    $scope.Title = "Nieuw subaccount aanmaken";
-    masteraccId = window.localStorage['masteraccId'];
-    subaccId = null;
+    if (window.localStorage['masteraccId'] == null) {
+        $state.go('login');
+
+    } else {
+        CheckInternet.getConnection($rootScope);
+        $scope.buttonText = "Aanmaken";
+        $scope.Title = "Nieuw subaccount aanmaken";
+        masteraccId = window.localStorage['masteraccId'];
+        subaccId = null;
 
 
-    $scope.create = function(data) {
-        console.log(data);
-        $ionicLoading.show({
-            template: 'Creëren...'
-        });
-        console.log($scope.formData.photo);
-        console.log(($scope.picData != undefined));
-        // debugger;
+        $scope.create = function(data) {
+            console.log(data);
+            $ionicLoading.show({
+                template: 'Creëren...'
+            });
+            console.log($scope.formData.photo);
+            console.log(($scope.picData != undefined));
+            // debugger;
 
 
-        ApiService.post('/account/' + masteraccId + '/subaccounts/create', { name: data.name }).then(function(result) {
-            // We've got a result
-            console.log(result);
-            subaccId = result;
-            if ($scope.picData != undefined) {
-                $scope.send();
+            ApiService.post('/account/' + masteraccId + '/subaccounts/create', { name: data.name }).then(function(result) {
+                // We've got a result
+                console.log(result);
+                subaccId = result;
+                if ($scope.picData != undefined) {
+                    $scope.send();
 
-            }
-            $ionicLoading.hide();
-            $window.location.reload();
-            $state.go('subaccounts');
-        });
-
-
-
-    }
-
-    $scope.takePic = function() {
-        var options = {
-            quality: 50,
-            destinationType: Camera.DestinationType.FILE_URI,
-            sourceType: 1, // 0:Photo Library, 1=Camera, 2=Saved Photo Album
-            encodingType: 0 // 0=JPG 1=PNG
-        }
-        navigator.camera.getPicture(onSuccess, onFail, options);
-    }
-    var onSuccess = function(FILE_URI) {
-        console.log(FILE_URI);
-        $scope.picData = FILE_URI;
-        $scope.$apply();
-    };
-    var onFail = function(e) {
-        console.log("On fail " + e);
-    }
-    $scope.send = function() {
-        console.log("dssds");
-        var myImg = $scope.picData;
-        var options = new FileUploadOptions();
-        options.fileKey = "post";
-        options.chunkedMode = false;
-        var params = {};
-        // params.user_token = localStorage.getItem('auth_token');
-        // params.user_email = localStorage.getItem('email');
-        options.params = params;
-        var ft = new FileTransfer();
-
-        ft.upload(myImg, encodeURI(baseUri + '/account/' + masteraccId + '/' + subaccId + '/uploadpic'), onUploadSuccess, onUploadFail, options);
-    }
-
-    // $scope.data = { "ImageURI": "Select Image" };
-
-    // $scope.takePicture = function() {
-    //     var options = {
-    //         quality: 50,
-    //         destinationType: Camera.DestinationType.FILE_URL,
-    //         sourceType: Camera.PictureSourceType.CAMERA
-    //     };
-    //     $cordovaCamera.getPicture(options).then(
-    //         function(imageData) {
-    //             $scope.picData = imageData;
-    //             $scope.ftLoad = true;
-    //             // $localstorage.set('fotoUp', imageData);
-    //             // $ionicLoading.show({ template: 'Foto acquisita...', duration: 500 });
-    //         },
-    //         function(err) {
-    //             $ionicLoading.show({ template: 'Error, gelieve opnieuw een foto te maken', duration: 500 });
-    //         })
-    // }
-
-    // $scope.selectPicture = function() {
-    //     var options = {
-    //         quality: 50,
-    //         destinationType: Camera.DestinationType.FILE_URI,
-    //         sourceType: Camera.PictureSourceType.PHOTOLIBRARY
-    //     };
-
-    //     $cordovaCamera.getPicture(options).then(
-    //         function(imageURI) {
-    //             window.resolveLocalFileSystemURI(imageURI, function(fileEntry) {
-    //                 $scope.picData = fileEntry.nativeURL;
-    //                 $scope.ftLoad = true;
-    //                 var image = document.getElementById('myImage');
-    //                 image.src = fileEntry.nativeURL;
-    //             });
-    //             // $ionicLoading.show({ template: 'Foto acquisita...', duration: 500 });
-    //         },
-    //         function(err) {
-    //             $ionicLoading.show({ template: 'Error, gelieve opnieuw te proberen', duration: 500 });
-    //         })
-    // };
-
-    // $scope.uploadPicture = function() {
-    //     $ionicLoading.show({ template: 'Uploaden' });
-    //     var fileURL = $scope.picData;
-    //     var options = new FileUploadOptions();
-    //     options.fileKey = "file";
-    //     options.fileName = fileURL.substr(fileURL.lastIndexOf('/') + 1);
-    //     options.mimeType = "image/jpeg";
-    //     options.chunkedMode = true;
-
-    //     var params = {};
-    //     params.value1 = "someparams";
-    //     params.value2 = "otherparams";
-
-    //     options.params = params;
-
-    //     var ft = new FileTransfer();
-    //     ft.upload(fileURL, encodeURI("http://www.yourdomain.com/upload.php"), viewUploadedPictures, function(error) {
-    //         $ionicLoading.show({ template: 'Een Error gelieve opnieuw te proberen' });
-    //         $ionicLoading.hide();
-    //     }, options);
-    // }
-    // 
-
-    $scope.formData = {};
-
-    // action sheet
-    $scope.showAction = function() {
-
-        var hideSheet = $ionicActionSheet.show({
-            buttons: [
-                { text: ' Capture' },
-                { text: ' Pick' }
-            ],
-            title: 'Add Photo',
-            cancelText: 'Cancel',
-            cancel: function() {
-                //
-            },
-            buttonClicked: function(index) {
-                if (index == 0) {
-                    var options = {
-                        limit: 1
-                    };
-
-                    // capture
-                    $cordovaCapture.captureImage(options).then(function(imageData) {
-                        var imgData = imageData[0].fullPath;
-                        // convert image to base64 string
-                        Photo.convertImageToBase64(imgData, function(base64Img) {
-                            $scope.formData.photo = base64Img;
-                        });
-                        console.log($scope.formData.photo);
-
-
-                    }, function(error) {
-                        $scope.photoError = error;
-                    });
-                } else if (index == 1) {
-                    var options = {
-                        maximumImagesCount: 1,
-                    };
-
-                    // pick
-                    $cordovaImagePicker.getPictures(options).then(function(results) {
-                        var imgData = results[0];
-                        // convert image to base64 string
-                        Photo.convertImageToBase64(imgData, function(base64Img) {
-                            $scope.formData.photo = base64Img;
-                        });
-                        console.log($scope.formData.photo);
-                    });
                 }
-            }
-        })
-    };
+                $ionicLoading.hide();
+                $window.location.reload();
+                $state.go('subaccounts');
+            });
 
+
+
+        }
+
+        $scope.takePic = function() {
+            var options = {
+                quality: 50,
+                destinationType: Camera.DestinationType.FILE_URI,
+                sourceType: 1, // 0:Photo Library, 1=Camera, 2=Saved Photo Album
+                encodingType: 0 // 0=JPG 1=PNG
+            }
+            navigator.camera.getPicture(onSuccess, onFail, options);
+        }
+        var onSuccess = function(FILE_URI) {
+            console.log(FILE_URI);
+            $scope.picData = FILE_URI;
+            $scope.$apply();
+        };
+        var onFail = function(e) {
+            console.log("On fail " + e);
+        }
+        $scope.send = function() {
+            console.log("dssds");
+            var myImg = $scope.picData;
+            var options = new FileUploadOptions();
+            options.fileKey = "post";
+            options.chunkedMode = false;
+            var params = {};
+            // params.user_token = localStorage.getItem('auth_token');
+            // params.user_email = localStorage.getItem('email');
+            options.params = params;
+            var ft = new FileTransfer();
+
+            ft.upload(myImg, encodeURI(baseUri + '/account/' + masteraccId + '/' + subaccId + '/uploadpic'), onUploadSuccess, onUploadFail, options);
+        }
+
+        // $scope.data = { "ImageURI": "Select Image" };
+
+        // $scope.takePicture = function() {
+        //     var options = {
+        //         quality: 50,
+        //         destinationType: Camera.DestinationType.FILE_URL,
+        //         sourceType: Camera.PictureSourceType.CAMERA
+        //     };
+        //     $cordovaCamera.getPicture(options).then(
+        //         function(imageData) {
+        //             $scope.picData = imageData;
+        //             $scope.ftLoad = true;
+        //             // $localstorage.set('fotoUp', imageData);
+        //             // $ionicLoading.show({ template: 'Foto acquisita...', duration: 500 });
+        //         },
+        //         function(err) {
+        //             $ionicLoading.show({ template: 'Error, gelieve opnieuw een foto te maken', duration: 500 });
+        //         })
+        // }
+
+        // $scope.selectPicture = function() {
+        //     var options = {
+        //         quality: 50,
+        //         destinationType: Camera.DestinationType.FILE_URI,
+        //         sourceType: Camera.PictureSourceType.PHOTOLIBRARY
+        //     };
+
+        //     $cordovaCamera.getPicture(options).then(
+        //         function(imageURI) {
+        //             window.resolveLocalFileSystemURI(imageURI, function(fileEntry) {
+        //                 $scope.picData = fileEntry.nativeURL;
+        //                 $scope.ftLoad = true;
+        //                 var image = document.getElementById('myImage');
+        //                 image.src = fileEntry.nativeURL;
+        //             });
+        //             // $ionicLoading.show({ template: 'Foto acquisita...', duration: 500 });
+        //         },
+        //         function(err) {
+        //             $ionicLoading.show({ template: 'Error, gelieve opnieuw te proberen', duration: 500 });
+        //         })
+        // };
+
+        // $scope.uploadPicture = function() {
+        //     $ionicLoading.show({ template: 'Uploaden' });
+        //     var fileURL = $scope.picData;
+        //     var options = new FileUploadOptions();
+        //     options.fileKey = "file";
+        //     options.fileName = fileURL.substr(fileURL.lastIndexOf('/') + 1);
+        //     options.mimeType = "image/jpeg";
+        //     options.chunkedMode = true;
+
+        //     var params = {};
+        //     params.value1 = "someparams";
+        //     params.value2 = "otherparams";
+
+        //     options.params = params;
+
+        //     var ft = new FileTransfer();
+        //     ft.upload(fileURL, encodeURI("http://www.yourdomain.com/upload.php"), viewUploadedPictures, function(error) {
+        //         $ionicLoading.show({ template: 'Een Error gelieve opnieuw te proberen' });
+        //         $ionicLoading.hide();
+        //     }, options);
+        // }
+        // 
+
+        $scope.formData = {};
+
+        // action sheet
+        $scope.showAction = function() {
+
+            var hideSheet = $ionicActionSheet.show({
+                buttons: [
+                    { text: ' Capture' },
+                    { text: ' Pick' }
+                ],
+                title: 'Add Photo',
+                cancelText: 'Cancel',
+                cancel: function() {
+                    //
+                },
+                buttonClicked: function(index) {
+                    if (index == 0) {
+                        var options = {
+                            limit: 1
+                        };
+
+                        // capture
+                        $cordovaCapture.captureImage(options).then(function(imageData) {
+                            var imgData = imageData[0].fullPath;
+                            // convert image to base64 string
+                            Photo.convertImageToBase64(imgData, function(base64Img) {
+                                $scope.formData.photo = base64Img;
+                            });
+                            console.log($scope.formData.photo);
+
+
+                        }, function(error) {
+                            $scope.photoError = error;
+                        });
+                    } else if (index == 1) {
+                        var options = {
+                            maximumImagesCount: 1,
+                        };
+
+                        // pick
+                        $cordovaImagePicker.getPictures(options).then(function(results) {
+                            var imgData = results[0];
+                            // convert image to base64 string
+                            Photo.convertImageToBase64(imgData, function(base64Img) {
+                                $scope.formData.photo = base64Img;
+                            });
+                            console.log($scope.formData.photo);
+                        });
+                    }
+                }
+            })
+        };
+    }
 });
 
 // factory

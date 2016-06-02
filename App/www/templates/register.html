@@ -1,7 +1,7 @@
 <ion-view view-title="Registreren">
     <ion-content scroll="true">
         <form name="registerform" novalidate ng-submit="register(data)">
-            <p ng-if="loginError" id="loginError" class="card error">{{ loginError }}</p>
+            <p ng-if="loginError" id="loginError" class="card error">Dit email adres is al geregistreerd ga naar <a href='#/login'> inloggen </a> om met dit e-mail adres in te loggen!</div></p>
             <div class="list list-inset">
                 <label class="item item-input" ">
                     <span class="input-label ">E-mail adres*</span>
@@ -11,14 +11,14 @@
                     <div ng-messages-include="error-list.html "></div>
                 </div> -->
                 <label class="item item-input ">
-                    <span class="input-label ">Wachtwoord*</span>
-                    <input required type="password" name="password " placeholder="Wachtwoord " ng-model="data.password " form-validate-after ng-class="{ 'has-errors' : registerform.password.$invalid && !registerform.password.$pristine, 'no-errors' : registerform.password.$valid && !registerform.password.$pristine } ">
+                    <span class="input-label ">Wachtwoord(minstens 5 tekens)*</span>
+                    <input required type="password" name="password " placeholder="Wachtwoord " ng-model="data.password "  ng-minlength="5" form-validate-after ng-class="{ 'has-errors' : registerform.password.$invalid && !registerform.password.$pristine, 'no-errors' : registerform.password.$valid && !registerform.password.$pristine } ">
                     <!-- <p ng-show="loginform.password.$error.required ">* Password is required</p> -->
                 </label>
 
                 <label class="item item-input ">
                     <span class="input-label ">Herhaal wachtwoord*</span>
-                    <input required type="password" name="passwordRepeat " placeholder="Wachtwoord herhalen " ng-model="data.passwordRepeat " form-validate-after compare-to="data.password " ng-class="{ 'has-errors' : registerform.passwordRepeat.$invalid && !registerform.passwordRepeat.$pristine, 'no-errors' : registerform.passwordRepeat.$valid && !registerform.passwordRepeat.$pristine } ">
+                    <input required type="password" name="passwordRepeat " placeholder="Wachtwoord herhalen " ng-model="data.passwordRepeat " form-validate-after compare-to="data.password " ng-minlength="5" ng-class="{ 'has-errors' : registerform.passwordRepeat.$invalid && !registerform.passwordRepeat.$pristine, 'no-errors' : registerform.passwordRepeat.$valid && !registerform.passwordRepeat.$pristine } ">
                     <!-- <p ng-show="loginform.password.$error.required ">* Password is required</p> -->
                 </label>
                 <div ng-messages="registerform.passwordRepeat.$error "> 

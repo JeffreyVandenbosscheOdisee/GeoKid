@@ -83,6 +83,18 @@
     line-height: 30px;
     padding-left: 10px;
 }
+.navigationbuttonstopoverlay{
+   position: absolute;
+    top: 10px;
+    left: 32%;
+    z-index: 5;
+    background-color: #fff;
+    padding: 5px;
+    border: 1px solid #999;
+    text-align: center;
+    line-height: 30px;
+    padding-left: 10px;
+}
 
 .testImage{
   width: 20%;
@@ -121,4 +133,12 @@
  
 .no-errors {
   border: 3px solid green !important;
+}
+
+.logout{
+  text-align:right;
+}
+
+.active{
+  border: 3px solid blue;
 }

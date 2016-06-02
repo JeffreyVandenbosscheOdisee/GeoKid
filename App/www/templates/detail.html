@@ -19,7 +19,8 @@
         <div>
             <h2>Verzamelde badges</h2>
             <ion-list>
-                <ion-item ng-repeat="badges in apiResultBadges">
+                <ion-item ng-repeat="achievement in apiResultachievement">
+                <img src="{{ ApiUrl + achievement.photo.url }}">
                 </ion-item>
             </ion-list>
         </div>

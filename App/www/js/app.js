@@ -27,6 +27,11 @@ app.config(
               templateUrl: 'templates/login.html',
               controller: 'LoginCtrl'
             })
+            .state('logout', {
+              url: '/logout',
+              controller: 'LogoutCtrl'
+            })
+
             .state('register', {
               url: '/register',
               templateUrl: 'templates/register.html',
