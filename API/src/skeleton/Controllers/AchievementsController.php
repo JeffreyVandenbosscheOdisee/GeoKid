@@ -30,7 +30,7 @@ class AchievementsController implements ControllerProviderInterface {
 			->method('GET|POST');
 
 		$controllers
-			->match('/get', array($this, 'tasks'))
+			->match('/get', array($this, 'getachievement'))
 			->method('GET|POST');
 
 		return $controllers;
@@ -95,17 +95,31 @@ class AchievementsController implements ControllerProviderInterface {
 		return new JsonResponse($achievement);
 	}
 
-	public function tasks(Application $app, Request $request) 
+	public function getachievement(Application $app, Request $request) 
 	{
-		$subaccountIds = $request->get('subaccountsId');
-		$playgroundId = $request->get('playgroundId');
-		$taskid = $request->get('taskId');
+		$subaccountId = $request->get('subaccountId');
+		$achievements = $app['db.achievements_has_subaccounts']->findsubAccAchievements($subaccountId);
+			$achievements2 = [];
+		foreach ($achievements as $achievement) {
+				$photos = null;
+				$di = new \DirectoryIterator($app['achievements.base_path']);
+				foreach ($di as $file) {
 
+					if ($file->getExtension() == 'png') {
+						if($achievement['Id'] == current(explode('-', $file->getFileName()))){
+							$photos = array(
+								'url' => $app['achievements.base_url'] . '/' . $file,
+								'title' => $file->getFileName()
+							);
+							
+						}
+					}
+				};
+				$achievement['photo']= $photos;
 
-		foreach ($subaccountIds as $value){
-			$task = $app['db.tasks']->findCompleteTask($taskid, $playgroundId, $value);
-			$data = $app['db.tasks']->delete( array('id' => $task['Id']));
-		}
-		return new JsonResponse();
+				array_push($achievements2, $achievement);
+
+			}
+		return new JsonResponse($achievements2);
 	}
 }
