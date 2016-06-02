@@ -314,7 +314,7 @@ mod.controller('SubAccCtrl', function($scope, $rootScope, ApiService, CheckInter
     }
 });
 
-mod.controller('LoginCtrl', function($scope, ApiService, CheckInternet, $state, $window, $rootScope) {
+mod.controller('LoginCtrl', function($ionicLoading, $scope, ApiService, CheckInternet, $state, $window, $rootScope) {
 
     CheckInternet.getConnection($rootScope);
     $scope.loginError = '';
@@ -325,13 +325,18 @@ mod.controller('LoginCtrl', function($scope, ApiService, CheckInternet, $state, 
 
     // Handle login
     $scope.login = function(data) {
+        $ionicLoading.show({
+            template: 'Inloggen...'
+        });
         console.log(data);
         var regexMail = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
         if (data != null) {
             console.log(data.password);
             if ((data.password) == undefined || (data.email) == undefined) {
+                $ionicLoading.hide();
                 showError("Email en/of wachtwoord mogen niet leeg zijn!");
             } else if (!regexMail.test(data.email)) {
+                $ionicLoading.hide();
                 showError("Ongeldig email formaat!");
             } else {
                 ApiService.post('/auth/login/', { email: data.email, password: data.password }).then(function(result) {
@@ -343,6 +348,7 @@ mod.controller('LoginCtrl', function($scope, ApiService, CheckInternet, $state, 
 
                         $state.go('subaccounts');
                     } else {
+                        $ionicLoading.hide();
                         showError('Ongeldige inloggegevens!');
                     }
                 });
@@ -353,7 +359,8 @@ mod.controller('LoginCtrl', function($scope, ApiService, CheckInternet, $state, 
     }
 });
 
-mod.controller('RegisterCtrl', function($scope, ApiService, $state, $rootScope, CheckInternet) {
+mod.controller('RegisterCtrl', function($ionicLoading, $scope, ApiService, $state, $rootScope, CheckInternet) {
+
     $scope.loginError = '';
     CheckInternet.getConnection($rootScope);
 
@@ -362,47 +369,42 @@ mod.controller('RegisterCtrl', function($scope, ApiService, $state, $rootScope, 
     }
 
     $scope.register = function(data) {
-        console.log(data);
-        var regexMail = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+        $ionicLoading.show({
+            template: 'Registreren...'
+        });
+        // console.log(data);
 
-        if (data != null) {
-            console.log(data.password);
-            console.log(data.passwordRepeat);
-
-            console.log();
-            if ((data.password) == undefined || (data.email) == undefined || (data.familyname) == undefined || (data.streetnr) == undefined || (data.zipcode) == undefined || (data.city) == undefined) {
-                showError("Email en/of wachtwoord mogen niet leeg zijn!");
-            } else if (!regexMail.test(data.email)) {
-                showError("Ongeldig email formaat!");
-            } else if (!angular.equals(data.password, data.passwordRepeat)) {
-                showError("De 2 wachtwoorden zijn niet gelijk aan elkaar!");
+        ApiService.post('/auth/register/', { email: data.email, password: data.password, familyname: data.familyname, streetnr: data.streetnr, zipcode: data.zipcode, city: data.city }).then(function(result) {
+            if (result == false) {
+                showError("Dit email adres is al geregistreerd ga naar <a href='#/login'> inloggen </a> om met dit e-mail adres in te loggen!");
+                $ionicLoading.hide();
 
             } else {
-                ApiService.post('/auth/register/', { email: data.email, password: data.password, familyname: data.familyname, streetnr: data.streetnr, zipcode: data.zipcode, city: data.city }).then(function(result) {
-                    // We've got a result
-                    console.log(result);
-                    // if (result.succesLogin)
-                    //     $state.go('overview');
-                    // else {
-                    //     showError('Ongeldige inloggegevens!');
-                    // }
-                });
-            }
-        } else {
-            showError("Email en/of wachtwoord mogen niet leeg zijn!");
-        }
+                window.localStorage['masteraccId'] = result;
+                $ionicLoading.hide();
 
+                $state.go('subaccounts');
+            }
+            console.log(result);
+
+        });
     }
+
+
+
 });
 
-mod.controller('DeletesubCtrl', function($rootScope, CheckInternet, $window, $scope, ApiService, $state, $stateParams) {
+mod.controller('DeletesubCtrl', function($ionicLoading, $rootScope, CheckInternet, $window, $scope, ApiService, $state, $stateParams) {
+     $ionicLoading.show({
+            template: 'Verwijderen...'
+        });
     CheckInternet.getConnection($rootScope);
     masteraccId = window.localStorage['masteraccId'];
     subaccId = $stateParams.userId;
     ApiService.get('/account/' + masteraccId + '/subaccounts/' + $stateParams.userId + '/delete').then(function(result) {
         // We've got a result
         console.log(result);
-
+        $ionicLoading.hide();
         $window.location.reload();
         $state.go('subaccounts');
     });
@@ -410,80 +412,78 @@ mod.controller('DeletesubCtrl', function($rootScope, CheckInternet, $window, $sc
 });
 
 
-mod.controller('EditsubCtrl', function($window, $scope, $rootScope, CheckInternet, ApiService, $state, $cordovaCapture, $cordovaImagePicker, $ionicActionSheet, Photo, $stateParams) {
+mod.controller('EditsubCtrl', function($ionicLoading, $window, $scope, $rootScope, CheckInternet, ApiService, $state, $cordovaCapture, $cordovaImagePicker, $ionicActionSheet, Photo, $stateParams) {
+    $scope.buttonText = "Aanpassen";
+
     CheckInternet.getConnection($rootScope);
-    $scope.loginError = '';
     masteraccId = window.localStorage['masteraccId'];
     subaccId = $stateParams.userId;
 
-    function showError(text) {
-        $scope.loginError = text;
-    }
+
     ApiService.get('/account/' + masteraccId + '/subaccounts/' + $stateParams.userId).then(function(result) {
         console.log(result);
         $scope.data = { name: result.Name };
+        $scope.Title = "Subaccount: " + result.Name + " aanpassen";
     });
 
     $scope.create = function(data) {
-        if (data != null) {
+        $ionicLoading.show({
+            template: 'Aanpassen...'
+        });
 
 
-            ApiService.post('/account/' + masteraccId + '/subaccounts/' + $stateParams.userId + '/change', { name: data.name }).then(function(result) {
-                // We've got a result
-                console.log(result);
-                subaccId = result;
-                if ($scope.picData != undefined) {
-                    $scope.send();
+        ApiService.post('/account/' + masteraccId + '/subaccounts/' + $stateParams.userId + '/change', { name: data.name }).then(function(result) {
+            // We've got a result
+            console.log(result);
+            subaccId = result;
+            if ($scope.picData != undefined) {
+                $scope.send();
 
-                }
-                // $state.go($state.current, {}, {reload: true});
-                $window.location.reload();
+            }
+            $ionicLoading.hide();
+            // $state.go($state.current, {}, {reload: true});
+            $window.location.reload();
 
-                $state.go('subaccounts');
-            });
+            $state.go('subaccounts');
+        });
 
-        } else {
-            showError("Email en/of wachtwoord mogen niet leeg zijn!");
-        }
+
 
     }
 
 });
-mod.controller('CreateSubCtrl', function($window, $scope, $rootScope, CheckInternet, ApiService, $state, $cordovaCapture, $cordovaImagePicker, $ionicActionSheet, Photo) {
+mod.controller('CreateSubCtrl', function($ionicLoading, $window, $scope, $rootScope, CheckInternet, ApiService, $state, $cordovaCapture, $cordovaImagePicker, $ionicActionSheet, Photo) {
     CheckInternet.getConnection($rootScope);
-    $scope.loginError = '';
+    $scope.buttonText = "Aanmaken";
+    $scope.Title = "Nieuw subaccount aanmaken";
     masteraccId = window.localStorage['masteraccId'];
     subaccId = null;
 
-    function showError(text) {
-        $scope.loginError = text;
-    }
 
     $scope.create = function(data) {
         console.log(data);
+        $ionicLoading.show({
+            template: 'Creëren...'
+        });
+        console.log($scope.formData.photo);
+        console.log(($scope.picData != undefined));
+        // debugger;
 
-        if (data != null) {
-            console.log(data.name);
-            console.log($scope.formData.photo);
-            console.log(($scope.picData != undefined));
-            // debugger;
+
+        ApiService.post('/account/' + masteraccId + '/subaccounts/create', { name: data.name }).then(function(result) {
+            // We've got a result
+            console.log(result);
+            subaccId = result;
+            if ($scope.picData != undefined) {
+                $scope.send();
+
+            }
+            $ionicLoading.hide();
+            $window.location.reload();
+            $state.go('subaccounts');
+        });
 
 
-            ApiService.post('/account/' + masteraccId + '/subaccounts/create', { name: data.name }).then(function(result) {
-                // We've got a result
-                console.log(result);
-                subaccId = result;
-                if ($scope.picData != undefined) {
-                    $scope.send();
-
-                }
-                $window.location.reload();
-                $state.go('subaccounts');
-            });
-
-        } else {
-            showError("Email en/of wachtwoord mogen niet leeg zijn!");
-        }
 
     }
 

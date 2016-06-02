@@ -1,45 +1,62 @@
-<ion-view view-title="Registreren" >
-    <ion-content scroll="false">
-        <form name="registerform" novalidate>
+<ion-view view-title="Registreren">
+    <ion-content scroll="true">
+        <form name="registerform" novalidate ng-submit="register(data)">
             <p ng-if="loginError" id="loginError" class="card error">{{ loginError }}</p>
             <div class="list list-inset">
-                <label class="item item-input">
+                <label class="item item-input" ">
                     <span class="input-label ">E-mail adres*</span>
-                    <input required type="email" name="email" placeholder="Emailadres" ng-model="data.email" form-validate-after>
-                    <!-- <p ng-show="loginform.email.$error.required">* emailadres is verplicht</p> -->
+                    <input required type="email" name="email " placeholder="Emailadres " ng-model="data.email " ng-class="{ 'has-errors' : registerform.email.$invalid && !registerform.email.$pristine, 'no-errors' : registerform.email.$valid && !registerform.email.$pristine } ">
                 </label>
-                <label class="item item-input">
-                    <span class="input-label">Wachtwoord*</span>
-                    <input required type="password" name="password" placeholder="Wachtwoord" ng-model="data.password" form-validate-after>
-                    <!-- <p ng-show="loginform.password.$error.required">* Password is required</p> -->
+                <!-- <div class="error-container " ng-show="registerform.email.$error " ng-messages="registerform.email.$error ">
+                    <div ng-messages-include="error-list.html "></div>
+                </div> -->
+                <label class="item item-input ">
+                    <span class="input-label ">Wachtwoord*</span>
+                    <input required type="password" name="password " placeholder="Wachtwoord " ng-model="data.password " form-validate-after ng-class="{ 'has-errors' : registerform.password.$invalid && !registerform.password.$pristine, 'no-errors' : registerform.password.$valid && !registerform.password.$pristine } ">
+                    <!-- <p ng-show="loginform.password.$error.required ">* Password is required</p> -->
                 </label>
-                <label class="item item-input">
-                    <span class="input-label">Herhaal wachtwoord*</span>
-                    <input required type="password" name="passwordRepeat" placeholder="Wachtwoord herhalen" ng-model="data.passwordRepeat" form-validate-after>
-                    <!-- <p ng-show="loginform.password.$error.required">* Password is required</p> -->
+
+                <label class="item item-input ">
+                    <span class="input-label ">Herhaal wachtwoord*</span>
+                    <input required type="password" name="passwordRepeat " placeholder="Wachtwoord herhalen " ng-model="data.passwordRepeat " form-validate-after compare-to="data.password " ng-class="{ 'has-errors' : registerform.passwordRepeat.$invalid && !registerform.passwordRepeat.$pristine, 'no-errors' : registerform.passwordRepeat.$valid && !registerform.passwordRepeat.$pristine } ">
+                    <!-- <p ng-show="loginform.password.$error.required ">* Password is required</p> -->
                 </label>
-                <label class="item item-input">
-                    <span class="input-label">Familienaam*</span>
-                    <input required type="text" name="Familyname" placeholder="Familienaam" ng-model="data.familyname" form-validate-after>
-                    <!-- <p ng-show="loginform.password.$error.required">* Password is required</p> -->
+                <div ng-messages="registerform.passwordRepeat.$error "> 
+                    <div ng-messages-include="messages.html "></div>
+                    
+                </div>
+                <label class="item item-input " >
+                    <span class="input-label ">Familienaam*</span>
+                    <input required type="text" name="Familyname " placeholder="Familienaam " ng-model="data.familyname " form-validate-after ng-class="{ 'has-errors' : registerform.Familyname.$invalid && !registerform.Familyname.$pristine, 'no-errors' : registerform.Familyname.$valid && !registerform.Familyname.$pristine } ">
+                    <!-- <p ng-show="loginform.password.$error.required ">* Password is required</p> -->
                 </label>
-                <label class="item item-input">
-                    <span class="input-label">Adres: Straat + nr*</span>
-                    <input required type="text" name="StreetNr" placeholder="Adres" ng-model="data.streetnr" form-validate-after>
-                    <!-- <p ng-show="loginform.password.$error.required">* Password is required</p> -->
+
+                <label class="item item-input " >
+                    <span class="input-label ">Adres: Straat + nr*</span>
+                    <input required type="text" name="StreetNr " placeholder="Adres " ng-model="data.streetnr " form-validate-after ng-class="{ 'has-errors' : registerform.StreetNr.$invalid && !registerform.StreetNr.$pristine, 'no-errors' : registerform.StreetNr.$valid && !registerform.StreetNr.$pristine } ">
+                    <!-- <p ng-show="loginform.password.$error.required ">* Password is required</p> -->
                 </label>
-                <label class="item item-input">
-                    <span class="input-label">Postcode*</span>
-                    <input required type="number" name="zipcode" placeholder="Postcode" ng-model="data.zipcode" form-validate-after>
-                    <!-- <p ng-show="loginform.password.$error.required">* Password is required</p> -->
+
+                <label class="item item-input ">
+                    <span class="input-label ">Postcode*</span>
+                    <input required type="number" min="1000 " max="9999 " step="1 " name="zipcode " placeholder="Postcode " ng-model="data.zipcode " form-validate-after ng-class="{ 'has-errors' : registerform.zipcode.$invalid && !registerform.zipcode.$pristine, 'no-errors' : registerform.zipcode.$valid && !registerform.zipcode.$pristine } ">
+                    <!-- <p ng-show="loginform.password.$error.required ">* Password is required</p> -->
                 </label>
-                <label class="item item-input">
-                    <span class="input-label">Gemeente/stad*</span>
-                    <input required type="text" name="city" placeholder="gemeente/stad" ng-model="data.city" form-validate-after>
-                    <!-- <p ng-show="loginform.password.$error.required">* Password is required</p> -->
+
+                <label class="item item-input " ng-class="{ 'has-errors' : registerform.city.$invalid && !registerform.city.$pristine} " >
+                    <span class="input-label ">Gemeente/stad*</span>
+                    <input required type="text" name="city " placeholder="gemeente/stad " ng-model="data.city " form-validate-after ng-class="{ 'has-errors' : registerform.city.$invalid && !registerform.city.$pristine, 'no-errors' : registerform.city.$valid && !registerform.city.$pristine } ">
+                    <!-- <p ng-show="loginform.password.$error.required ">* Password is required</p> -->
                 </label>
+
             </div>
-            <button class="button button-large button-block icon-right button-calm button-login" ng-click="register(data)">Registeren</button>     
+            <button class="btn btn-primary " ng-disabled="registerform.$invalid " type="submit ">Registeren</button>
         </form>
     </ion-content>
 </ion-view>
+
+<script id="messages.html " type="text/ng-template ">  
+    <div class="messages ">
+        <div ng-message="compareTo ">De 2 wachtwoorden moeten identiek zijn!</div>
+    </div>
+</script>

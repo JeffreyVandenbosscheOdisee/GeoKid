@@ -1,5 +1,5 @@
 /* your custom styles */
-.scroll {
+/*.scroll {
     height: 100%;
 }
 .center {
@@ -16,63 +16,11 @@
 }
 .background{
 	/*background-image: url('background.jpg');*/
-	background-size: cover;
+	/*background-size: cover;
 
 }
+*/
 
-.float-button {
-  -webkit-border-radius: 50%;
-  -moz-border-radius: 50%;
-  border-radius: 50%;
-  width: 30px;
-  padding: 30px;
-  font-size: 40px;
-  background: $warning;
-  position: fixed;
-  bottom: 20px; /* Adjust to where you want it */
-  right: 20px; /* Adjust to where you want it */
-  z-index: 9999;
-  background-color: #0a9dc7;
-}
-
-.float-button .height_fix {
-  margin-top: 100%;
-}
-
-.float-button .content {
-  position: absolute;
-  left: 0;
-  top: 50%;
-  height: 100%;
-  width: 100%;
-  text-align: center;
-  margin-top: -20px; /* Note, this must be half the font size */
-  color: white;
-}
-.solved{
-	color:green !important;
-}
-.notsolved{
-	color: red !important;
-}
-
-.error{
-  color: red;
-}
-
-.icons{
-  font-size: 40px;
-}
-
-.thumbnail{
-      position: absolute;
-    top: 10px;
-    left: 10px;
-    max-width: 80px;
-    max-height: 80px;
-    width: 100%;
-    height: 100%;
-}
 
 .scroll {
     height: 100%;
@@ -95,6 +43,25 @@
   float: left;
 }
 
+
+
+.error{
+  color: red;
+}
+
+.icons{
+  font-size: 40px;
+}
+
+.thumbnail{
+      position: absolute;
+    top: 10px;
+    left: 10px;
+    max-width: 80px;
+    max-height: 80px;
+    width: 100%;
+    height: 100%;
+}
 .infoplayground{
   width: 30%;
   float:left;
@@ -119,4 +86,39 @@
 
 .testImage{
   width: 20%;
+}
+
+.error-container {
+  margin: 5px 0;
+}
+ 
+.error-container:last-child {
+    margin: 5px 0 0;
+}
+ 
+.error {
+  padding: 10px 16px;
+  font-family: "Arial Black", Gadget, sans-serif;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: #555;
+  vertical-align: middle;
+}
+ 
+.error i {
+  font-size: 24px;
+  color: #B83E2C;  
+  vertical-align: middle;
+}
+ 
+.last-error-container > .error {
+  padding: 10px 16px 0;
+}
+ 
+.has-errors { 
+  border: 3px solid #B83E2C !important;
+}
+ 
+.no-errors {
+  border: 3px solid green !important;
 }

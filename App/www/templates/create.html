@@ -1,17 +1,17 @@
 <ion-view view-title="SubAccount aanmaken">
     <ion-content scroll="false">
-        <form name="createform" novalidate>
-            <p ng-if="loginError" id="loginError" class="card error">{{ loginError }}</p>
+    <h2>{{ Title }}</h2>
+        <form name="createform" novalidate ng-submit="create(data)">
             <div class="list list-inset">
                 <label class="item item-input">
                     <span class="input-label ">Naam*</span>
-                    <input type="text" name="name" ng-model="data.name">
+                    <input required type="text" name="name" placeholder="Naam" ng-model="data.name" ng-class="{ 'has-errors' : createform.name.$invalid && !createform.name.$pristine, 'no-errors' : createform.name.$valid && !createform.name.$pristine } ">
                 </label>
                 <!-- <button class="button button-positive" ng-click="showAction()">
                     Add Photo
                 </button> -->
             </div>
-            <button class="button button-large button-block icon-right button-calm button-login" ng-click="create(data)">SubAccount aanmaken</button>
+            <button class="btn btn-primary"  ng-disabled="createform.$invalid" type="submit">{{ buttonText }}</button>
         </form>
         <!-- <h1><i class="mdi-image-camera-alt small"></i><br />INSERT PHOTO</h1>
         <div class="button-bar"> <a class="button" ng-click="takePicture();">Take photo</a> <a class="button" ng-click="selectPicture()">Choice photo</a> <a class="button" ng-click="viewPictures();">View loaded</a> </div>

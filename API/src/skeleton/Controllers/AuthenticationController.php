@@ -72,7 +72,7 @@ class AuthenticationController implements ControllerProviderInterface {
 			$userregister = $app['db.masteraccounts']->insert($data);
 			return new JsonResponse($userregister);
 		}
-		return new JsonResponse(null);
+		return new JsonResponse(false);
 		
 	}
 
