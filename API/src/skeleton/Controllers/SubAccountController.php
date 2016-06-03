@@ -108,10 +108,24 @@ class SubAccountController implements ControllerProviderInterface {
 
 	public function uploadpic(Request $request, Application $app) 
 	{
+		$subaccId = $_POST['subaccId'];
 
 		if(isset($_FILES['photo'])){
 			//Look if image exist
-			$subaccId = $_POST['subaccId'];
+			$di = new \DirectoryIterator($app['photoSubaccount.base_urlServer']);
+			foreach ($di as $file) {
+				if ($file->getExtension() == 'jpg') {
+					if($subaccId == current(explode('-', $file->getFileName()))){		
+						
+							unlink($app['photoSubaccount.base_urlServer'] . '/' . $file);
+						
+						
+					}
+				}
+
+			};
+
+			// exit();
 		 	$date = (new\ DateTime('now', new\ DateTimeZone('UTC'))) -> format('dmY_His');
 		    $temp = explode(".", $_FILES["photo"]["name"]);
 			$filename = $subaccId.'-'.$date . '.' . end($temp);
@@ -124,7 +138,7 @@ class SubAccountController implements ControllerProviderInterface {
 		}else{
 		    echo "No File!";
 		}
-				return new JsonResponse(null);
+		return new JsonResponse(null);
 		
 	}
 
