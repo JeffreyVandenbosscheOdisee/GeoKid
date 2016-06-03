@@ -164,8 +164,8 @@ a {
     margin-top: 2%; }
 
 .smalldiv {
-  top: 25%;
-  bottom: 25%; }
+  top: 23%;
+  bottom: 23%; }
 
 .centerform {
   margin-top: 2%;
@@ -213,6 +213,13 @@ a {
       width: 90%; }
   .inputfields .halfwidth:last-child input {
     width: 100%; }
+
+.loading-container .loading {
+  background-color: rgba(255, 255, 255, 0.7) !important;
+  font-family: "nal_hand";
+  font-size: 30px !important; }
+  .loading-container .loading span {
+    background-color: transparent; }
 
 .error {
   color: #FD6B6A !important;
