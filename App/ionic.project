@@ -1,4 +1,12 @@
 {
   "name": "FindMyCoffee",
-  "app_id": "3eb22c26"
+  "app_id": "3eb22c26",
+  "gulpStartupTasks": [
+    "sass",
+    "watch"
+  ],
+  "watchPatterns": [
+    "www/**/*",
+    "!www/lib/**/*"
+  ]
 }

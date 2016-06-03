@@ -461,7 +461,7 @@ mod.controller('LoginCtrl', function($ionicLoading, $scope, ApiService, CheckInt
         }
 
         // Handle login
-        $scope.login = function(data) {
+            $scope.login = function(data) {
             $ionicLoading.show({
                 template: 'Inloggen...'
             });
@@ -492,6 +492,8 @@ mod.controller('LoginCtrl', function($ionicLoading, $scope, ApiService, CheckInt
                     });
                 }
             } else {
+                $ionicLoading.hide();
+
                 showError("Email en/of wachtwoord mogen niet leeg zijn!");
             }
         }
