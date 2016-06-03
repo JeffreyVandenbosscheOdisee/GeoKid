@@ -8,7 +8,7 @@
                     <input required type="text" name="name" placeholder="Naam" ng-model="data.name" ng-class="{ 'has-errors' : createform.name.$invalid && !createform.name.$pristine, 'no-errors' : createform.name.$valid && !createform.name.$pristine } ">
                 </label>
                  <button type="button" ng-click="takePhoto()" id="take-btn">Take a Photo</button>
-                   <img src="" id="image-preview" width="100%">
+                 <img class="profilepic" ng-if="photoUrl == null"  id="image-preview" src="images/help1.png"><img  id="image-preview" class="profilepic" ng-if="photoUrl != null" src="{{ photoUrl }}">
             </div>
             <button class="btn btn-primary"  ng-disabled="createform.$invalid" type="submit">{{ buttonText }}</button>
         </form>

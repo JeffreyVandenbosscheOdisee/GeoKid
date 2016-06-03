@@ -110,6 +110,7 @@ class SubAccountController implements ControllerProviderInterface {
 	{
 
 		if(isset($_FILES['photo'])){
+			//Look if image exist
 			$subaccId = $_POST['subaccId'];
 		 	$date = (new\ DateTime('now', new\ DateTimeZone('UTC'))) -> format('dmY_His');
 		    $temp = explode(".", $_FILES["photo"]["name"]);

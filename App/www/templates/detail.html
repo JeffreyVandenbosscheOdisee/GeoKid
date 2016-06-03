@@ -1,11 +1,10 @@
 <ion-view view-title="detailview" cache-view="false">
     <ion-content>
         <div>
-            <img ng-if="apiResult.photo == null" src="images/help1.png">
-            <img ng-if="apiResult.photo != null" src="{{ ApiUrl + subaccount.photo.url }}">
+          <img class="profilepic" ng-if="apiResult.photo == null" src="images/help1.png"><img class="profilepic" ng-if="apiResult.photo != null" src="{{ ApiUrl + apiResult.photo.url }}">
         </div>
         <div>
-            <h2>{{ apiResult.Name }}</h2>
+            <h2>{{ apiResult.Name  }} </h2>
             <a href="#/account/{{apiResult.Id}}/edit" class="ion-edit " title=""></a>
             <div>
                 <h3>Bezochte speelpleinen:</h3>

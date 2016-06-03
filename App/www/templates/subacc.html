@@ -7,7 +7,7 @@
                     <p ng-if="problem.solvedDate == undefined" class="notsolved"><i class="ion ion-close-round"></i> Not yet fixed</p>
                 </p> -->
                 <a ng-click = "ChoosePlayer({{ subaccount.Id }})" ><img class="thumbnail" ng-if="subaccount.photo == null" src="images/help1.png"></a>
-                <a href="#/login" ><img class="thumbnail" ng-if="subaccount.photo != null" src="{{ ApiUrl + subaccount.photo.url }}"></a>
+                <a ng-click = "ChoosePlayer({{ subaccount.Id }})"" ><img class="thumbnail" ng-if="subaccount.photo != null" src="{{ ApiUrl + subaccount.photo.url }}"></a>
                 <h2 class="icons" >{{ subaccount.Name }}</h2><a href="#/detail/{{ subaccount.Id }}" class="icons ion-gear-b"></i></a>
 
             </div>

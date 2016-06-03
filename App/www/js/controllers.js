@@ -359,7 +359,7 @@ mod.controller('DetailPlayCtrl', function($scope, $rootScope, CheckInternet, Api
 });
 
 
-mod.controller('SubAccCtrl', function($document, $state, $scope, $rootScope, ApiService, CheckInternet, $stateParams, $window) {
+mod.controller('SubAccCtrl', function($document, $state, $scope, $rootScope, ApiService, CheckInternet, $stateParams, $window, $ImageCacheFactory) {
     if (window.localStorage['masteraccId'] == null) {
         $state.go('login');
 
@@ -370,11 +370,23 @@ mod.controller('SubAccCtrl', function($document, $state, $scope, $rootScope, Api
 
         CheckInternet.getConnection($rootScope);
         masteraccId = window.localStorage['masteraccId'];
-        console.log(ActivePlayers.length);
         $scope.ApiUrl = baseUri;
         ApiService.get('/account/' + masteraccId + '/subaccounts').then(function(result) {
             console.log(result);
             $scope.apiResult = result;
+            for (var i = 0; i < result.length; i++) {
+                if (result[i].photo != null) {
+                    console.log(result[i]);
+                    photourl = baseUri + result[i].photo.url;
+                    $ImageCacheFactory.Cache([
+                        photourl
+                    ]).then(function() {
+                        console.log("Images done loading!");
+                    }, function(failed) {
+                        console.log("An image failed: " + failed);
+                    });
+                }
+            }
         });
         $scope.ChoosePlayer = function(subaccId) {
             console.log();
@@ -535,6 +547,7 @@ mod.controller('EditsubCtrl', function($ionicLoading, $window, $scope, $rootScop
         ApiService.get('/account/' + masteraccId + '/subaccounts/' + $stateParams.userId).then(function(result) {
             console.log(result);
             $scope.data = { name: result.Name };
+            $scope.photoUrl = baseUri + result.photo.url;
             $scope.Title = "Subaccount: " + result.Name + " aanpassen";
         });
 
@@ -548,8 +561,8 @@ mod.controller('EditsubCtrl', function($ionicLoading, $window, $scope, $rootScop
                 // We've got a result
                 console.log(result);
                 subaccId = result;
-                if ($scope.picData != undefined) {
-                    $scope.send();
+                if (imgPath != null) {
+                    $scope.uploadPhoto();
 
                 }
                 $ionicLoading.hide();
@@ -559,8 +572,49 @@ mod.controller('EditsubCtrl', function($ionicLoading, $window, $scope, $rootScop
                 $state.go('subaccounts');
             });
 
+        }
+
+        $scope.takePhoto = function() {
+            navigator.camera.getPicture(function(imgData) {
+                imgPath = imgData;
+                //show after users capture photo
+                document.getElementById("image-preview").src = imgData;
+                // document.getElementById("upload-btn").style.display = "block";
+                document.getElementById("image-preview").style.display = "block";
+                // document.getElementById("description").style.display = "block";
+            }, function(error) {
+                alert(error);
+            }, {
+                quality: 90,
+                destinationType: Camera.DestinationType.FILE_URI,
+                correctOrientation: true
+            });
+        };
+         $scope.uploadPhoto = function() {
+            var options = new FileUploadOptions();
+            options.fileKey = "photo";
+            options.fileName = imgPath;
+            options.mimeType = "image/jpeg";
+            options.params = {
+                subaccId: subaccId
+                    // description: document.getElementById("description").value
+            };
+
+            //set file transfer
+            var fileTransfer = new FileTransfer();
+            //show loading bar when upload on progress
 
 
+            var destinationUrl = "http://api.jeffreyvdb.be/account/10/subaccounts/uploadpic";
+
+            //upload file
+            fileTransfer.upload(imgPath, destinationUrl, function(response) {
+                //on success
+                alert(response.response);
+            }, function(error) {
+                //on failed
+                alert("An error has occured: Code=" + error.code);
+            }, options);
         }
     }
 });
@@ -578,47 +632,47 @@ mod.controller('CreateSubCtrl', function($ionicLoading, $window, $scope, $rootSc
 
 
         $scope.takePhoto = function() {
-                navigator.camera.getPicture(function(imgData) {
-                    imgPath = imgData;
-                    //show after users capture photo
-                    document.getElementById("image-preview").src = imgData;
-                    document.getElementById("upload-btn").style.display = "block";
-                    document.getElementById("image-preview").style.display = "block";
-                    document.getElementById("description").style.display = "block";
-                }, function(error) {
-                    alert(error);
-                }, {
-                    quality: 90,
-                    destinationType: Camera.DestinationType.FILE_URI,
-                    correctOrientation: true
-                });
-            },
-            $scope.create = function(data) {
-                console.log(data);
-                $ionicLoading.show({
-                    template: 'Creëren...'
-                });
-                console.log($scope.formData.photo);
-                console.log(($scope.picData != undefined));
-                // debugger;
+            navigator.camera.getPicture(function(imgData) {
+                imgPath = imgData;
+                //show after users capture photo
+                document.getElementById("image-preview").src = imgData;
+                // document.getElementById("upload-btn").style.display = "block";
+                document.getElementById("image-preview").style.display = "block";
+                // document.getElementById("description").style.display = "block";
+            }, function(error) {
+                alert(error);
+            }, {
+                quality: 90,
+                destinationType: Camera.DestinationType.FILE_URI,
+                correctOrientation: true
+            });
+        };
+        $scope.create = function(data) {
+            console.log(data);
+            $ionicLoading.show({
+                template: 'Creëren...'
+            });
+            console.log($scope.formData.photo);
+            console.log(($scope.picData != undefined));
+            // debugger;
 
 
-                ApiService.post('/account/' + masteraccId + '/subaccounts/create', { name: data.name }).then(function(result) {
-                    // We've got a result
-                    console.log(result);
-                    subaccId = result;
-                    if (imgPath != null) {
-                        $scope.uploadPhoto();
+            ApiService.post('/account/' + masteraccId + '/subaccounts/create', { name: data.name }).then(function(result) {
+                // We've got a result
+                console.log(result);
+                subaccId = result;
+                if (imgPath != null) {
+                    $scope.uploadPhoto();
 
-                    }
-                    $ionicLoading.hide();
-                    $window.location.reload();
-                    $state.go('subaccounts');
-                });
+                }
+                $ionicLoading.hide();
+                $window.location.reload();
+                $state.go('subaccounts');
+            });
 
 
 
-            }
+        };
         $scope.uploadPhoto = function() {
             var options = new FileUploadOptions();
             options.fileKey = "photo";
@@ -626,15 +680,15 @@ mod.controller('CreateSubCtrl', function($ionicLoading, $window, $scope, $rootSc
             options.mimeType = "image/jpeg";
             options.params = {
                 subaccId: subaccId
-                // description: document.getElementById("description").value
+                    // description: document.getElementById("description").value
             };
 
             //set file transfer
             var fileTransfer = new FileTransfer();
             //show loading bar when upload on progress
-            
 
-var destinationUrl = "http://api.jeffreyvdb.be/account/10/subaccounts/uploadpic";
+
+            var destinationUrl = "http://api.jeffreyvdb.be/account/10/subaccounts/uploadpic";
 
             //upload file
             fileTransfer.upload(imgPath, destinationUrl, function(response) {
@@ -645,155 +699,6 @@ var destinationUrl = "http://api.jeffreyvdb.be/account/10/subaccounts/uploadpic"
                 alert("An error has occured: Code=" + error.code);
             }, options);
         }
-        // $scope.takePic = function() {
-        //     var options = {
-        //         quality: 50,
-        //         destinationType: Camera.DestinationType.FILE_URI,
-        //         sourceType: 1, // 0:Photo Library, 1=Camera, 2=Saved Photo Album
-        //         encodingType: 0 // 0=JPG 1=PNG
-        //     }
-        //     navigator.camera.getPicture(onSuccess, onFail, options);
-        // }
-        // var onSuccess = function(FILE_URI) {
-        //     console.log(FILE_URI);
-        //     $scope.picData = FILE_URI;
-        //     $scope.$apply();
-        // };
-        // var onFail = function(e) {
-        //     console.log("On fail " + e);
-        // }
-        // $scope.send = function() {
-        //     console.log("dssds");
-        //     var myImg = $scope.picData;
-        //     var options = new FileUploadOptions();
-        //     options.fileKey = "post";
-        //     options.chunkedMode = false;
-        //     var params = {};
-        //     // params.user_token = localStorage.getItem('auth_token');
-        //     // params.user_email = localStorage.getItem('email');
-        //     options.params = params;
-        //     var ft = new FileTransfer();
-
-        //     ft.upload(myImg, encodeURI(baseUri + '/account/' + masteraccId + '/' + subaccId + '/uploadpic'), onUploadSuccess, onUploadFail, options);
-        // }
-
-        // $scope.data = { "ImageURI": "Select Image" };
-
-        // $scope.takePicture = function() {
-        //     var options = {
-        //         quality: 50,
-        //         destinationType: Camera.DestinationType.FILE_URL,
-        //         sourceType: Camera.PictureSourceType.CAMERA
-        //     };
-        //     $cordovaCamera.getPicture(options).then(
-        //         function(imageData) {
-        //             $scope.picData = imageData;
-        //             $scope.ftLoad = true;
-        //             // $localstorage.set('fotoUp', imageData);
-        //             // $ionicLoading.show({ template: 'Foto acquisita...', duration: 500 });
-        //         },
-        //         function(err) {
-        //             $ionicLoading.show({ template: 'Error, gelieve opnieuw een foto te maken', duration: 500 });
-        //         })
-        // }
-
-        // $scope.selectPicture = function() {
-        //     var options = {
-        //         quality: 50,
-        //         destinationType: Camera.DestinationType.FILE_URI,
-        //         sourceType: Camera.PictureSourceType.PHOTOLIBRARY
-        //     };
-
-        //     $cordovaCamera.getPicture(options).then(
-        //         function(imageURI) {
-        //             window.resolveLocalFileSystemURI(imageURI, function(fileEntry) {
-        //                 $scope.picData = fileEntry.nativeURL;
-        //                 $scope.ftLoad = true;
-        //                 var image = document.getElementById('myImage');
-        //                 image.src = fileEntry.nativeURL;
-        //             });
-        //             // $ionicLoading.show({ template: 'Foto acquisita...', duration: 500 });
-        //         },
-        //         function(err) {
-        //             $ionicLoading.show({ template: 'Error, gelieve opnieuw te proberen', duration: 500 });
-        //         })
-        // };
-
-        // $scope.uploadPicture = function() {
-        //     $ionicLoading.show({ template: 'Uploaden' });
-        //     var fileURL = $scope.picData;
-        //     var options = new FileUploadOptions();
-        //     options.fileKey = "file";
-        //     options.fileName = fileURL.substr(fileURL.lastIndexOf('/') + 1);
-        //     options.mimeType = "image/jpeg";
-        //     options.chunkedMode = true;
-
-        //     var params = {};
-        //     params.value1 = "someparams";
-        //     params.value2 = "otherparams";
-
-        //     options.params = params;
-
-        //     var ft = new FileTransfer();
-        //     ft.upload(fileURL, encodeURI("http://www.yourdomain.com/upload.php"), viewUploadedPictures, function(error) {
-        //         $ionicLoading.show({ template: 'Een Error gelieve opnieuw te proberen' });
-        //         $ionicLoading.hide();
-        //     }, options);
-        // }
-        // 
-
-        $scope.formData = {};
-
-        // action sheet
-        $scope.showAction = function() {
-
-            var hideSheet = $ionicActionSheet.show({
-                buttons: [
-                    { text: ' Capture' },
-                    { text: ' Pick' }
-                ],
-                title: 'Add Photo',
-                cancelText: 'Cancel',
-                cancel: function() {
-                    //
-                },
-                buttonClicked: function(index) {
-                    if (index == 0) {
-                        var options = {
-                            limit: 1
-                        };
-
-                        // capture
-                        $cordovaCapture.captureImage(options).then(function(imageData) {
-                            var imgData = imageData[0].fullPath;
-                            // convert image to base64 string
-                            Photo.convertImageToBase64(imgData, function(base64Img) {
-                                $scope.formData.photo = base64Img;
-                            });
-                            console.log($scope.formData.photo);
-
-
-                        }, function(error) {
-                            $scope.photoError = error;
-                        });
-                    } else if (index == 1) {
-                        var options = {
-                            maximumImagesCount: 1,
-                        };
-
-                        // pick
-                        $cordovaImagePicker.getPictures(options).then(function(results) {
-                            var imgData = results[0];
-                            // convert image to base64 string
-                            Photo.convertImageToBase64(imgData, function(base64Img) {
-                                $scope.formData.photo = base64Img;
-                            });
-                            console.log($scope.formData.photo);
-                        });
-                    }
-                }
-            })
-        };
     }
 });
 
