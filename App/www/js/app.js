@@ -1,4 +1,4 @@
-var app = angular.module('GeoKidApp', ['ionic','ngCordova','ngMessages','GeoKidApp.services', 'GeoKidApp.controllers', 'GeoKidApp.filters', 'GeoKidApp.directives', 'ionic.ion.imageCacheFactory']);
+var app = angular.module('GeoKidApp', ['ionic', 'ngCordova', 'ngMessages', 'GeoKidApp.services', 'GeoKidApp.controllers', 'GeoKidApp.filters', 'GeoKidApp.directives', 'ionic.ion.imageCacheFactory']);
 var baseUri = 'https://api.jeffreyvdb.be';
 // var baseUri = 'http://localhost:8000';
 
@@ -6,15 +6,20 @@ var baseUri = 'https://api.jeffreyvdb.be';
 // === Basic Setup
 app.run(
     function($ionicPlatform) {
-      $ionicPlatform.ready(function() {
-        if(window.cordova && window.cordova.plugins.Keyboard) {
-          cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-          cordova.plugins.Keyboard.disableScroll(true);
-        }
-        if(window.StatusBar) {
-          StatusBar.styleDefault();
-        }
-      })
+        $ionicPlatform.ready(function() {
+            if (window.cordova && window.cordova.plugins.Keyboard) {
+                cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+                cordova.plugins.Keyboard.disableScroll(true);
+            }
+            if (window.StatusBar) {
+                window.StatusBar.overlaysWebView(false);
+                window.StatusBar.styleHex('#556270');
+                StatusBar.styleDefault();
+            }
+            if (cordova.platformId == 'android') {
+                StatusBar.backgroundColorByHexString("#556270");
+            }
+        })
     }
 );
 
@@ -23,19 +28,19 @@ app.config(
     function($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state('login', {
-              url: '/login',
-              templateUrl: 'templates/login.html',
-              controller: 'LoginCtrl'
+                url: '/login',
+                templateUrl: 'templates/login.html',
+                controller: 'LoginCtrl'
             })
             .state('logout', {
-              url: '/logout',
-              controller: 'LogoutCtrl'
+                url: '/logout',
+                controller: 'LogoutCtrl'
             })
 
-            .state('register', {
-              url: '/register',
-              templateUrl: 'templates/register.html',
-              controller: 'RegisterCtrl'
+        .state('register', {
+                url: '/register',
+                templateUrl: 'templates/register.html',
+                controller: 'RegisterCtrl'
             })
             .state('mapoverview', {
                 url: '/mapoverview',
@@ -43,48 +48,47 @@ app.config(
                 controller: 'MapOverviewCtrl'
             })
 
-            .state('navigation', {
-                url: '/navigation',
-                templateUrl: 'templates/navigate.html',
-                controller: 'NavCtrl'
-            })
+        .state('navigation', {
+            url: '/navigation',
+            templateUrl: 'templates/navigate.html',
+            controller: 'NavCtrl'
+        })
 
-            .state('detailplayground', {
-                url: '/detailplayground/:playgroundId',
-                templateUrl: 'templates/detailplayground.html',
-                params:{playgroundId: null},
-                controller: 'DetailPlayCtrl'
-            })
-
-
-            .state('detailsub', {
-                url: '/detail/:userId',
-                templateUrl: 'templates/detail.html',
-                controller: 'DetailSubaccCtrl'
-            })
-
-            .state('createsub', {
-              url: '/subaccounts/create',
-              templateUrl: 'templates/create.html',
-              controller: 'CreateSubCtrl'
-            })
-
-            .state('editsub', {
-              url: '/account/:userId/edit',
-              templateUrl: 'templates/create.html',
-              controller: 'EditsubCtrl'
-            })
+        .state('detailplayground', {
+            url: '/detailplayground/:playgroundId',
+            templateUrl: 'templates/detailplayground.html',
+            params: { playgroundId: null },
+            controller: 'DetailPlayCtrl'
+        })
 
 
-            .state('subaccounts', {
-                'url': '/subaccounts',
-                'templateUrl': 'templates/subacc.html',
-                'controller': 'SubAccCtrl'
-            });
+        .state('detailsub', {
+            url: '/detail/:userId',
+            templateUrl: 'templates/detail.html',
+            controller: 'DetailSubaccCtrl'
+        })
+
+        .state('createsub', {
+            url: '/subaccounts/create',
+            templateUrl: 'templates/create.html',
+            controller: 'CreateSubCtrl'
+        })
+
+        .state('editsub', {
+            url: '/account/:userId/edit',
+            templateUrl: 'templates/create.html',
+            controller: 'EditsubCtrl'
+        })
+
+
+        .state('subaccounts', {
+            'url': '/subaccounts',
+            'templateUrl': 'templates/subacc.html',
+            'controller': 'SubAccCtrl'
+        });
 
         // if none of the above states are matched, use this as the fallback
         // $urlRouterProvider.otherwise('/subaccounts/create');
         $urlRouterProvider.otherwise('/login');
     }
 );
-

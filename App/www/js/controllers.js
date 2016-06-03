@@ -9,6 +9,8 @@ mod.controller('MapOverviewCtrl', function($scope, $rootScope, ApiService, Check
         $state.go('login');
 
     } else {
+        $rootScope.login = false;
+        
         // $ionicPlatform.ready(function() {
         CheckInternet.getConnection($rootScope);
 
@@ -115,6 +117,8 @@ mod.controller('NavCtrl', function($scope, $rootScope, CheckInternet, ApiService
         $state.go('login');
 
     } else {
+        $rootScope.login = false;
+
         CheckInternet.getConnection($rootScope);
         var playground = JSON.parse(window.localStorage['playground']);
         console.log(playground);
@@ -238,6 +242,8 @@ mod.controller('DetailSubaccCtrl', function($scope, $rootScope, CheckInternet, A
         $state.go('login');
 
     } else {
+        $rootScope.login = false;
+
         CheckInternet.getConnection($rootScope);
         console.log($stateParams.userId);
         $scope.ApiUrl = baseUri;
@@ -289,6 +295,8 @@ mod.controller('DetailPlayCtrl', function($scope, $rootScope, CheckInternet, Api
         $state.go('login');
 
     } else {
+        $rootScope.login = false;
+
         var internet = CheckInternet.getConnection($rootScope);
         console.log($stateParams);
         var checkeditems = 0;
@@ -392,6 +400,7 @@ mod.controller('SubAccCtrl', function($document, $state, $scope, $rootScope, Api
         $state.go('login');
 
     } else {
+        $rootScope.login = false;
 
         localStorage.removeItem("ActivePlayers");
         $scope.Start = false;
@@ -547,6 +556,7 @@ mod.controller('EditsubCtrl', function($ionicLoading, $window, $scope, $rootScop
         $state.go('login');
 
     } else {
+        $rootScope.login = false;
         $scope.buttonText = "Aanpassen";
 
         CheckInternet.getConnection($rootScope);
@@ -634,6 +644,8 @@ mod.controller('CreateSubCtrl', function($ionicLoading, $window, $scope, $rootSc
         $state.go('login');
 
     } else {
+        $rootScope.login = false;
+
         var imgPath = null;
         CheckInternet.getConnection($rootScope);
         $scope.buttonText = "Aanmaken";
