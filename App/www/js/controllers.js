@@ -233,7 +233,7 @@ mod.controller('NavCtrl', function($scope, $rootScope, CheckInternet, ApiService
 });
 
 // DetailController
-mod.controller('DetailSubaccCtrl', function($scope, $rootScope, CheckInternet, ApiService, $stateParams) {
+mod.controller('DetailSubaccCtrl', function($scope, $rootScope, CheckInternet, ApiService, $stateParams, $ionicPopup, $ionicLoading, $window) {
     if (window.localStorage['masteraccId'] == null) {
         $state.go('login');
 
@@ -253,6 +253,34 @@ mod.controller('DetailSubaccCtrl', function($scope, $rootScope, CheckInternet, A
                 $scope.apiResultachievement = result;
             });
         });
+        $scope.DeleteUser = function(userid) {
+            var confirmPopup = $ionicPopup.confirm({
+                title: 'Gebruiker verwijderen',
+                template: 'Bent u zeker dat u deze gebruiker wilt verwijderen?',
+                buttons: [{
+                    text: 'Annuleren'
+                }, {
+                    text: '<b>Verwijderen</b>',
+                    type: 'button-positive',
+                    onTap: function(e) {
+                        $ionicLoading.show({
+                            template: 'Verwijderen...'
+                        });
+                        CheckInternet.getConnection($rootScope);
+                        masteraccId = window.localStorage['masteraccId'];
+                        // subaccId = $stateParams.userId;
+                        subaccId = userid;
+                        ApiService.get('/account/' + masteraccId + '/subaccounts/' + $stateParams.userId + '/delete').then(function(result) {
+                            // We've got a result
+                            console.log(result);
+                            $ionicLoading.hide();
+                            $window.location.reload();
+                            $state.go('subaccounts');
+                        });
+                    }
+                }]
+            });
+        }
     }
 });
 
@@ -510,26 +538,6 @@ mod.controller('RegisterCtrl', function($ionicLoading, $scope, ApiService, $stat
     }
 });
 
-mod.controller('DeletesubCtrl', function($ionicLoading, $rootScope, CheckInternet, $window, $scope, ApiService, $state, $stateParams) {
-    if (window.localStorage['masteraccId'] == null) {
-        $state.go('login');
-
-    } else {
-        $ionicLoading.show({
-            template: 'Verwijderen...'
-        });
-        CheckInternet.getConnection($rootScope);
-        masteraccId = window.localStorage['masteraccId'];
-        subaccId = $stateParams.userId;
-        ApiService.get('/account/' + masteraccId + '/subaccounts/' + $stateParams.userId + '/delete').then(function(result) {
-            // We've got a result
-            console.log(result);
-            $ionicLoading.hide();
-            $window.location.reload();
-            $state.go('subaccounts');
-        });
-    }
-});
 
 
 mod.controller('EditsubCtrl', function($ionicLoading, $window, $scope, $rootScope, CheckInternet, ApiService, $state, $cordovaCapture, $cordovaImagePicker, $ionicActionSheet, Photo, $stateParams) {
@@ -547,7 +555,8 @@ mod.controller('EditsubCtrl', function($ionicLoading, $window, $scope, $rootScop
         ApiService.get('/account/' + masteraccId + '/subaccounts/' + $stateParams.userId).then(function(result) {
             console.log(result);
             $scope.data = { name: result.Name };
-            $scope.photoUrl = baseUri + result.photo.url;
+            if (result.photo != null)
+                $scope.photoUrl = baseUri + result.photo.url;
             $scope.Title = "Subaccount: " + result.Name + " aanpassen";
         });
 
@@ -560,7 +569,7 @@ mod.controller('EditsubCtrl', function($ionicLoading, $window, $scope, $rootScop
             ApiService.post('/account/' + masteraccId + '/subaccounts/' + $stateParams.userId + '/change', { name: data.name }).then(function(result) {
                 // We've got a result
                 console.log(result);
-                subaccId = result;
+                // subaccId = result;
                 if (imgPath != null) {
                     $scope.uploadPhoto();
 
@@ -590,7 +599,7 @@ mod.controller('EditsubCtrl', function($ionicLoading, $window, $scope, $rootScop
                 correctOrientation: true
             });
         };
-         $scope.uploadPhoto = function() {
+        $scope.uploadPhoto = function() {
             var options = new FileUploadOptions();
             options.fileKey = "photo";
             options.fileName = imgPath;
@@ -652,8 +661,7 @@ mod.controller('CreateSubCtrl', function($ionicLoading, $window, $scope, $rootSc
             $ionicLoading.show({
                 template: 'Creëren...'
             });
-            console.log($scope.formData.photo);
-            console.log(($scope.picData != undefined));
+
             // debugger;
 
 

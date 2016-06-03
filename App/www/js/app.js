@@ -75,10 +75,6 @@ app.config(
               controller: 'EditsubCtrl'
             })
 
-            .state('deletesub', {
-              url: '/account/:userId/delete',
-              controller: 'DeletesubCtrl'
-            })
 
             .state('subaccounts', {
                 'url': '/subaccounts',

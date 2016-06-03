@@ -24,7 +24,7 @@
             </ion-list>
         </div>
         <a href="#/subaccounts" title="">Terug naar subaccounts.</a>
-        <a href="#/account/{{apiResult.Id}}/delete" title="">
+        <a ng-click="DeleteUser({{ apiResult.Id }})" >
             <p>Profiel verwijderen?</p>
         </a>
     </ion-content>

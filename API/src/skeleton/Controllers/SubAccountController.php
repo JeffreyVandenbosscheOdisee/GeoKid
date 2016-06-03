@@ -192,7 +192,11 @@ class SubAccountController implements ControllerProviderInterface {
 
 		$subaccount = $app['db.subaccounts']->findSubAccount($masteraccId, $subaccId);
 
+		$data = $app['db.playgrounds_has_subaccounts']->delete( array('subaccounts_Id' => $subaccId));
+		$data = $app['db.tasks']->delete( array('SubAccounts_Id' => $subaccId));
+		$data = $app['db.achievements_has_subaccounts']->delete( array('SubAccounts_Id' => $subaccId));
 		$data = $app['db.subaccounts']->delete( array('id' => $subaccId));
+
 		return new JsonResponse($data);
 	}
 }
