@@ -139,7 +139,9 @@ a {
   outline: 0;
   -webkit-appearance: none;
   background-color: #fff;
-  font-size: 16px; }
+  font-size: 16px;
+  width: 50%;
+  /*whatever width you want*/ }
   .centerdiv h2 {
     font-family: "nal_hand";
     text-align: center;
@@ -162,9 +164,7 @@ a {
 
 .inner {
   margin-left: auto;
-  margin-right: auto;
-  width: 50%;
-  /*whatever width you want*/ }
+  margin-right: auto; }
 
 .smalldiv {
   top: 23%;
@@ -228,6 +228,36 @@ a {
   color: #FD6B6A !important;
   margin-bottom: 1%;
   font-size: 20px; }
+
+.wrap {
+  text-align: center; }
+
+.subaccount {
+  display: inline-block;
+  width: 15%;
+  padding: 2%; }
+
+.datasubaccount {
+  width: 100%;
+  float: left;
+  min-height: 250px; }
+  .datasubaccount img {
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    box-sizing: border-box;
+    display: block;
+    margin: 0 auto;
+    border-radius: 50%;
+    border: 1px solid white; }
+  .datasubaccount h2 {
+    width: 100%;
+    font-family: "nal_hand";
+    color: white; }
+  .datasubaccount .active {
+    border: 6px solid #4ECDC4; }
+  .datasubaccount a {
+    color: #4ECDC4; }
 
 /*!
   Ionicons, v2.0.1

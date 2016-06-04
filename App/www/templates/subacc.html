@@ -1,27 +1,33 @@
 <ion-view view-title="User Overview">
     <ion-content>
-        <!-- <ion-list> -->
-            <div ng-repeat="subaccount in apiResult" class="item item-thumbnail-left" id="{{ subaccount.Id }}">
-<!--                 <p>
-                    <p class="solved" ng-if="problem.solvedDate != undefined"><i class="ion ion-checkmark"></i>Fixed </p>
-                    <p ng-if="problem.solvedDate == undefined" class="notsolved"><i class="ion ion-close-round"></i> Not yet fixed</p>
-                </p> -->
-                <a ng-click = "ChoosePlayer({{ subaccount.Id }})" ><img class="thumbnail" ng-if="subaccount.photo == null" src="images/help1.png"></a>
-                <a ng-click = "ChoosePlayer({{ subaccount.Id }})"" ><img class="thumbnail" ng-if="subaccount.photo != null" src="{{ ApiUrl + subaccount.photo.url }}"></a>
-                <h2 class="icons" >{{ subaccount.Name }}</h2><a href="#/detail/{{ subaccount.Id }}" class="icons ion-gear-b"></i></a>
-
+        <div class="wrap outer">
+            <div class="middle">
+                <div class="subaccount inner" ng-repeat="subaccount in apiResult">
+                    <div class="datasubaccount">
+                        <a ng-click="ChoosePlayer({{ subaccount.Id }})">
+                            <img id="{{ subaccount.Id  }}" ng-if="subaccount.photo == null" src="images/help1.png">
+                        </a>
+                        <a ng-click="ChoosePlayer({{ subaccount.Id }})" " >
+                            <img id="{{ subaccount.Id  }}" ng-if="subaccount.photo !=null " src="{{ ApiUrl + subaccount.photo.url }} ">
+                        </a>
+                        <h2>{{ subaccount.Name }}</h2>
+                        <div>
+                            <a href="#/detail/{{ subaccount.Id }} ">Profielpagina</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="subaccount ">
+                    <div class="datasubaccount ">
+                        <a href="#/subaccounts/create">
+                            <img src="images/add.png">
+                        </a >
+                        <h2>Toevoegen</h2>
+                    </div>
+                </div>
             </div>
-             <a href="#/subaccounts/create""><div class="item item-thumbnail-left">
-<!--                 <p>
-                    <p class="solved" ng-if="problem.solvedDate != undefined"><i class="ion ion-checkmark"></i>Fixed </p>
-                    <p ng-if="problem.solvedDate == undefined" class="notsolved"><i class="ion ion-close-round"></i> Not yet fixed</p>
-                </p> -->
-                <p> +</p>
-                <h2>Toevoegen</h2>
-            </div></a>
-        <!-- </ion-list> -->
+        </div>
         <div>
-                <a href="#/mapoverview" ng-show="Start">Vertrekken</a>
+            <a href="#/mapoverview " ng-show="Start ">Vertrekken</a>
         </div>
     </ion-content>
 </ion-view>

@@ -431,6 +431,7 @@ mod.controller('SubAccCtrl', function($document, $state, $scope, $rootScope, Api
             if (index == -1) {
                 ActivePlayers.push(subaccId);
                 var result = document.getElementById(subaccId);
+                console.log(result);
                 var wrappedResult = angular.element(result);
                 wrappedResult.addClass('active');
             } else {

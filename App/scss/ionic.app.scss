@@ -37,14 +37,15 @@ $subColorRed: #FD6B6A !default;
     border: 1px solid #ccc;
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
-    border-radius: 10px;   
+    border-radius: 10px;
     font-size: 20px;
     padding: 4px 7px;
     outline: 0;
     -webkit-appearance: none;
 }
-@mixin buttonShadow{
-	-moz-box-shadow: 2px 2px 3px #666;
+
+@mixin buttonShadow {
+    -moz-box-shadow: 2px 2px 3px #666;
     -webkit-box-shadow: 2px 2px 3px #666;
     box-shadow: 2px 2px 3px #666;
 }
@@ -177,16 +178,12 @@ a {
 }
 
 .centerdiv {
-    // width: 50%;
     @include roundCorner;
     background-color: #fff;
-    // position: absolute;
-    // display: block;
-    // margin: auto;
-    // left: 25%;
-    // right: 25%;
     font-size: 16px;
-    // height: auto;
+    width: 50%;
+    /*whatever width you want*/
+    ;
     h2 {
         font-family: "nal_hand";
         // float:left;
@@ -215,8 +212,7 @@ a {
 
 .inner {
     margin-left: auto;
-    margin-right: auto; 
-    width: 50%;/*whatever width you want*/;
+    margin-right: auto;
 }
 
 .smalldiv {
@@ -238,7 +234,6 @@ a {
     min-height: 47px;
     @include roundCorner;
     @include buttonShadow;
-
     font-size: 16px;
     font-family: "nal_hand";
     font-size: 30px;
@@ -286,6 +281,50 @@ a {
     color: $subColorRed !important;
     margin-bottom: 1%;
     font-size: 20px;
+}
+
+
+.wrap {
+    // border: 1px solid black;
+    text-align: center;
+}
+
+.subaccount {
+    // border: 1px solid blue;
+    display: inline-block;
+    width: 15%;
+    padding: 2%;
+}
+
+.datasubaccount {
+    // border: 1px solid green;
+    width: 100%;
+    float:left;
+    min-height: 250px;
+    // height: 50px;
+    img {
+        width: 100px;
+        height: 100px;
+        overflow: hidden;
+        box-sizing: border-box;
+        display: block;
+        margin: 0 auto;
+        border-radius: 50%;
+        border: 1px solid white;
+
+    }
+    h2 {
+        width: 100%;
+        font-family: "nal_hand";
+        color: white;
+    }
+    .active{
+        border: 6px solid $subColorBlue;
+
+    }
+    a{
+    	color: $subColorBlue;
+    }
 }
 
 // Include all of Ionic
