@@ -344,5 +344,18 @@ a {
 
 }
 
+.goBtn{
+	margin: 0 auto;
+	text-align: center;
+	// float:left;
+	width: 100%;
+    position: absolute;
+    bottom: 25%;
+    a{
+    	color: white;
+    	padding:1% 5%;
+    }
+}
+
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";

@@ -272,6 +272,16 @@ a {
     border-radius: 50%;
     border: 1px solid white; }
 
+.goBtn {
+  margin: 0 auto;
+  text-align: center;
+  width: 100%;
+  position: absolute;
+  bottom: 25%; }
+  .goBtn a {
+    color: white;
+    padding: 1% 5%; }
+
 /*!
   Ionicons, v2.0.1
   Created by Ben Sperry for the Ionic Framework, http://ionicons.com/
