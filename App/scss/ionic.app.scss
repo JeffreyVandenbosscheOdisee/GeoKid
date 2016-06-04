@@ -181,7 +181,7 @@ a {
     @include roundCorner;
     background-color: #fff;
     font-size: 16px;
-    width: 50%;
+    // width: 50%;
     /*whatever width you want*/
     ;
     h2 {
@@ -213,6 +213,7 @@ a {
 .inner {
     margin-left: auto;
     margin-right: auto;
+    width:50%;
 }
 
 .smalldiv {
@@ -325,6 +326,22 @@ a {
     a{
     	color: $subColorBlue;
     }
+}
+.previewImage{
+	// background-color: $baseColor;
+	text-align:center;
+	img{
+		background-color: $baseColor;
+		width: 100px;
+        height: 100px;
+        overflow: hidden;
+        box-sizing: border-box;
+        display: block;
+        margin: 0 auto;
+        border-radius: 50%;
+        border: 1px solid white;
+	}
+
 }
 
 // Include all of Ionic

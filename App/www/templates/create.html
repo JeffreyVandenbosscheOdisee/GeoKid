@@ -1,25 +1,27 @@
 <ion-view view-title="SubAccount aanmaken">
     <ion-content scroll="true">
-    <h2>{{ Title }}</h2>
-        <form name="createform" novalidate ng-submit="create(data)">
-            <div class="list list-inset">
-                <label class="item item-input">
-                    <span class="input-label ">Naam*</span>
-                    <input required type="text" name="name" placeholder="Naam" ng-model="data.name" ng-class="{ 'has-errors' : createform.name.$invalid && !createform.name.$pristine, 'no-errors' : createform.name.$valid && !createform.name.$pristine } ">
-                </label>
-                 <button type="button" ng-click="takePhoto()" id="take-btn">Take a Photo</button>
-                 <img class="profilepic" ng-if="photoUrl == null"  id="image-preview" src="images/help1.png"><img  id="image-preview" class="profilepic" ng-if="photoUrl != null" src="{{ photoUrl }}">
+        <div class="outer">
+            <div class="middle">
+                <div class="inner">
+                    <div class="centerdiv">
+                        <form name="createform" novalidate ng-submit="create(data)"  class="centerform">
+                            <h2>{{ Title }}</h2>
+                            <div class="inputfields">
+                                <label>
+                                    <span>Naam*</span>
+                                    <input required type="text" name="name" placeholder="Naam" ng-model="data.name" ng-class="{ 'has-errors' : createform.name.$invalid && !createform.name.$pristine, 'no-errors' : createform.name.$valid && !createform.name.$pristine } ">
+                                </label>
+                                
+                                <div class="previewImage">
+                                    <img class="profilepic" ng-if="photoUrl == null" id="image-preview" src="images/help1.png"><img id="image-preview" class="profilepic" ng-if="photoUrl != null" src="{{ photoUrl }}">
+                                    <button type="button" class="ownbutton" ng-click="takePhoto()" id="take-btn">Foto nemen</button>
+                                </div>
+                            </div>
+                            <button class="ownbutton button-block" ng-disabled="createform.$invalid" type="submit">{{ buttonText }}</button>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <button class="btn btn-primary"  ng-disabled="createform.$invalid" type="submit">{{ buttonText }}</button>
-        </form>
-        <!-- <h1><i class="mdi-image-camera-alt small"></i><br />INSERT PHOTO</h1>
-        <div class="button-bar"> <a class="button" ng-click="takePicture();">Take photo</a> <a class="button" ng-click="selectPicture()">Choice photo</a> <a class="button" ng-click="viewPictures();">View loaded</a> </div>
-        <div ng-show="picData" class="item item-image">When pics loaded click to upload!<img id="myImage" class="item" ng-src="{{picData}}" ng-click="uploadPicture()" style="height:200px;" /></div>
-        <div class="home-sq" ng-show=photos>
-            <p><i class="icon ion-alert-circled" style="color:#F60"></i> Click to set photo like avatar, or lon click to delete!
-                <p>
-                    <div ng-repeat="photo in photos track by $index" ng-click="setPhoto($index, photo.name, profilo.user_id)" on-hold="delPhoto($index, photo.name)" style="background-image:url({{photo.file}});background-size:120% auto"> </div>
         </div>
-        </div> -->
     </ion-content>
 </ion-view>

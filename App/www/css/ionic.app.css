@@ -140,7 +140,6 @@ a {
   -webkit-appearance: none;
   background-color: #fff;
   font-size: 16px;
-  width: 50%;
   /*whatever width you want*/ }
   .centerdiv h2 {
     font-family: "nal_hand";
@@ -164,7 +163,8 @@ a {
 
 .inner {
   margin-left: auto;
-  margin-right: auto; }
+  margin-right: auto;
+  width: 50%; }
 
 .smalldiv {
   top: 23%;
@@ -258,6 +258,19 @@ a {
     border: 6px solid #4ECDC4; }
   .datasubaccount a {
     color: #4ECDC4; }
+
+.previewImage {
+  text-align: center; }
+  .previewImage img {
+    background-color: #556270;
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    box-sizing: border-box;
+    display: block;
+    margin: 0 auto;
+    border-radius: 50%;
+    border: 1px solid white; }
 
 /*!
   Ionicons, v2.0.1
