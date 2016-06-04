@@ -177,16 +177,16 @@ a {
 }
 
 .centerdiv {
-    width: 50%;
+    // width: 50%;
     @include roundCorner;
     background-color: #fff;
-    position: absolute;
-    display: block;
-    margin: auto;
-    left: 25%;
-    right: 25%;
+    // position: absolute;
+    // display: block;
+    // margin: auto;
+    // left: 25%;
+    // right: 25%;
     font-size: 16px;
-    height: auto;
+    // height: auto;
     h2 {
         font-family: "nal_hand";
         // float:left;
@@ -199,6 +199,24 @@ a {
         text-align: center;
         margin-top: 2%;
     }
+}
+
+.outer {
+    display: table;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
+.middle {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.inner {
+    margin-left: auto;
+    margin-right: auto; 
+    width: 50%;/*whatever width you want*/;
 }
 
 .smalldiv {
