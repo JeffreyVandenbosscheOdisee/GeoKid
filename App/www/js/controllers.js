@@ -10,6 +10,7 @@ mod.controller('MapOverviewCtrl', function($scope, $rootScope, ApiService, Check
 
     } else {
         $rootScope.login = false;
+        $scope.ApiUrl = baseUri;
         
         // $ionicPlatform.ready(function() {
         CheckInternet.getConnection($rootScope);

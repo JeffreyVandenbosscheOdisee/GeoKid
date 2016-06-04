@@ -1,17 +1,20 @@
 <ion-view view-title="User Overview" cache-view="false">
-    <ion-content>
+    <ion-content class="background">
         <div ng-show="playgroundactive" class="infoplayground">
             <div>
                 <h2>{{ playgroundInfo.Name }}</h2>
-                <div>
+                <div ng-show="playgroundInfo.functions.length > 0">
                     <h3>Functies:</h3>
-                    <ion-list>
-                        <ion-item ng-repeat="functions in playgroundInfo.functions">
-                            <p>{{ functions }}</p>
-                        </ion-item>
-                    </ion-list>
+                    <div ng-repeat="functions in playgroundInfo.functions">
+                        <p>{{ functions }}</p>
+                    </div>
                 </div>
-                <a ng-click="gotoNav()" title="">Navigeer naar dit park!</a>
+                <div>
+                    <img src="{{ ApiUrl + playgroundInfo.photo.url }} ">
+                </div>
+                <div class="goBtnnav">
+                    <a class="ownbutton" ng-click="gotoNav()" title="">Navigeer naar dit park!</a>
+                </div>
             </div>
         </div>
         <div ng-class="{divmapfull: !playgroundactive, divmap: playgroundactive}">

@@ -89,6 +89,17 @@ class PlaygroundController implements ControllerProviderInterface {
 	public function detail(Application $app, $id) 
 	{
 		$playground = $app['db.playgrounds']->findSpecficPlayground($id);
+		$di = new \DirectoryIterator($app['photoPlayground.base_path']);
+		$photos = null;
+		foreach ($di as $file) {
+			if ($file->getExtension() == 'jpg') {
+				$photos = array(
+					'url' => $app['photoPlayground.base_url'] . '/' . $file,
+					'title' => $file->getFileName()
+				);
+			}
+		}
+		$playground['photo'] = $photos;
 		// var_dump($playgrounds);
 		return new JsonResponse($playground);
 	}

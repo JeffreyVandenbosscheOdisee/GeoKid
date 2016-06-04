@@ -26,7 +26,6 @@ $dark:                            #444 !default;
   font-weight: normal; }
 
 body * {
-  background-color: #556270;
   color: black;
   font-family: "nal_hand";
   font-size: 30px; }
@@ -34,6 +33,12 @@ body * {
   body * h3,
   body * h4 {
     font-family: "nal_hand"; }
+
+body {
+  background-color: #556270 !important; }
+
+.background {
+  background-color: #556270 !important; }
 
 ::-webkit-input-placeholder {
   font-family: "nal_hand";
@@ -192,6 +197,8 @@ a {
   width: 80%;
   background-color: #fff;
   margin-bottom: 5%; }
+  .centerform h2 {
+    color: black; }
 
 .ownbutton {
   background-color: #4ECDC4;
@@ -394,6 +401,73 @@ a {
     width: 8vw;
     height: 8vw;
     border: none; }
+
+.scroll {
+  height: 100%; }
+
+#map {
+  width: 100%;
+  height: 100%; }
+
+.divmap {
+  width: 70%;
+  height: 100%;
+  float: left; }
+
+.divmapfull {
+  width: 100%;
+  height: 100%;
+  float: left; }
+
+.infoplayground {
+  width: 30%;
+  height: 100%;
+  float: left;
+  padding-top: 3%;
+  padding-left: 1.5%;
+  padding-right: 1.5%;
+  position: relative; }
+  .infoplayground .goBtnnav {
+    bottom: 7%;
+    width: 63%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    float: left; }
+  .infoplayground h2,
+  .infoplayground h3,
+  .infoplayground p {
+    color: white;
+    font-size: 40px; }
+  .infoplayground h3 {
+    font-size: 30px; }
+  .infoplayground div img {
+    width: 100%; }
+
+.navigationbuttonstop {
+  position: absolute;
+  top: 10px;
+  left: 2%;
+  z-index: 5;
+  background-color: #fff;
+  padding: 5px;
+  border: 1px solid #999;
+  text-align: center;
+  line-height: 30px;
+  padding-left: 10px; }
+
+.navigationbuttonstopoverlay {
+  position: absolute;
+  top: 10px;
+  left: 32%;
+  z-index: 5;
+  background-color: #fff;
+  padding: 5px;
+  border: 1px solid #999;
+  text-align: center;
+  line-height: 30px;
+  padding-left: 10px; }
 
 /*!
   Ionicons, v2.0.1
