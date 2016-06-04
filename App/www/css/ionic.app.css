@@ -16,8 +16,8 @@ $royal:                           #886aea !default;
 $dark:                            #444 !default;
 */
 /**
- * Start CSS
- */
+* Start CSS
+*/
 @font-face {
   font-family: "nal_hand";
   src: url("fonts/nal_hand.eot");
@@ -30,7 +30,9 @@ body * {
   color: black;
   font-family: "nal_hand";
   font-size: 30px; }
-  body * h2, body * h3, body * h4 {
+  body * h2,
+  body * h3,
+  body * h4 {
     font-family: "nal_hand"; }
 
 ::-webkit-input-placeholder {
@@ -337,16 +339,61 @@ a {
     margin-top: 5%;
     color: #FD6B6A; }
 
-.deletepopup .popup {
-  border: 1px solid #ccc;
-  -moz-border-radius: 10px;
-  -webkit-border-radius: 10px;
-  border-radius: 10px;
-  font-size: 20px;
-  padding: 4px 7px;
-  outline: 0;
-  -webkit-appearance: none;
-  width: 40% !important; }
+.deletepopup {
+  background-color: none;
+  padding: 0; }
+  .deletepopup .popup {
+    border: 1px solid #ccc;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    font-size: 20px;
+    padding: 4px 7px;
+    outline: 0;
+    -webkit-appearance: none;
+    width: 40% !important;
+    background-color: white !important;
+    opacity: 0.9; }
+    .deletepopup .popup .popup-head {
+      background-color: white;
+      border-bottom: 2px solid black; }
+      .deletepopup .popup .popup-head h3 {
+        font-size: 30px;
+        background-color: white; }
+    .deletepopup .popup .popup-body {
+      background-color: white; }
+      .deletepopup .popup .popup-body span {
+        background-color: white; }
+    .deletepopup .popup .popup-buttons {
+      background-color: white; }
+      .deletepopup .popup .popup-buttons button {
+        background-color: none; }
+        .deletepopup .popup .popup-buttons button p {
+          background-color: inherit;
+          color: white;
+          font-family: "nal_hand";
+          font-size: 25px;
+          padding: 5% 5%; }
+        .deletepopup .popup .popup-buttons button .cancel {
+          background-color: #4ECDC4; }
+        .deletepopup .popup .popup-buttons button .delete {
+          background-color: #FD6B6A; }
+      .deletepopup .popup .popup-buttons span {
+        background-color: white; }
+
+.playground p::before {
+  content: "* "; }
+
+.playground p {
+  color: white !important; }
+
+.achievements {
+  width: 21%;
+  float: left; }
+  .achievements img {
+    width: 8vw;
+    height: 8vw;
+    border: none; }
 
 /*!
   Ionicons, v2.0.1

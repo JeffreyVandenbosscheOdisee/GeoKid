@@ -53,8 +53,8 @@ $assertive: #ef473a !default;
 
 
 /**
- * Start CSS
- */
+* Start CSS
+*/
 
 @include fontFace('nal_hand',
 'fonts/nal_hand');
@@ -63,8 +63,10 @@ body * {
     color: black;
     font-family: "nal_hand";
     font-size: 30px;
-    h2,h3,h4{
-    	font-family:"nal_hand";
+    h2,
+    h3,
+    h4 {
+        font-family: "nal_hand";
     }
 }
 
@@ -158,18 +160,18 @@ a {
     }
 }
 
-.header-internet{
+.header-internet {
     background-color: $baseColor !important;
-	@extend .header;
+    @extend .header;
 }
 
-.header-no-internet{
-	background-color: $assertive !important;
-
-	@extend .header;
+.header-no-internet {
+    background-color: $assertive !important;
+    @extend .header;
 }
+
 .bannerNoInternet {
-	background-color: $assertive;
+    background-color: $assertive;
     color: white;
     position: absolute;
     right: 0;
@@ -190,17 +192,14 @@ a {
     font-size: 30px;
 }
 
-.logout-no-internet{
-	@extend .logout;
-	background-color: $assertive !important;
+.logout-no-internet {
+    @extend .logout;
+    background-color: $assertive !important;
 }
 
-.logout-internet{
-	@extend .logout;
+.logout-internet {
+    @extend .logout;
 }
-
-
-
 
 .centerdiv {
     @include roundCorner;
@@ -440,17 +439,71 @@ a {
     }
 }
 
-
-
-.deletepopup .popup{ 
-	 @include roundCorner;
-	 width: 40% !important;
-
+.deletepopup {
+    background-color: none;
+    padding: 0;
+    .popup {
+        @include roundCorner;
+        width: 40% !important;
+        background-color: white !important;
+        opacity: 0.9;
+        .popup-head {
+            background-color: white;
+            border-bottom: 2px solid black;
+            h3 {
+                font-size: 30px;
+                background-color: white;
+            }
+        }
+        .popup-body {
+            background-color: white;
+            span {
+                background-color: white;
+            }
+        }
+        .popup-buttons {
+            background-color: white;
+            button {
+                background-color: none;
+                p {
+                    background-color: inherit;
+                    color: white;
+                    font-family: "nal_hand";
+                    font-size: 25px;
+                    padding: 5% 5%;
+                }
+                .cancel {
+                    background-color: $subColorBlue;
+                }
+                .delete {
+                    background-color: $subColorRed;
+                }
+            }
+            span {
+                background-color: white;
+            }
+            // opacity:0.2;
+        }
+    }
 }
-.deletepopup .popup .popup-head{ }
-.deletepopup .popup .popup-body{ }
 
-
-
+.playground {
+    p::before {
+        content: "* ";
+    }
+    p {
+        color: white !important;
+    }
+}
+.achievements{
+	width:21%;
+	float:left;
+	img{
+		width: 8vw;
+		height: 8vw;
+		border: none;
+	}
+}
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
+

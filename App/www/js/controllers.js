@@ -265,10 +265,9 @@ mod.controller('DetailSubaccCtrl', function($scope, $rootScope, CheckInternet, A
                 template: 'Bent u zeker dat u deze gebruiker wilt verwijderen?',
                 cssClass: 'deletepopup',
                 buttons: [{
-                    text: 'Annuleren'
+                    text: '<p class="cancel">Annuleren</p>'
                 }, {
-                    text: '<b>Verwijderen</b>',
-                    type: 'button-positive',
+                    text: '<p class="delete">Verwijderen</p>',
                     onTap: function(e) {
                         $ionicLoading.show({
                             template: 'Verwijderen...'

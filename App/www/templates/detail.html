@@ -4,29 +4,24 @@
             <div class="datasubaccount">
                 <div class="divimage column">
                     <img class="profilepic" ng-if="apiResult.photo == null" src="images/help1.png"><img class="profilepic" ng-if="apiResult.photo != null" src="{{ ApiUrl + apiResult.photo.url }}">
-                    <p><a href="#/account/{{apiResult.Id}}/edit"  title="">Profiel bewerken <i class="ion-edit"></i></a></p> 
+                    <p><a href="#/account/{{apiResult.Id}}/edit" title="">Profiel bewerken <i class="ion-edit"></i></a></p>
                 </div>
                 <div class="column name">
                     <h2>{{ apiResult.Name  }} </h2>
                 </div>
                 <div class="column">
-                    
                     <div>
                         <h3>Bezochte speelpleinen:</h3>
-                        <ion-list>
-                            <ion-item ng-repeat="playground in apiResultplaygrounds">
-                                <p>{{ playground.Name }}</p>
-                            </ion-item>
-                        </ion-list>
+                        <div ng-repeat="playground in apiResultplaygrounds" class="playground">
+                            <p>{{ playground.Name }}</p>
+                        </div>
                     </div>
                 </div>
                 <div class="column">
                     <h3>Verzamelde badges</h3>
-                    <ion-list>
-                        <ion-item ng-repeat="achievement in apiResultachievement">
-                            <img src="{{ ApiUrl + achievement.photo.url }}">
-                        </ion-item>
-                    </ion-list>
+                    <div ng-repeat="achievement in apiResultachievement" class="achievements">
+                        <img src="{{ ApiUrl + achievement.photo.url }}">
+                    </div>
                 </div>
             </div>
             <div class="goBtnsubacc">
