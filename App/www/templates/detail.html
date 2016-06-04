@@ -1,31 +1,40 @@
 <ion-view view-title="detailview" cache-view="false">
     <ion-content>
         <div>
-          <img class="profilepic" ng-if="apiResult.photo == null" src="images/help1.png"><img class="profilepic" ng-if="apiResult.photo != null" src="{{ ApiUrl + apiResult.photo.url }}">
-        </div>
-        <div>
-            <h2>{{ apiResult.Name  }} </h2>
-            <a href="#/account/{{apiResult.Id}}/edit" class="ion-edit " title=""></a>
-            <div>
-                <h3>Bezochte speelpleinen:</h3>
-                <ion-list>
-                    <ion-item ng-repeat="playground in apiResultplaygrounds">
-                    <p>{{ playground.Name }}</p>
-                    </ion-item>
-                </ion-list>
+            <div class="datasubaccount">
+                <div class="divimage column">
+                    <img class="profilepic" ng-if="apiResult.photo == null" src="images/help1.png"><img class="profilepic" ng-if="apiResult.photo != null" src="{{ ApiUrl + apiResult.photo.url }}">
+                    <p><a href="#/account/{{apiResult.Id}}/edit"  title="">Profiel bewerken <i class="ion-edit"></i></a></p> 
+                </div>
+                <div class="column name">
+                    <h2>{{ apiResult.Name  }} </h2>
+                </div>
+                <div class="column">
+                    
+                    <div>
+                        <h3>Bezochte speelpleinen:</h3>
+                        <ion-list>
+                            <ion-item ng-repeat="playground in apiResultplaygrounds">
+                                <p>{{ playground.Name }}</p>
+                            </ion-item>
+                        </ion-list>
+                    </div>
+                </div>
+                <div class="column">
+                    <h3>Verzamelde badges</h3>
+                    <ion-list>
+                        <ion-item ng-repeat="achievement in apiResultachievement">
+                            <img src="{{ ApiUrl + achievement.photo.url }}">
+                        </ion-item>
+                    </ion-list>
+                </div>
+            </div>
+            <div class="goBtnsubacc">
+                <a href="#/subaccounts" class="ownbutton" title="">Terug naar subaccounts</a>
+                <a class="deleteAcc" ng-click="DeleteUser({{ apiResult.Id }})">
+                Profiel verwijderen?
+            </a>
             </div>
         </div>
-        <div>
-            <h2>Verzamelde badges</h2>
-            <ion-list>
-                <ion-item ng-repeat="achievement in apiResultachievement">
-                <img src="{{ ApiUrl + achievement.photo.url }}">
-                </ion-item>
-            </ion-list>
-        </div>
-        <a href="#/subaccounts" title="">Terug naar subaccounts.</a>
-        <a ng-click="DeleteUser({{ apiResult.Id }})" >
-            <p>Profiel verwijderen?</p>
-        </a>
     </ion-content>
 </ion-view>

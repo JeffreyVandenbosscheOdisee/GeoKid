@@ -37,8 +37,8 @@
 
 <body ng-app="GeoKidApp">
     <ion-pane>
-        <ion-header-bar class="header">
-            <h1 class="title">Geokid</h1> <p ng-hide="internet" class="bannerNoInternet">geen internet</p><a href="#/logout" title="" ng-hide="login" class="logout">Afmelden</a>
+        <ion-header-bar ng-class="{ 'header-internet' : internet, 'header-no-internet' : !internet } ">
+            <h1 class="title">Geokid</h1> <p ng-hide="internet" class="bannerNoInternet">geen internet</p><a href="#/logout" title="" ng-hide="login" ng-class="{ 'logout-internet' : internet, 'logout-no-internet' : !internet } ">Afmelden</a>
         </ion-header-bar>
         <!--
     The views will be rendered in the <ion-nav-view> directive below

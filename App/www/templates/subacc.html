@@ -2,15 +2,18 @@
     <ion-content>
         <div class="wrap outer">
             <div class="middle">
+                <h2>Wie gaat er vandaag mee op avontuur?</h2>
                 <div class="subaccount inner" ng-repeat="subaccount in apiResult">
                     <div class="datasubaccount">
-                        <a ng-click="ChoosePlayer({{ subaccount.Id }})">
-                            <img id="{{ subaccount.Id  }}" ng-if="subaccount.photo == null" src="images/help1.png">
-                        </a>
-                        <a ng-click="ChoosePlayer({{ subaccount.Id }})" " >
+                        <div class="aspect">
+                            <a ng-click="ChoosePlayer({{ subaccount.Id }})">
+                                <img id="{{ subaccount.Id  }}" ng-if="subaccount.photo == null" src="images/help1.png">
+                            </a>
+                            <a ng-click="ChoosePlayer({{ subaccount.Id }})" " >
                             <img id="{{ subaccount.Id }} " ng-if="subaccount.photo !=null " src="{{ ApiUrl + subaccount.photo.url }} ">
                         </a>
-                        <h2>{{ subaccount.Name }}</h2>
+                        </div>
+                        <h3>{{ subaccount.Name }}</h3>
                         <div>
                             <a href="#/detail/{{ subaccount.Id }} ">Profielpagina</a>
                         </div>
@@ -21,14 +24,14 @@
                         <a href="#/subaccounts/create ">
                             <img src="images/add.png ">
                         </a >
-                        <h2>Toevoegen</h2>
+                        <h3>Toevoegen</h3>
                     </div>
                 </div>
             </div>
             
         </div>
-        <div class="goBtn">
-            <a href="#/mapoverview" ng-show="Start" class="ownbutton">Vertrekken</a>
+        <div class="goBtn ">
+            <a href="#/mapoverview " ng-show="Start " class="ownbutton ">Vertrekken</a>
         </div>
     </ion-content>
 </ion-view>

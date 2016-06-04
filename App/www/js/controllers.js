@@ -263,6 +263,7 @@ mod.controller('DetailSubaccCtrl', function($scope, $rootScope, CheckInternet, A
             var confirmPopup = $ionicPopup.confirm({
                 title: 'Gebruiker verwijderen',
                 template: 'Bent u zeker dat u deze gebruiker wilt verwijderen?',
+                cssClass: 'deletepopup',
                 buttons: [{
                     text: 'Annuleren'
                 }, {
@@ -406,6 +407,7 @@ mod.controller('SubAccCtrl', function($document, $state, $scope, $rootScope, Api
         $scope.Start = false;
 
         CheckInternet.getConnection($rootScope);
+
         masteraccId = window.localStorage['masteraccId'];
         $scope.ApiUrl = baseUri;
         ApiService.get('/account/' + masteraccId + '/subaccounts').then(function(result) {
