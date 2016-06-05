@@ -268,6 +268,16 @@ a {
     h2 {
         color: black;
     }
+    button{
+    	width: 38%;
+    	// margin: 5%;
+    }
+    .cancel{
+    	background-color: $subColorRed;
+    	margin-right: 7%;
+    	margin-left: 7%;
+
+    }
 }
 
 .ownbutton {
@@ -452,7 +462,7 @@ a {
 }
 
 .deletepopup {
-    background-color: none;
+    background-color: transparent;
     padding: 0;
     .popup {
         @include roundCorner;
@@ -469,14 +479,18 @@ a {
         }
         .popup-body {
             background-color: white;
+            text-align: center;
             span {
                 background-color: white;
+            }
+            div img{
+				width:50%;
             }
         }
         .popup-buttons {
             background-color: white;
             button {
-                background-color: none;
+                background-color: transparent;
                 p {
                     background-color: inherit;
                     color: white;
@@ -484,7 +498,7 @@ a {
                     font-size: 25px;
                     padding: 5% 5%;
                 }
-                .cancel {
+                .cancel, .ok {
                     background-color: $subColorBlue;
                 }
                 .delete {
@@ -666,6 +680,7 @@ a {
             background-color: white;
             color: black;
             margin-top: 10%;
+            padding: 3% !important;
             @include roundCorner;
             h3 {
                 color: black;
@@ -677,6 +692,11 @@ a {
 .task {
     color: black !important;
     font-size:20px !important;
+    label{
+    	border:none;    
+    	padding-top: 3%;
+    	padding-bottom: 3%;
+    }
 }
 
 .task input:before,

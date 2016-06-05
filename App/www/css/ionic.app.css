@@ -199,6 +199,12 @@ a {
   margin-bottom: 5%; }
   .centerform h2 {
     color: black; }
+  .centerform button {
+    width: 38%; }
+  .centerform .cancel {
+    background-color: #FD6B6A;
+    margin-right: 7%;
+    margin-left: 7%; }
 
 .ownbutton {
   background-color: #4ECDC4;
@@ -347,7 +353,7 @@ a {
     color: #FD6B6A; }
 
 .deletepopup {
-  background-color: none;
+  background-color: transparent;
   padding: 0; }
   .deletepopup .popup {
     border: 1px solid #ccc;
@@ -368,20 +374,23 @@ a {
         font-size: 30px;
         background-color: white; }
     .deletepopup .popup .popup-body {
-      background-color: white; }
+      background-color: white;
+      text-align: center; }
       .deletepopup .popup .popup-body span {
         background-color: white; }
+      .deletepopup .popup .popup-body div img {
+        width: 50%; }
     .deletepopup .popup .popup-buttons {
       background-color: white; }
       .deletepopup .popup .popup-buttons button {
-        background-color: none; }
+        background-color: transparent; }
         .deletepopup .popup .popup-buttons button p {
           background-color: inherit;
           color: white;
           font-family: "nal_hand";
           font-size: 25px;
           padding: 5% 5%; }
-        .deletepopup .popup .popup-buttons button .cancel {
+        .deletepopup .popup .popup-buttons button .cancel, .deletepopup .popup .popup-buttons button .ok {
           background-color: #4ECDC4; }
         .deletepopup .popup .popup-buttons button .delete {
           background-color: #FD6B6A; }
@@ -515,6 +524,7 @@ a {
       background-color: white;
       color: black;
       margin-top: 10%;
+      padding: 3% !important;
       border: 1px solid #ccc;
       -moz-border-radius: 10px;
       -webkit-border-radius: 10px;
@@ -529,6 +539,10 @@ a {
 .task {
   color: black !important;
   font-size: 20px !important; }
+  .task label {
+    border: none;
+    padding-top: 3%;
+    padding-bottom: 3%; }
 
 .task input:before,
 .task .checkbox-icon:before {

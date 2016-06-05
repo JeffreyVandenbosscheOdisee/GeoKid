@@ -14,7 +14,7 @@
                                 </label>
                                 <label>
                                     <span>wachtwoord(minstens 5 tekens)*</span>
-                                    <input required type="password" name="password " placeholder="Wachtwoord " ng-model="data.password " ng-minlength="5" form-validate-after ng-class="{ 'has-errors' : registerform.password.$invalid && !registerform.password.$pristine, 'no-errors' : registerform.password.$valid && !registerform.password.$pristine } ">
+                                    <input required type="password" name="password " placeholder="Wachtwoord " ng-model="data.password " ng-minlength="5" ng-maxlength ="36" form-validate-after ng-class="{ 'has-errors' : registerform.password.$invalid && !registerform.password.$pristine, 'no-errors' : registerform.password.$valid && !registerform.password.$pristine } ">
                                     <!-- <p ng-show="loginform.password.$error.required ">* Password is required</p> -->
                                 </label>
                                 <label>
@@ -43,7 +43,8 @@
                                     <input required type="text" name="city " placeholder="gemeente/stad " ng-model="data.city " form-validate-after ng-class="{ 'has-errors' : registerform.city.$invalid && !registerform.city.$pristine, 'no-errors' : registerform.city.$valid && !registerform.city.$pristine } ">
                                 </label>
                             </div>
-                            <button class="ownbutton button-block" ng-disabled="registerform.$invalid " ng-click="register(data)" type="submit ">registeren</button>
+                            <button class="ownbutton cancel" ng-click="cancel()" type="button">Annuleren</button>
+                            <button class="ownbutton" ng-disabled="registerform.$invalid " ng-click="register(data)" type="submit ">registeren</button>
                         </form>
                     </div>
                 </div>

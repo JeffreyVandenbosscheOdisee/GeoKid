@@ -9,7 +9,7 @@
                             <div class="inputfields">
                                 <label>
                                     <span>Naam*</span>
-                                    <input required type="text" name="name" placeholder="Naam" ng-model="data.name" ng-class="{ 'has-errors' : createform.name.$invalid && !createform.name.$pristine, 'no-errors' : createform.name.$valid && !createform.name.$pristine } ">
+                                    <input required type="text" name="name" placeholder="Naam" ng-maxlength ="36" ng-model="data.name" ng-class="{ 'has-errors' : createform.name.$invalid && !createform.name.$pristine, 'no-errors' : createform.name.$valid && !createform.name.$pristine } ">
                                 </label>
                                 
                                 <div class="previewImage">
@@ -17,7 +17,10 @@
                                     <button type="button" class="ownbutton" ng-click="takePhoto()" id="take-btn">Foto nemen</button>
                                 </div>
                             </div>
-                            <button class="ownbutton button-block" ng-disabled="createform.$invalid" type="submit">{{ buttonText }}</button>
+                            
+                            <button class="ownbutton cancel" ng-click="cancel()" type="button">Annuleren</button>
+                            <button class="ownbutton" ng-disabled="createform.$invalid" type="submit">{{ buttonText }}</button>
+
                         </form>
                     </div>
                 </div>

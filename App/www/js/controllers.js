@@ -11,7 +11,7 @@ mod.controller('MapOverviewCtrl', function($scope, $rootScope, ApiService, Check
     } else {
         $rootScope.login = false;
         $scope.ApiUrl = baseUri;
-        
+
         // $ionicPlatform.ready(function() {
         CheckInternet.getConnection($rootScope);
 
@@ -238,7 +238,7 @@ mod.controller('NavCtrl', function($scope, $rootScope, CheckInternet, ApiService
 });
 
 // DetailController
-mod.controller('DetailSubaccCtrl', function($scope, $rootScope, CheckInternet, ApiService, $stateParams, $ionicPopup, $ionicLoading, $window) {
+mod.controller('DetailSubaccCtrl', function($scope, $rootScope, CheckInternet, ApiService, $stateParams, $ionicPopup, $ionicLoading, $window, $state) {
     if (window.localStorage['masteraccId'] == null) {
         $state.go('login');
 
@@ -252,13 +252,19 @@ mod.controller('DetailSubaccCtrl', function($scope, $rootScope, CheckInternet, A
         masteraccId = window.localStorage['masteraccId'];
         ApiService.get('/account/' + masteraccId + '/subaccounts/' + $stateParams.userId).then(function(result) {
             console.log(result);
-            $scope.apiResult = result;
-            ApiService.post('/playgrounds/visitedplaygrounds', { subaccountsId: $stateParams.userId }).then(function(result) {
-                $scope.apiResultplaygrounds = result;
-            });
-            ApiService.post('/achievements/get', { subaccountId: $stateParams.userId }).then(function(result) {
-                $scope.apiResultachievement = result;
-            });
+            if (result == undefined || result == null) {
+                $state.go('subaccounts');
+            } else {
+
+
+                $scope.apiResult = result;
+                ApiService.post('/playgrounds/visitedplaygrounds', { subaccountsId: $stateParams.userId }).then(function(result) {
+                    $scope.apiResultplaygrounds = result;
+                });
+                ApiService.post('/achievements/get', { subaccountId: $stateParams.userId }).then(function(result) {
+                    $scope.apiResultachievement = result;
+                });
+            }
         });
         $scope.DeleteUser = function(userid) {
             var confirmPopup = $ionicPopup.confirm({
@@ -282,7 +288,9 @@ mod.controller('DetailSubaccCtrl', function($scope, $rootScope, CheckInternet, A
                             console.log(result);
                             $ionicLoading.hide();
                             $window.location.reload();
+
                             $state.go('subaccounts');
+
                         });
                     }
                 }]
@@ -304,7 +312,20 @@ mod.controller('DetailPlayCtrl', function($scope, $rootScope, CheckInternet, Api
         var ActivePlayers = JSON.parse(window.localStorage['ActivePlayers']);
         console.log(ActivePlayers);
         $scope.ApiUrl = baseUri;
+        var showPopup = function(result) {
+            var alertPopup = $ionicPopup.alert({
+                title: 'Proficiat ' + result.NameUser + ' !',
+                // template: 'Je hebt de achievement "' + result.Name  + '"" vrijgespeeld',
+                template: '<div>Je hebt een badge gewonnen!</div><div><img src="' + baseUri + result.photo.url + '"></div><div><p>' + result.Name + '</p></div>',
+                cssClass: 'deletepopup',
+                buttons: [{
+                    text: '<p class="ok">Oké</p>',
+                    onTap: function(e) {
 
+                    }
+                }]
+            });
+        }
         var getPlayground = function() {
             masteraccId = window.localStorage['masteraccId'];
             ApiService.get('/playgrounds/' + $stateParams.playgroundId + '/tasks').then(function(result) {
@@ -317,18 +338,7 @@ mod.controller('DetailPlayCtrl', function($scope, $rootScope, CheckInternet, Api
                         ApiService.post('/achievements/check', { subaccountsId: ActivePlayers[i], type: "Playgrounds" }).then(function(result) {
                             console.log(result);
                             if (result != false) {
-                                var alertPopup = $ionicPopup.alert({
-                                    title: 'Proficiat ' + result.NameUser + ', je hebt een achievement gewonnen!',
-                                    // template: 'Je hebt de achievement "' + result.Name  + '"" vrijgespeeld',
-                                    template: '<div><img src="' + baseUri + result.photo.url + '">This is the right format</div>',
-                                    buttons: [{
-                                        text: 'Ok',
-                                        type: 'button-positive',
-                                        onTap: function(e) {
-
-                                        }
-                                    }]
-                                });
+                                showPopup(result);
 
                             }
                         });
@@ -341,57 +351,47 @@ mod.controller('DetailPlayCtrl', function($scope, $rootScope, CheckInternet, Api
         }
 
         $scope.clickItem = function(task) {
-            if (task.checked) {
+                if (task.checked) {
 
-                ApiService.post('/task/complete', { playgroundId: $stateParams.playgroundId, taskId: task.Id, subaccountsId: ActivePlayers }).then(function(result) {
-                    console.log(result);
-                    checkeditems++;
-                    console.log(checkeditems);
-                    for (var i = 0; i <= ActivePlayers.length; i++) {
-                        ApiService.post('/achievements/check', { subaccountsId: ActivePlayers[i], type: "Tasks" }).then(function(result) {
-                            console.log(result);
-                            if (result != false) {
-                                var alertPopup = $ionicPopup.alert({
-                                    title: 'Proficiat ' + result.NameUser + ', je hebt een achievement gewonnen!',
-                                    // template: 'Je hebt de achievement "' + result.Name  + '"" vrijgespeeld',
-                                    template: '<div><img src="' + baseUri + result.photo.url + '"></div>',
-                                    buttons: [{
-                                        text: 'Ok',
-                                        type: 'button-positive',
-                                        onTap: function(e) {
+                    ApiService.post('/task/complete', { playgroundId: $stateParams.playgroundId, taskId: task.Id, subaccountsId: ActivePlayers }).then(function(result) {
+                        console.log(result);
+                        checkeditems++;
+                        console.log(checkeditems);
+                        for (var i = 0; i <= ActivePlayers.length; i++) {
+                            ApiService.post('/achievements/check', { subaccountsId: ActivePlayers[i], type: "Tasks" }).then(function(result) {
+                                console.log(result);
+                                if (result != false) {
 
-                                        }
-                                    }]
-                                });
+                                    showPopup(result);
 
-                            }
-                        });
-                    }
-                    if (checkeditems == 5) {
-                        var alertPopup = $ionicPopup.alert({
-                            title: 'Proficiat!',
-                            template: 'Je hebt alle opdrachten voltooid',
-                            buttons: [{
-                                text: 'Een nieuwe locatie kiezen',
-                                type: 'button-positive',
-                                onTap: function(e) {
-                                    $state.go('mapoverview');
                                 }
-                            }]
-                        });
-                    }
-                });
-            } else {
-                ApiService.post('/task/uncomplete', { playgroundId: $stateParams.playgroundId, taskId: task.Id, subaccountsId: ActivePlayers }).then(function(result) {
-                    console.log(result);
-                    checkeditems--;
-                    console.log(checkeditems);
+                            });
+                        }
+                        if (checkeditems == 5) {
+                            var alertPopup = $ionicPopup.alert({
+                                title: 'Proficiat!',
+                                template: 'Je hebt alle opdrachten voltooid',
+                                cssClass: 'deletepopup',
+                                buttons: [{
+                                    text: '<p class="ok">Een nieuwe locatie kiezen</p>',
+                                    onTap: function(e) {
+                                        $state.go('mapoverview');
+                                    }
+                                }]
+                            });
+                        }
+                    });
+                } else {
+                    ApiService.post('/task/uncomplete', { playgroundId: $stateParams.playgroundId, taskId: task.Id, subaccountsId: ActivePlayers }).then(function(result) {
+                        console.log(result);
+                        checkeditems--;
+                        console.log(checkeditems);
 
-                });
+                    });
+                }
             }
-        }
-        // if (internet)
-            getPlayground();
+            // if (internet)
+        getPlayground();
     }
 });
 
@@ -473,7 +473,7 @@ mod.controller('LoginCtrl', function($ionicLoading, $scope, ApiService, CheckInt
         }
 
         // Handle login
-            $scope.login = function(data) {
+        $scope.login = function(data) {
             $ionicLoading.show({
                 template: 'Inloggen...'
             });
@@ -550,6 +550,10 @@ mod.controller('RegisterCtrl', function($ionicLoading, $scope, ApiService, $stat
 
         });
     }
+
+    $scope.cancel = function() {
+        $state.go('login');
+    }
 });
 
 
@@ -561,7 +565,7 @@ mod.controller('EditsubCtrl', function($ionicLoading, $window, $scope, $rootScop
     } else {
         $rootScope.login = false;
         $scope.buttonText = "Aanpassen";
-
+        var imgPath = null;
         CheckInternet.getConnection($rootScope);
         masteraccId = window.localStorage['masteraccId'];
         subaccId = $stateParams.userId;
@@ -597,7 +601,9 @@ mod.controller('EditsubCtrl', function($ionicLoading, $window, $scope, $rootScop
             });
 
         }
-
+        $scope.cancel = function() {
+            $state.go('subaccounts');
+        }
         $scope.takePhoto = function() {
             navigator.camera.getPicture(function(imgData) {
                 imgPath = imgData;
@@ -673,6 +679,9 @@ mod.controller('CreateSubCtrl', function($ionicLoading, $window, $scope, $rootSc
                 correctOrientation: true
             });
         };
+        $scope.cancel = function() {
+            $state.go('subaccounts');
+        }
         $scope.create = function(data) {
             console.log(data);
             $ionicLoading.show({
