@@ -129,7 +129,7 @@ class SubAccountController implements ControllerProviderInterface {
 		 	$date = (new\ DateTime('now', new\ DateTimeZone('UTC'))) -> format('dmY_His');
 		    $temp = explode(".", $_FILES["photo"]["name"]);
 			$filename = $subaccId.'-'.$date . '.' . end($temp);
-			var_dump($filename);
+			// var_dump($filename);
 		    // $filename = $_FILES['photo']['name'];
 
 		    move_uploaded_file($_FILES['photo']['tmp_name'], 'assets/public/img/subaccounts/'.$filename);

@@ -1,26 +1,30 @@
 <ion-view view-title="detail playground" cache-view="false">
-    <ion-content>
-        <div>
-            <img class="testImage" src="{{ ApiUrl + playground.photo.url }}">
-        </div>
-        <div>
-            <h2>{{ playground.Name }}</h2>
-            <div>
-                <h3>Functies:</h3>
-                <ion-list>
-                    <ion-item ng-repeat="function in playground.functions"  ng-model="function.checked" ng-checked="function.checked">
-                        <p>{{ function }}</p>
-                    </<ion-item>
-                </ion-list>
+    <ion-content class="background">
+        <div class="info">
+            <div class="playgroundImage">
+                <div>
+                    <img class="testImage" src="{{ ApiUrl + playground.photo.url }}">
+                </div>
             </div>
-        </div>
-        <div>
-            <h2>Opdrachten</h2>
-            <ion-list>
-                <ion-checkbox ng-repeat="task in playground.tasks" ng-model="task.checked" ng-checked="task.checked" ng-click="clickItem(task); $event.stopPropagation();">
-                    <p>{{ task.Name }}</p>
-                </ion-checkbox>
-            </ion-list>
+            <div class="functionsTasks">
+                <div ng-show="playground.functions.length > 0" class="functions">
+                    <h2>{{ playground.Name }}</h2>
+                    <div>
+                        <h3>Mogelijkheden:</h3>
+                        <div ng-repeat="function in playground.functions" ng-model="function.checked" ng-checked="function.checked">
+                            <p>{{ function }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="tasks">
+                    <h3>Opdrachten</h3>
+                    <ion-list>
+                        <ion-checkbox ng-repeat="task in playground.tasks" ng-model="task.checked" ng-checked="task.checked" ng-click="clickItem(task); $event.stopPropagation();">
+                            <p>{{ task.Name }}</p>
+                        </ion-checkbox>
+                    </ion-list>
+                </div>
+            </div>
         </div>
     </ion-content>
 </ion-view>

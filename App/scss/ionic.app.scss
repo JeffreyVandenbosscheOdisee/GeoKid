@@ -583,9 +583,8 @@ a {
     text-align: center;
     line-height: 30px;
     padding-left: 10px;
-    a{
-    color: white;
-
+    a {
+        color: white;
     }
 }
 
@@ -600,9 +599,8 @@ a {
     text-align: center;
     line-height: 30px;
     padding-left: 10px;
-    a{
-    color: white;
-		    	
+    a {
+        color: white;
     }
 }
 
@@ -613,6 +611,65 @@ a {
         }
         p {
             font-size: 28px;
+        }
+    }
+}
+
+.info {
+    margin-top: 5%;
+    width: 100%;
+    float: left;
+    .playgroundImage {
+        width: 50%;
+        height: 100%;
+        float: left;
+        // position: relative;
+        div {
+            // position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            text-align: center;
+            /* Align center inline elements */
+            font: 0/0 a;
+            img {
+                // vertical-align: middle;
+                display: inline-block;
+                border-radius: 10px;
+                width: 80%;
+            }
+        }
+        // div::before {
+        //     content: ' ';
+        //     display: inline-block;
+        //     vertical-align: middle;
+        //     height: 100%;
+        // }
+    }
+    .functionsTasks {
+        width: 40%;
+        float: left;
+        margin-right: 5%;
+        h2,
+        h3,
+        p {
+            color: white;
+        }
+        h2 {
+            font-size: 45px;
+        }
+        h3 {
+            font-size: 35px;
+        }
+        .tasks {
+            background-color: white;
+            color: black;
+            margin-top: 10%;
+            @include roundCorner;
+            h3 {
+                color: black;
+            }
         }
     }
 }

@@ -479,6 +479,53 @@ a {
 .functions div p {
   font-size: 28px; }
 
+.info {
+  margin-top: 5%;
+  width: 100%;
+  float: left; }
+  .info .playgroundImage {
+    width: 50%;
+    height: 100%;
+    float: left; }
+    .info .playgroundImage div {
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      text-align: center;
+      /* Align center inline elements */
+      font: 0/0 a; }
+      .info .playgroundImage div img {
+        display: inline-block;
+        border-radius: 10px;
+        width: 80%; }
+  .info .functionsTasks {
+    width: 40%;
+    float: left;
+    margin-right: 5%; }
+    .info .functionsTasks h2,
+    .info .functionsTasks h3,
+    .info .functionsTasks p {
+      color: white; }
+    .info .functionsTasks h2 {
+      font-size: 45px; }
+    .info .functionsTasks h3 {
+      font-size: 35px; }
+    .info .functionsTasks .tasks {
+      background-color: white;
+      color: black;
+      margin-top: 10%;
+      border: 1px solid #ccc;
+      -moz-border-radius: 10px;
+      -webkit-border-radius: 10px;
+      border-radius: 10px;
+      font-size: 20px;
+      padding: 4px 7px;
+      outline: 0;
+      -webkit-appearance: none; }
+      .info .functionsTasks .tasks h3 {
+        color: black; }
+
 /*!
   Ionicons, v2.0.1
   Created by Ben Sperry for the Ionic Framework, http://ionicons.com/
