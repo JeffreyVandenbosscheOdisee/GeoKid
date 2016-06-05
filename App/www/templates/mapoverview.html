@@ -3,9 +3,9 @@
         <div ng-show="playgroundactive" class="infoplayground">
             <div>
                 <h2>{{ playgroundInfo.Name }}</h2>
-                <div ng-show="playgroundInfo.functions.length > 0">
-                    <h3>Functies:</h3>
-                    <div ng-repeat="functions in playgroundInfo.functions">
+                <div ng-show="playgroundInfo.functions.length > 0" class="functions">
+                    <h3>Mogelijkheden:</h3>
+                    <div ng-repeat="functions in playgroundInfo.functions" >
                         <p>{{ functions }}</p>
                     </div>
                 </div>

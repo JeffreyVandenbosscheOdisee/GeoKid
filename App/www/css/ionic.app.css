@@ -469,6 +469,12 @@ a {
   line-height: 30px;
   padding-left: 10px; }
 
+.functions div p::before {
+  content: "* "; }
+
+.functions div p {
+  font-size: 28px; }
+
 /*!
   Ionicons, v2.0.1
   Created by Ben Sperry for the Ionic Framework, http://ionicons.com/

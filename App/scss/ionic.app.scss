@@ -597,5 +597,16 @@ a {
     padding-left: 10px;
 }
 
+.functions{
+	div{
+		p::before{
+			content: "* ";
+		}
+		p{
+			font-size:28px;
+		}
+	}
+}
+
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
