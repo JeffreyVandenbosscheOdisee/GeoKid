@@ -5,6 +5,9 @@
                 <div>
                     <img class="testImage" src="{{ ApiUrl + playground.photo.url }}">
                 </div>
+                <div class="gotoMap">
+                    <a href="" class="ownbutton" title="">Terug naar kaart</a>
+                </div>
             </div>
             <div class="functionsTasks">
                 <div ng-show="playground.functions.length > 0" class="functions">
@@ -18,11 +21,15 @@
                 </div>
                 <div class="tasks">
                     <h3>Opdrachten</h3>
-                    <ion-list>
-                        <ion-checkbox ng-repeat="task in playground.tasks" ng-model="task.checked" ng-checked="task.checked" ng-click="clickItem(task); $event.stopPropagation();">
-                            <p>{{ task.Name }}</p>
-                        </ion-checkbox>
-                    </ion-list>
+                    <ul>
+                        <li ng-repeat="task in playground.tasks" ng-checked="task.checked" ng-click="clickItem(task); $event.stopPropagation();" class="task" >
+                            <!-- <ion-list> -->
+                            <ion-checkbox  ng-model="task.checked" >
+                                <p class="task">{{ task.Name }}</p>
+                            </ion-checkbox>
+                        </li>
+                    </ul>
+                    <!-- </ion-list> -->
                 </div>
             </div>
         </div>

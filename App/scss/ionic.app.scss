@@ -674,5 +674,26 @@ a {
     }
 }
 
+.task {
+    color: black !important;
+    font-size:20px !important;
+}
+
+.task input:before,
+.task .checkbox-icon:before {
+  border-color: $subColorBlue !important;  }
+
+.task input:checked:before,
+.task input:checked + .checkbox-icon:before {
+  background: $subColorBlue !important;
+  border-color: $subColorBlue !important; }
+
+.gotoMap{
+	margin-top: 7%;
+	a{
+		background-color: $subColorRed;
+	}
+}
+
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";

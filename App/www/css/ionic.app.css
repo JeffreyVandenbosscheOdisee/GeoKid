@@ -526,6 +526,24 @@ a {
       .info .functionsTasks .tasks h3 {
         color: black; }
 
+.task {
+  color: black !important;
+  font-size: 20px !important; }
+
+.task input:before,
+.task .checkbox-icon:before {
+  border-color: #4ECDC4 !important; }
+
+.task input:checked:before,
+.task input:checked + .checkbox-icon:before {
+  background: #4ECDC4 !important;
+  border-color: #4ECDC4 !important; }
+
+.gotoMap {
+  margin-top: 7%; }
+  .gotoMap a {
+    background-color: #FD6B6A; }
+
 /*!
   Ionicons, v2.0.1
   Created by Ben Sperry for the Ionic Framework, http://ionicons.com/

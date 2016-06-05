@@ -390,7 +390,7 @@ mod.controller('DetailPlayCtrl', function($scope, $rootScope, CheckInternet, Api
                 });
             }
         }
-        if (internet)
+        // if (internet)
             getPlayground();
     }
 });
