@@ -450,24 +450,28 @@ a {
   top: 10px;
   left: 2%;
   z-index: 5;
-  background-color: #fff;
+  background-color: #FD6B6A;
   padding: 5px;
   border: 1px solid #999;
   text-align: center;
   line-height: 30px;
   padding-left: 10px; }
+  .navigationbuttonstop a {
+    color: white; }
 
 .navigationbuttonstopoverlay {
   position: absolute;
   top: 10px;
   left: 32%;
   z-index: 5;
-  background-color: #fff;
+  background-color: #FD6B6A;
   padding: 5px;
   border: 1px solid #999;
   text-align: center;
   line-height: 30px;
   padding-left: 10px; }
+  .navigationbuttonstopoverlay a {
+    color: white; }
 
 .functions div p::before {
   content: "* "; }

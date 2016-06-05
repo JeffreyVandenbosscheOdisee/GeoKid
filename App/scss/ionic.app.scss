@@ -72,10 +72,11 @@ body * {
 body {
     background-color: $baseColor !important;
 }
-.background{
-    background-color: $baseColor !important;
 
+.background {
+    background-color: $baseColor !important;
 }
+
 ::-webkit-input-placeholder {
     font-family: "nal_hand";
     text-transform: uppercase;
@@ -264,8 +265,8 @@ a {
     width: 80%;
     background-color: #fff;
     margin-bottom: 5%;
-    h2{
-    	color:black;
+    h2 {
+        color: black;
     }
 }
 
@@ -576,12 +577,16 @@ a {
     top: 10px;
     left: 2%;
     z-index: 5;
-    background-color: #fff;
+    background-color: $subColorRed;
     padding: 5px;
     border: 1px solid #999;
     text-align: center;
     line-height: 30px;
     padding-left: 10px;
+    a{
+    color: white;
+
+    }
 }
 
 .navigationbuttonstopoverlay {
@@ -589,23 +594,27 @@ a {
     top: 10px;
     left: 32%;
     z-index: 5;
-    background-color: #fff;
+    background-color: $subColorRed;
     padding: 5px;
     border: 1px solid #999;
     text-align: center;
     line-height: 30px;
     padding-left: 10px;
+    a{
+    color: white;
+		    	
+    }
 }
 
-.functions{
-	div{
-		p::before{
-			content: "* ";
-		}
-		p{
-			font-size:28px;
-		}
-	}
+.functions {
+    div {
+        p::before {
+            content: "* ";
+        }
+        p {
+            font-size: 28px;
+        }
+    }
 }
 
 // Include all of Ionic
