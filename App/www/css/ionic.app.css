@@ -390,7 +390,8 @@ a {
           font-family: "nal_hand";
           font-size: 25px;
           padding: 5% 5%; }
-        .deletepopup .popup .popup-buttons button .cancel, .deletepopup .popup .popup-buttons button .ok {
+        .deletepopup .popup .popup-buttons button .cancel,
+        .deletepopup .popup .popup-buttons button .ok {
           background-color: #4ECDC4; }
         .deletepopup .popup .popup-buttons button .delete {
           background-color: #FD6B6A; }
@@ -405,7 +406,9 @@ a {
 
 .achievements {
   width: 21%;
-  float: left; }
+  float: left;
+  margin-right: 2%;
+  margin-bottom: 2%; }
   .achievements img {
     width: 8vw;
     height: 8vw;

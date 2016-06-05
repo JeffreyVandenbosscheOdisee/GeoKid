@@ -10,8 +10,9 @@
                 </div>
             </div>
             <div class="functionsTasks">
-                <div ng-show="playground.functions.length > 0" class="functions">
                     <h2>{{ playground.Name }}</h2>
+            
+                <div ng-show="playground.functions.length > 0" class="functions">
                     <div>
                         <h3>Mogelijkheden:</h3>
                         <div ng-repeat="function in playground.functions" ng-model="function.checked" ng-checked="function.checked">

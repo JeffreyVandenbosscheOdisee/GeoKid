@@ -268,15 +268,14 @@ a {
     h2 {
         color: black;
     }
-    button{
-    	width: 38%;
-    	// margin: 5%;
+    button {
+        width: 38%;
+        // margin: 5%;
     }
-    .cancel{
-    	background-color: $subColorRed;
-    	margin-right: 7%;
-    	margin-left: 7%;
-
+    .cancel {
+        background-color: $subColorRed;
+        margin-right: 7%;
+        margin-left: 7%;
     }
 }
 
@@ -483,8 +482,8 @@ a {
             span {
                 background-color: white;
             }
-            div img{
-				width:50%;
+            div img {
+                width: 50%;
             }
         }
         .popup-buttons {
@@ -498,7 +497,8 @@ a {
                     font-size: 25px;
                     padding: 5% 5%;
                 }
-                .cancel, .ok {
+                .cancel,
+                .ok {
                     background-color: $subColorBlue;
                 }
                 .delete {
@@ -525,6 +525,8 @@ a {
 .achievements {
     width: 21%;
     float: left;
+    margin-right: 2%;
+    margin-bottom: 2%;
     img {
         width: 8vw;
         height: 8vw;
@@ -691,28 +693,30 @@ a {
 
 .task {
     color: black !important;
-    font-size:20px !important;
-    label{
-    	border:none;    
-    	padding-top: 3%;
-    	padding-bottom: 3%;
+    font-size: 20px !important;
+    label {
+        border: none;
+        padding-top: 3%;
+        padding-bottom: 3%;
     }
 }
 
 .task input:before,
 .task .checkbox-icon:before {
-  border-color: $subColorBlue !important;  }
+    border-color: $subColorBlue !important;
+}
 
 .task input:checked:before,
 .task input:checked + .checkbox-icon:before {
-  background: $subColorBlue !important;
-  border-color: $subColorBlue !important; }
+    background: $subColorBlue !important;
+    border-color: $subColorBlue !important;
+}
 
-.gotoMap{
-	margin-top: 7%;
-	a{
-		background-color: $subColorRed;
-	}
+.gotoMap {
+    margin-top: 7%;
+    a {
+        background-color: $subColorRed;
+    }
 }
 
 // Include all of Ionic
