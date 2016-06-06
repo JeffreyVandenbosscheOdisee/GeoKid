@@ -63,6 +63,7 @@ class AuthenticationController implements ControllerProviderInterface {
 
 		$user = $app['db.masteraccounts']->findMasteraccount($email);	
 		if($user == false){
+			$data['AuthKey'];
 			$data['Email']= $email;
 			$data['Password']= $password;
 			$data['FamilyName']= $familyname;

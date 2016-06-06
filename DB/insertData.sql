@@ -3,8 +3,8 @@
 INSERT INTO `achievements` (`Id`, `Name`, `Needed_points`, `Type`) VALUES
 (1, 'Bezoek eerste speelplein', 1, 'Playgrounds'),
 (2, 'eerste taak voltooid', 1, 'Tasks'),
-(3, '4 taken voltooid', 4, 'Tasks'),
-(4, '3 speelpleinen bezocht', 3, 'Playgrounds');
+(3, '3 taken voltooid', 3, 'Tasks'),
+(4, '4 speelpleinen bezocht', 4, 'Playgrounds');
 
 
 
