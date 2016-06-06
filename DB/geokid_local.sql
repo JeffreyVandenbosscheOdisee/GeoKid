@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Machine: 127.0.0.1
--- Gegenereerd op: 29 mei 2016 om 20:19
+-- Gegenereerd op: 06 jun 2016 om 10:31
 -- Serverversie: 5.6.17
 -- PHP-versie: 5.5.12
 
@@ -29,9 +29,21 @@ SET time_zone = "+00:00";
 CREATE TABLE IF NOT EXISTS `achievements` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Name` varchar(45) NOT NULL,
+  `Needed_points` int(10) NOT NULL,
+  `Type` text NOT NULL,
   PRIMARY KEY (`Id`),
   UNIQUE KEY `Id_UNIQUE` (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `achievements`
+--
+
+INSERT INTO `achievements` (`Id`, `Name`, `Needed_points`, `Type`) VALUES
+(1, 'Bezoek eerste speelplein', 1, 'Playgrounds'),
+(2, 'eerste taak voltooid', 1, 'Tasks'),
+(3, '4 taken voltooid', 4, 'Tasks'),
+(4, '3 speelpleinen bezocht', 3, 'Playgrounds');
 
 -- --------------------------------------------------------
 
@@ -46,6 +58,13 @@ CREATE TABLE IF NOT EXISTS `achievements_has_subaccounts` (
   KEY `fk_Achievements_has_SubAccounts_SubAccounts1_idx` (`SubAccounts_Id`),
   KEY `fk_Achievements_has_SubAccounts_Achievements1_idx` (`Achievements_Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `achievements_has_subaccounts`
+--
+
+INSERT INTO `achievements_has_subaccounts` (`Achievements_Id`, `SubAccounts_Id`) VALUES
+(2, 18);
 
 -- --------------------------------------------------------
 
@@ -62,7 +81,60 @@ CREATE TABLE IF NOT EXISTS `completed_tasks` (
   KEY `fk_Completed_tasks_Playfields1_idx` (`Playgrounds_Id`),
   KEY `fk_Completed_tasks_Tasks1_idx` (`Tasks_Id`),
   KEY `fk_Completed_tasks_SubAccounts1` (`SubAccounts_Id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=60 ;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `completed_tasks`
+--
+
+INSERT INTO `completed_tasks` (`Id`, `SubAccounts_Id`, `Playgrounds_Id`, `Tasks_Id`) VALUES
+(1, 18, 112, 21),
+(4, 21, 122, 1),
+(5, 20, 122, 1),
+(6, 21, 122, 1),
+(7, 20, 122, 1),
+(18, 21, 122, 21),
+(19, 20, 122, 21),
+(20, 21, 122, 19),
+(21, 20, 122, 19),
+(22, 21, 122, 2),
+(23, 20, 122, 2),
+(24, 21, 122, 8),
+(25, 20, 122, 8),
+(26, 21, 122, 21),
+(27, 20, 122, 21),
+(28, 21, 122, 15),
+(29, 20, 122, 15),
+(30, 21, 62, 7),
+(31, 20, 62, 7),
+(32, 21, 62, 1),
+(33, 20, 62, 1),
+(34, 21, 62, 8),
+(35, 20, 62, 8),
+(36, 21, 62, 4),
+(37, 20, 62, 4),
+(38, 21, 62, 5),
+(39, 20, 62, 5),
+(40, 21, 7, 19),
+(41, 20, 7, 19),
+(42, 21, 7, 3),
+(43, 20, 7, 3),
+(44, 21, 7, 18),
+(45, 20, 7, 18),
+(46, 21, 7, 11),
+(47, 20, 7, 11),
+(48, 21, 7, 2),
+(49, 20, 7, 2),
+(50, 21, 135, 10),
+(51, 20, 135, 10),
+(52, 21, 135, 11),
+(53, 20, 135, 11),
+(54, 21, 135, 1),
+(55, 20, 135, 1),
+(56, 21, 135, 16),
+(57, 20, 135, 16),
+(58, 21, 135, 17),
+(59, 20, 135, 17);
 
 -- --------------------------------------------------------
 
@@ -78,6 +150,26 @@ CREATE TABLE IF NOT EXISTS `favorite_parks_masteraccount` (
   KEY `fk_Playfields_has_MasterAccounts_MasterAccounts1_idx` (`MasterAccounts_Id`),
   KEY `fk_Playfields_has_MasterAccounts_Playfields1_idx` (`Playgrounds_Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `favorite_parks_masteraccount`
+--
+
+INSERT INTO `favorite_parks_masteraccount` (`Playgrounds_Id`, `MasterAccounts_Id`, `Favorite_playground`) VALUES
+(3, 6, 0),
+(7, 3, 0),
+(7, 7, 0),
+(55, 3, 0),
+(62, 3, 0),
+(62, 6, 0),
+(65, 3, 0),
+(112, 3, 0),
+(112, 6, 0),
+(113, 3, 0),
+(113, 6, 0),
+(114, 3, 0),
+(122, 6, 0),
+(135, 7, 0);
 
 -- --------------------------------------------------------
 
@@ -466,14 +558,18 @@ CREATE TABLE IF NOT EXISTS `masteraccounts` (
   `City` varchar(150) NOT NULL,
   PRIMARY KEY (`Id`),
   UNIQUE KEY `Id_UNIQUE` (`Id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
 
 --
 -- Gegevens worden geëxporteerd voor tabel `masteraccounts`
 --
 
 INSERT INTO `masteraccounts` (`Id`, `Email`, `Password`, `FamilyName`, `Street_And_Nr`, `ZipCode`, `City`) VALUES
-(3, 'Jeffrey.vandenbossche@gmail.com', '$2y$10$.mFBmNGLq/qHP5ou67bz1u1qc1vvBWpso6.L21T6OC1MWZ.TnFnbi', 'Vandenbossche', 'Hoogstraat 17', 9820, 'Merelbeke');
+(3, 'Jeffrey.vandenbossche@gmail.com', '$2y$10$.mFBmNGLq/qHP5ou67bz1u1qc1vvBWpso6.L21T6OC1MWZ.TnFnbi', 'Vandenbossche', 'Hoogstraat 17', 9820, 'Merelbeke'),
+(6, 'jeffreyvdb17@hotmail.com', '$2y$10$CcuXp1RAHDYaBvXzORRRcezeq4gK4eIWIyR/Qfo0VO3ai1TWOEjPi', 'Vandenbossche', '17', 9820, 'Merelbeke'),
+(7, 'elin_jonkers@hotmail.com', '$2y$10$0k/eWnDoUq0lVxGUNf0eoulLq1ADaEqp1UB4uIAalYe.HKCSbwt2e', 'Jonkers', '15', 2990, 'Wuustwezel'),
+(8, 'Jeffreytest@hotmail.com', '$2y$10$9l4AgUPcUmUm3/Pk.z.1s.htJvHZazCSDwmQEwoKEfJV1FXCYheCq', 'VDB', 'Melkweg 1', 9000, 'Gent'),
+(9, 'Jeffrey.vandenbossche12@gmail.com', '$2y$10$hcCm3tPwC3UWcNiMCkfOwOwTBZoy/wnbssc3UPu3eMMZ63nat/jAG', 'Vandenbossche', 'Hoogstraat 17', 9820, 'Merelbeke');
 
 -- --------------------------------------------------------
 
@@ -649,6 +745,28 @@ INSERT INTO `playgrounds` (`Id`, `Name`, `Longitude`, `Latitude`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Tabelstructuur voor tabel `playgrounds_has_subaccounts`
+--
+
+CREATE TABLE IF NOT EXISTS `playgrounds_has_subaccounts` (
+  `playgrounds_Id` int(11) NOT NULL,
+  `subaccounts_Id` int(11) NOT NULL,
+  PRIMARY KEY (`playgrounds_Id`,`subaccounts_Id`),
+  KEY `fk_playgrounds_has_subaccounts_subaccounts1_idx` (`subaccounts_Id`),
+  KEY `fk_playgrounds_has_subaccounts_playgrounds1_idx` (`playgrounds_Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `playgrounds_has_subaccounts`
+--
+
+INSERT INTO `playgrounds_has_subaccounts` (`playgrounds_Id`, `subaccounts_Id`) VALUES
+(149, 18),
+(149, 22);
+
+-- --------------------------------------------------------
+
+--
 -- Tabelstructuur voor tabel `subaccounts`
 --
 
@@ -659,7 +777,20 @@ CREATE TABLE IF NOT EXISTS `subaccounts` (
   PRIMARY KEY (`Id`,`MasterAccounts_Id`),
   UNIQUE KEY `Id_UNIQUE` (`Id`),
   KEY `fk_SubAccounts_MasterAccounts1_idx` (`MasterAccounts_Id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=26 ;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `subaccounts`
+--
+
+INSERT INTO `subaccounts` (`Id`, `Name`, `MasterAccounts_Id`) VALUES
+(18, 'Elin', 3),
+(20, 'Jeffrey123', 6),
+(21, 'Elin', 6),
+(22, 'Jeffrey', 3),
+(23, 'Elin', 7),
+(24, 'Jeff', 7),
+(25, 'Test', 3);
 
 -- --------------------------------------------------------
 
@@ -719,16 +850,16 @@ ALTER TABLE `achievements_has_subaccounts`
 -- Beperkingen voor tabel `completed_tasks`
 --
 ALTER TABLE `completed_tasks`
-  ADD CONSTRAINT `fk_Completed_tasks_SubAccounts1` FOREIGN KEY (`SubAccounts_Id`) REFERENCES `subaccounts` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_Completed_tasks_Playfields1` FOREIGN KEY (`Playgrounds_Id`) REFERENCES `playgrounds` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_Completed_tasks_SubAccounts1` FOREIGN KEY (`SubAccounts_Id`) REFERENCES `subaccounts` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_Completed_tasks_Tasks1` FOREIGN KEY (`Tasks_Id`) REFERENCES `tasks` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Beperkingen voor tabel `favorite_parks_masteraccount`
 --
 ALTER TABLE `favorite_parks_masteraccount`
-  ADD CONSTRAINT `fk_Playfields_has_MasterAccounts_Playfields1` FOREIGN KEY (`Playgrounds_Id`) REFERENCES `playgrounds` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_Playfields_has_MasterAccounts_MasterAccounts1` FOREIGN KEY (`MasterAccounts_Id`) REFERENCES `masteraccounts` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_Playfields_has_MasterAccounts_MasterAccounts1` FOREIGN KEY (`MasterAccounts_Id`) REFERENCES `masteraccounts` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_Playfields_has_MasterAccounts_Playfields1` FOREIGN KEY (`Playgrounds_Id`) REFERENCES `playgrounds` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Beperkingen voor tabel `functions_has_playgrounds`
@@ -736,6 +867,13 @@ ALTER TABLE `favorite_parks_masteraccount`
 ALTER TABLE `functions_has_playgrounds`
   ADD CONSTRAINT `fk_Functions_has_Playfields_Functions1` FOREIGN KEY (`Functions_Id`) REFERENCES `functions` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_Functions_has_Playfields_Playfields1` FOREIGN KEY (`PlayGrounds_Id`) REFERENCES `playgrounds` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Beperkingen voor tabel `playgrounds_has_subaccounts`
+--
+ALTER TABLE `playgrounds_has_subaccounts`
+  ADD CONSTRAINT `fk_playgrounds_has_subaccounts_playgrounds1` FOREIGN KEY (`playgrounds_Id`) REFERENCES `playgrounds` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_playgrounds_has_subaccounts_subaccounts1` FOREIGN KEY (`subaccounts_Id`) REFERENCES `subaccounts` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Beperkingen voor tabel `subaccounts`

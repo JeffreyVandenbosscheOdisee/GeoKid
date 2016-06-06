@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.1.14
+-- version 4.4.1.1
 -- http://www.phpmyadmin.net
 --
--- Machine: 127.0.0.1
--- Gegenereerd op: 28 mei 2016 om 15:20
--- Serverversie: 5.6.17
--- PHP-versie: 5.5.12
+-- Host: 10.3.1.103
+-- Gegenereerd op: 06 jun 2016 om 10:32
+-- Serverversie: 5.5.41
+-- PHP-versie: 5.5.31
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Databank: `geokid`
+-- Database: `jeffrwh153_Geo`
 --
 
 -- --------------------------------------------------------
@@ -27,11 +27,21 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE IF NOT EXISTS `achievements` (
-  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Id` int(11) NOT NULL,
   `Name` varchar(45) NOT NULL,
-  PRIMARY KEY (`Id`),
-  UNIQUE KEY `Id_UNIQUE` (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+  `Needed_points` int(10) NOT NULL,
+  `Type` enum('Tasks','Playgrounds') NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `achievements`
+--
+
+INSERT INTO `achievements` (`Id`, `Name`, `Needed_points`, `Type`) VALUES
+(1, 'Bezoek eerste speelplein', 1, 'Playgrounds'),
+(2, 'eerste taak voltooid', 1, 'Tasks'),
+(3, '3 taken voltooid', 3, 'Tasks'),
+(4, '4 speelpleinen bezocht', 4, 'Playgrounds');
 
 -- --------------------------------------------------------
 
@@ -41,11 +51,25 @@ CREATE TABLE IF NOT EXISTS `achievements` (
 
 CREATE TABLE IF NOT EXISTS `achievements_has_subaccounts` (
   `Achievements_Id` int(11) NOT NULL,
-  `SubAccounts_Id` int(11) NOT NULL,
-  PRIMARY KEY (`Achievements_Id`,`SubAccounts_Id`),
-  KEY `fk_Achievements_has_SubAccounts_SubAccounts1_idx` (`SubAccounts_Id`),
-  KEY `fk_Achievements_has_SubAccounts_Achievements1_idx` (`Achievements_Id`)
+  `SubAccounts_Id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `achievements_has_subaccounts`
+--
+
+INSERT INTO `achievements_has_subaccounts` (`Achievements_Id`, `SubAccounts_Id`) VALUES
+(1, 21),
+(2, 21),
+(3, 21),
+(1, 22),
+(1, 33),
+(2, 33),
+(3, 33),
+(4, 33),
+(1, 34),
+(2, 34),
+(3, 34);
 
 -- --------------------------------------------------------
 
@@ -54,25 +78,24 @@ CREATE TABLE IF NOT EXISTS `achievements_has_subaccounts` (
 --
 
 CREATE TABLE IF NOT EXISTS `completed_tasks` (
-  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Id` int(11) NOT NULL,
   `SubAccounts_Id` int(11) NOT NULL,
   `Playgrounds_Id` int(11) NOT NULL,
-  `Tasks_Id` int(11) NOT NULL,
-  PRIMARY KEY (`Id`),
-  KEY `fk_Completed_tasks_Playfields1_idx` (`Playgrounds_Id`),
-  KEY `fk_Completed_tasks_Tasks1_idx` (`Tasks_Id`),
-  KEY `fk_Completed_tasks_SubAccounts1` (`SubAccounts_Id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+  `Tasks_Id` int(11) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 
 --
 -- Gegevens worden geëxporteerd voor tabel `completed_tasks`
 --
 
 INSERT INTO `completed_tasks` (`Id`, `SubAccounts_Id`, `Playgrounds_Id`, `Tasks_Id`) VALUES
-(1, 1, 5, 3),
-(2, 2, 5, 3),
-(3, 1, 5, 3),
-(4, 2, 5, 3);
+(15, 21, 145, 8),
+(16, 34, 145, 8),
+(17, 33, 54, 20),
+(19, 33, 54, 1),
+(20, 33, 54, 2),
+(21, 33, 54, 7),
+(22, 33, 54, 11);
 
 -- --------------------------------------------------------
 
@@ -83,10 +106,7 @@ INSERT INTO `completed_tasks` (`Id`, `SubAccounts_Id`, `Playgrounds_Id`, `Tasks_
 CREATE TABLE IF NOT EXISTS `favorite_parks_masteraccount` (
   `Playgrounds_Id` int(11) NOT NULL,
   `MasterAccounts_Id` int(11) NOT NULL,
-  `Favorite_playground` tinyint(1) DEFAULT '0',
-  PRIMARY KEY (`Playgrounds_Id`,`MasterAccounts_Id`),
-  KEY `fk_Playfields_has_MasterAccounts_MasterAccounts1_idx` (`MasterAccounts_Id`),
-  KEY `fk_Playfields_has_MasterAccounts_Playfields1_idx` (`Playgrounds_Id`)
+  `Favorite_playground` tinyint(1) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -94,7 +114,20 @@ CREATE TABLE IF NOT EXISTS `favorite_parks_masteraccount` (
 --
 
 INSERT INTO `favorite_parks_masteraccount` (`Playgrounds_Id`, `MasterAccounts_Id`, `Favorite_playground`) VALUES
-(150, 2, 0);
+(3, 6, 0),
+(7, 3, 0),
+(7, 7, 0),
+(55, 3, 0),
+(62, 3, 0),
+(62, 6, 0),
+(65, 3, 0),
+(112, 3, 0),
+(112, 6, 0),
+(113, 3, 0),
+(113, 6, 0),
+(114, 3, 0),
+(122, 6, 0),
+(135, 7, 0);
 
 -- --------------------------------------------------------
 
@@ -103,10 +136,9 @@ INSERT INTO `favorite_parks_masteraccount` (`Playgrounds_Id`, `MasterAccounts_Id
 --
 
 CREATE TABLE IF NOT EXISTS `functions` (
-  `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `Name` varchar(45) NOT NULL,
-  PRIMARY KEY (`Id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
+  `Id` int(11) NOT NULL,
+  `Name` varchar(45) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 --
 -- Gegevens worden geëxporteerd voor tabel `functions`
@@ -129,10 +161,7 @@ INSERT INTO `functions` (`Id`, `Name`) VALUES
 
 CREATE TABLE IF NOT EXISTS `functions_has_playgrounds` (
   `Functions_Id` int(11) NOT NULL,
-  `PlayGrounds_Id` int(11) NOT NULL,
-  PRIMARY KEY (`Functions_Id`,`PlayGrounds_Id`),
-  KEY `fk_Functions_has_Playfields_Playfields1_idx` (`PlayGrounds_Id`),
-  KEY `fk_Functions_has_Playfields_Functions1_idx` (`Functions_Id`)
+  `PlayGrounds_Id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -474,19 +503,26 @@ INSERT INTO `functions_has_playgrounds` (`Functions_Id`, `PlayGrounds_Id`) VALUE
 --
 
 CREATE TABLE IF NOT EXISTS `masteraccounts` (
-  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Id` int(11) NOT NULL,
   `Email` varchar(150) NOT NULL,
   `Password` varchar(255) NOT NULL,
-  PRIMARY KEY (`Id`),
-  UNIQUE KEY `Id_UNIQUE` (`Id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+  `FamilyName` varchar(150) NOT NULL,
+  `Street_And_Nr` varchar(150) NOT NULL,
+  `ZipCode` int(11) NOT NULL,
+  `City` varchar(150) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 --
 -- Gegevens worden geëxporteerd voor tabel `masteraccounts`
 --
 
-INSERT INTO `masteraccounts` (`Id`, `Email`, `Password`) VALUES
-(2, 'Jeffrey.vandenbossche@gmail.com', '$2y$10$9Na.//jmdDIb4P.9CGNjjOh1wTKF6dYWKURks9fET5rUpID2RzsZu');
+INSERT INTO `masteraccounts` (`Id`, `Email`, `Password`, `FamilyName`, `Street_And_Nr`, `ZipCode`, `City`) VALUES
+(3, 'Jeffrey.vandenbossche@gmail.com', '$2y$10$.mFBmNGLq/qHP5ou67bz1u1qc1vvBWpso6.L21T6OC1MWZ.TnFnbi', 'Vandenbossche', 'Hoogstraat 17', 9820, 'Merelbeke'),
+(6, 'jeffreyvdb17@hotmail.com', '$2y$10$CcuXp1RAHDYaBvXzORRRcezeq4gK4eIWIyR/Qfo0VO3ai1TWOEjPi', 'Vandenbossche', '17', 9820, 'Merelbeke'),
+(7, 'elin_jonkers@hotmail.com', '$2y$10$0k/eWnDoUq0lVxGUNf0eoulLq1ADaEqp1UB4uIAalYe.HKCSbwt2e', 'Jonkers', '15', 2990, 'Wuustwezel'),
+(8, 'Jeffreytest@hotmail.com', '$2y$10$9l4AgUPcUmUm3/Pk.z.1s.htJvHZazCSDwmQEwoKEfJV1FXCYheCq', 'VDB', 'Melkweg 1', 9000, 'Gent'),
+(9, 'Jeffrey.vandenbossche12@gmail.com', '$2y$10$hcCm3tPwC3UWcNiMCkfOwOwTBZoy/wnbssc3UPu3eMMZ63nat/jAG', 'Vandenbossche', 'Hoogstraat 17', 9820, 'Merelbeke'),
+(10, 'jeffrey.vandenbosschetest@gmail.com', '$2y$10$9j/b8SB.JZF3/nNMcxL7cOL1pH445AyZl2cXlbr7nyJGYTHC1i2oG', 'Vand', 'Hoogstraat 17', 9820, 'Merelbeke');
 
 -- --------------------------------------------------------
 
@@ -495,13 +531,11 @@ INSERT INTO `masteraccounts` (`Id`, `Email`, `Password`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `playgrounds` (
-  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Id` int(11) NOT NULL,
   `Name` varchar(100) NOT NULL,
   `Longitude` float NOT NULL,
-  `Latitude` float NOT NULL,
-  PRIMARY KEY (`Id`),
-  UNIQUE KEY `Id_UNIQUE` (`Id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=151 ;
+  `Latitude` float NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=151 DEFAULT CHARSET=utf8;
 
 --
 -- Gegevens worden geëxporteerd voor tabel `playgrounds`
@@ -662,25 +696,51 @@ INSERT INTO `playgrounds` (`Id`, `Name`, `Longitude`, `Latitude`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Tabelstructuur voor tabel `playgrounds_has_subaccounts`
+--
+
+CREATE TABLE IF NOT EXISTS `playgrounds_has_subaccounts` (
+  `playgrounds_Id` int(11) NOT NULL,
+  `subaccounts_Id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `playgrounds_has_subaccounts`
+--
+
+INSERT INTO `playgrounds_has_subaccounts` (`playgrounds_Id`, `subaccounts_Id`) VALUES
+(145, 21),
+(117, 22),
+(6, 33),
+(7, 33),
+(54, 33),
+(117, 33),
+(145, 34);
+
+-- --------------------------------------------------------
+
+--
 -- Tabelstructuur voor tabel `subaccounts`
 --
 
 CREATE TABLE IF NOT EXISTS `subaccounts` (
-  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Id` int(11) NOT NULL,
   `Name` varchar(45) NOT NULL,
-  `MasterAccounts_Id` int(11) NOT NULL,
-  PRIMARY KEY (`Id`,`MasterAccounts_Id`),
-  UNIQUE KEY `Id_UNIQUE` (`Id`),
-  KEY `fk_SubAccounts_MasterAccounts1_idx` (`MasterAccounts_Id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+  `MasterAccounts_Id` int(11) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
 
 --
 -- Gegevens worden geëxporteerd voor tabel `subaccounts`
 --
 
 INSERT INTO `subaccounts` (`Id`, `Name`, `MasterAccounts_Id`) VALUES
-(1, 'Jeffrey', 2),
-(2, 'Elin', 2);
+(20, 'Jeffrey123', 6),
+(21, 'Elin', 6),
+(22, 'Jeffrey', 3),
+(23, 'Elin', 7),
+(24, 'Jeff', 7),
+(33, 'Jeffrey', 3),
+(34, 'JeffreyTest', 6);
 
 -- --------------------------------------------------------
 
@@ -689,12 +749,10 @@ INSERT INTO `subaccounts` (`Id`, `Name`, `MasterAccounts_Id`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `tasks` (
-  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Id` int(11) NOT NULL,
   `Name` varchar(150) NOT NULL,
-  `Tag` enum('skate','voetbal','zandbak','speeltoestellen','Avontuurlijk') DEFAULT NULL,
-  PRIMARY KEY (`Id`),
-  UNIQUE KEY `Id_UNIQUE` (`Id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=24 ;
+  `Tag` enum('skate','voetbal','zandbak','speeltoestellen','Avontuurlijk') DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 
 --
 -- Gegevens worden geëxporteerd voor tabel `tasks`
@@ -726,6 +784,132 @@ INSERT INTO `tasks` (`Id`, `Name`, `Tag`) VALUES
 (23, 'Pluk 20 grassprietjes en sorteer deze van klein naar groot', NULL);
 
 --
+-- Indexen voor geëxporteerde tabellen
+--
+
+--
+-- Indexen voor tabel `achievements`
+--
+ALTER TABLE `achievements`
+  ADD PRIMARY KEY (`Id`),
+  ADD UNIQUE KEY `Id_UNIQUE` (`Id`);
+
+--
+-- Indexen voor tabel `achievements_has_subaccounts`
+--
+ALTER TABLE `achievements_has_subaccounts`
+  ADD PRIMARY KEY (`Achievements_Id`,`SubAccounts_Id`),
+  ADD KEY `fk_Achievements_has_SubAccounts_SubAccounts1_idx` (`SubAccounts_Id`),
+  ADD KEY `fk_Achievements_has_SubAccounts_Achievements1_idx` (`Achievements_Id`);
+
+--
+-- Indexen voor tabel `completed_tasks`
+--
+ALTER TABLE `completed_tasks`
+  ADD PRIMARY KEY (`Id`),
+  ADD KEY `fk_Completed_tasks_Playfields1_idx` (`Playgrounds_Id`),
+  ADD KEY `fk_Completed_tasks_Tasks1_idx` (`Tasks_Id`),
+  ADD KEY `fk_Completed_tasks_SubAccounts1` (`SubAccounts_Id`);
+
+--
+-- Indexen voor tabel `favorite_parks_masteraccount`
+--
+ALTER TABLE `favorite_parks_masteraccount`
+  ADD PRIMARY KEY (`Playgrounds_Id`,`MasterAccounts_Id`),
+  ADD KEY `fk_Playfields_has_MasterAccounts_MasterAccounts1_idx` (`MasterAccounts_Id`),
+  ADD KEY `fk_Playfields_has_MasterAccounts_Playfields1_idx` (`Playgrounds_Id`);
+
+--
+-- Indexen voor tabel `functions`
+--
+ALTER TABLE `functions`
+  ADD PRIMARY KEY (`Id`);
+
+--
+-- Indexen voor tabel `functions_has_playgrounds`
+--
+ALTER TABLE `functions_has_playgrounds`
+  ADD PRIMARY KEY (`Functions_Id`,`PlayGrounds_Id`),
+  ADD KEY `fk_Functions_has_Playfields_Playfields1_idx` (`PlayGrounds_Id`),
+  ADD KEY `fk_Functions_has_Playfields_Functions1_idx` (`Functions_Id`);
+
+--
+-- Indexen voor tabel `masteraccounts`
+--
+ALTER TABLE `masteraccounts`
+  ADD PRIMARY KEY (`Id`),
+  ADD UNIQUE KEY `Id_UNIQUE` (`Id`);
+
+--
+-- Indexen voor tabel `playgrounds`
+--
+ALTER TABLE `playgrounds`
+  ADD PRIMARY KEY (`Id`),
+  ADD UNIQUE KEY `Id_UNIQUE` (`Id`);
+
+--
+-- Indexen voor tabel `playgrounds_has_subaccounts`
+--
+ALTER TABLE `playgrounds_has_subaccounts`
+  ADD PRIMARY KEY (`playgrounds_Id`,`subaccounts_Id`),
+  ADD KEY `fk_playgrounds_has_subaccounts_subaccounts1_idx` (`subaccounts_Id`),
+  ADD KEY `fk_playgrounds_has_subaccounts_playgrounds1_idx` (`playgrounds_Id`);
+
+--
+-- Indexen voor tabel `subaccounts`
+--
+ALTER TABLE `subaccounts`
+  ADD PRIMARY KEY (`Id`,`MasterAccounts_Id`),
+  ADD UNIQUE KEY `Id_UNIQUE` (`Id`),
+  ADD KEY `fk_SubAccounts_MasterAccounts1_idx` (`MasterAccounts_Id`);
+
+--
+-- Indexen voor tabel `tasks`
+--
+ALTER TABLE `tasks`
+  ADD PRIMARY KEY (`Id`),
+  ADD UNIQUE KEY `Id_UNIQUE` (`Id`);
+
+--
+-- AUTO_INCREMENT voor geëxporteerde tabellen
+--
+
+--
+-- AUTO_INCREMENT voor een tabel `achievements`
+--
+ALTER TABLE `achievements`
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT voor een tabel `completed_tasks`
+--
+ALTER TABLE `completed_tasks`
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=23;
+--
+-- AUTO_INCREMENT voor een tabel `functions`
+--
+ALTER TABLE `functions`
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+--
+-- AUTO_INCREMENT voor een tabel `masteraccounts`
+--
+ALTER TABLE `masteraccounts`
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
+--
+-- AUTO_INCREMENT voor een tabel `playgrounds`
+--
+ALTER TABLE `playgrounds`
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=151;
+--
+-- AUTO_INCREMENT voor een tabel `subaccounts`
+--
+ALTER TABLE `subaccounts`
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=35;
+--
+-- AUTO_INCREMENT voor een tabel `tasks`
+--
+ALTER TABLE `tasks`
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=24;
+--
 -- Beperkingen voor geëxporteerde tabellen
 --
 
@@ -740,16 +924,16 @@ ALTER TABLE `achievements_has_subaccounts`
 -- Beperkingen voor tabel `completed_tasks`
 --
 ALTER TABLE `completed_tasks`
-  ADD CONSTRAINT `fk_Completed_tasks_SubAccounts1` FOREIGN KEY (`SubAccounts_Id`) REFERENCES `subaccounts` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_Completed_tasks_Playfields1` FOREIGN KEY (`Playgrounds_Id`) REFERENCES `playgrounds` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_Completed_tasks_SubAccounts1` FOREIGN KEY (`SubAccounts_Id`) REFERENCES `subaccounts` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_Completed_tasks_Tasks1` FOREIGN KEY (`Tasks_Id`) REFERENCES `tasks` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Beperkingen voor tabel `favorite_parks_masteraccount`
 --
 ALTER TABLE `favorite_parks_masteraccount`
-  ADD CONSTRAINT `fk_Playfields_has_MasterAccounts_Playfields1` FOREIGN KEY (`Playgrounds_Id`) REFERENCES `playgrounds` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_Playfields_has_MasterAccounts_MasterAccounts1` FOREIGN KEY (`MasterAccounts_Id`) REFERENCES `masteraccounts` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_Playfields_has_MasterAccounts_MasterAccounts1` FOREIGN KEY (`MasterAccounts_Id`) REFERENCES `masteraccounts` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_Playfields_has_MasterAccounts_Playfields1` FOREIGN KEY (`Playgrounds_Id`) REFERENCES `playgrounds` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Beperkingen voor tabel `functions_has_playgrounds`
@@ -757,6 +941,13 @@ ALTER TABLE `favorite_parks_masteraccount`
 ALTER TABLE `functions_has_playgrounds`
   ADD CONSTRAINT `fk_Functions_has_Playfields_Functions1` FOREIGN KEY (`Functions_Id`) REFERENCES `functions` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_Functions_has_Playfields_Playfields1` FOREIGN KEY (`PlayGrounds_Id`) REFERENCES `playgrounds` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Beperkingen voor tabel `playgrounds_has_subaccounts`
+--
+ALTER TABLE `playgrounds_has_subaccounts`
+  ADD CONSTRAINT `fk_playgrounds_has_subaccounts_playgrounds1` FOREIGN KEY (`playgrounds_Id`) REFERENCES `playgrounds` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_playgrounds_has_subaccounts_subaccounts1` FOREIGN KEY (`subaccounts_Id`) REFERENCES `subaccounts` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Beperkingen voor tabel `subaccounts`
