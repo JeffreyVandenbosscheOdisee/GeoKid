@@ -56,8 +56,10 @@ class SubAccountController implements ControllerProviderInterface {
 
 	public function getSubAccounts(Application $app, Request $request) 
 	{
+		$AuthKey = $request->headers->get('AuthKey');
+
 		$masteraccId = $request->get('masteraccId');
-		$user = $app['db.masteraccounts']->findMasteraccountOnId($masteraccId);
+		$user = $app['db.masteraccounts']->findMasteraccountOnId($masteraccId, $AuthKey);
 		if($user != false){
 			$subaccounts = $app['db.subaccounts']->findAllSubAccounts($masteraccId);
 			$subaccounts2 = [];
@@ -82,17 +84,18 @@ class SubAccountController implements ControllerProviderInterface {
 			}
 			return new JsonResponse($subaccounts2);
 		}
-		return new JsonResponse(null);
+		return new JsonResponse(false);
 		
 	}
 
 	public function createSubAccount(Request $request, Application $app) 
 	{
-		$masteraccId = $request->get('masteraccId');
-
 		$name = $request->get('name');
 
-		$user = $app['db.masteraccounts']->findMasteraccountOnId($masteraccId);
+		$AuthKey = $request->headers->get('AuthKey');
+
+		$masteraccId = $request->get('masteraccId');
+		$user = $app['db.masteraccounts']->findMasteraccountOnId($masteraccId, $AuthKey);
 		if($user != false){
 			$data['Name']= $name;
 			$data['MasterAccounts_Id']= $masteraccId;
@@ -101,7 +104,7 @@ class SubAccountController implements ControllerProviderInterface {
 			return new JsonResponse($subaccount);
 
 		}
-		return new JsonResponse(null);
+		return new JsonResponse(false);
 		
 	}
 
@@ -118,8 +121,7 @@ class SubAccountController implements ControllerProviderInterface {
 					if($subaccId == current(explode('-', $file->getFileName()))){		
 						
 							unlink($app['photoSubaccount.base_urlServer'] . '/' . $file);
-						
-						
+							
 					}
 				}
 
@@ -146,57 +148,85 @@ class SubAccountController implements ControllerProviderInterface {
 	{
 		$masteraccId = $request->get('masteraccId');
 		$subaccId = $request->get('id');
+		$AuthKey = $request->headers->get('AuthKey');
+		$masteracc = $app['db.masteraccounts']->findMasteraccountOnAuthKey($AuthKey);
+		if($masteracc != null){
+			$subaccount = $app['db.subaccounts']->findSubAccount($subaccId);
+			if($subaccount != false){
+				$photos = null;
+				$di = new \DirectoryIterator($app['photoSubaccount.base_path']);
+				foreach ($di as $file) {
 
-		$subaccount = $app['db.subaccounts']->findSubAccount($subaccId);
-		if($subaccount != false){
-			$photos = null;
-			$di = new \DirectoryIterator($app['photoSubaccount.base_path']);
-			foreach ($di as $file) {
-
-				if ($file->getExtension() == 'jpg') {
-					if($subaccId == current(explode('-', $file->getFileName()))){		
-						$photos = array(
-							'url' => $app['photoSubaccount.base_url'] . '/' . $file,
-							'title' => $file->getFileName()
-						);
-						
+					if ($file->getExtension() == 'jpg') {
+						if($subaccId == current(explode('-', $file->getFileName()))){		
+							$photos = array(
+								'url' => $app['photoSubaccount.base_url'] . '/' . $file,
+								'title' => $file->getFileName()
+							);
+							
+						}
 					}
-				}
-			};
-			$subaccount['photo']= $photos;
-			
-			return new JsonResponse($subaccount);
+				};
+				$subaccount['photo']= $photos;
+				
+				return new JsonResponse($subaccount);
+			}
+			return new JsonResponse(null);
+				
 		}
 
-		return new JsonResponse(null);
+
+		
+
+		return new JsonResponse(false);
 		
 	}
 
 	public function changeSubAccount(Application $app, Request $request) 
 	{
-		$masteraccId = $request->get('masteraccId');
-		$subaccId = $request->get('id');
-		$name = $request->get('name');
+		$AuthKey = $request->headers->get('AuthKey');
+		$masteracc = $app['db.masteraccounts']->findMasteraccountOnAuthKey($AuthKey);
+		if($masteracc != null){
+			$masteraccId = $request->get('masteraccId');
+			$subaccId = $request->get('id');
+			$name = $request->get('name');
 
-		$subaccount = $app['db.subaccounts']->findSubAccount($masteraccId, $subaccId);
-		$subaccount['Name'] = $name;
+			$subaccount = $app['db.subaccounts']->findSubAccount($masteraccId, $subaccId);
+			if($subaccount != null){
+				$subaccount['Name'] = $name;
 
-		$data = $app['db.subaccounts']->update($subaccount, array('id' => $subaccId));
-		return new JsonResponse($data);
+				$data = $app['db.subaccounts']->update($subaccount, array('id' => $subaccId));
+				return new JsonResponse($data);
+			}
+			return new JsonResponse(null);
+
+		}
+		return new JsonResponse(false);
+
+		
 	}
 
 	public function deletesubAccount(Application $app, Request $request) 
 	{
-		$masteraccId = $request->get('masteraccId');
-		$subaccId = $request->get('id');
+		$AuthKey = $request->headers->get('AuthKey');
+		$masteracc = $app['db.masteraccounts']->findMasteraccountOnAuthKey($AuthKey);
+		if($masteracc != null){
 
-		$subaccount = $app['db.subaccounts']->findSubAccount($masteraccId, $subaccId);
+			$masteraccId = $request->get('masteraccId');
+			$subaccId = $request->get('id');
 
-		$data = $app['db.playgrounds_has_subaccounts']->delete( array('subaccounts_Id' => $subaccId));
-		$data = $app['db.tasks']->delete( array('SubAccounts_Id' => $subaccId));
-		$data = $app['db.achievements_has_subaccounts']->delete( array('SubAccounts_Id' => $subaccId));
-		$data = $app['db.subaccounts']->delete( array('id' => $subaccId));
+			$subaccount = $app['db.subaccounts']->findSubAccount($masteraccId, $subaccId);
+			if($subaccount != null){
+				$data = $app['db.playgrounds_has_subaccounts']->delete( array('subaccounts_Id' => $subaccId));
+				$data = $app['db.tasks']->delete( array('SubAccounts_Id' => $subaccId));
+				$data = $app['db.achievements_has_subaccounts']->delete( array('SubAccounts_Id' => $subaccId));
+				$data = $app['db.subaccounts']->delete( array('id' => $subaccId));
+				return new JsonResponse($data);
+			}
 
-		return new JsonResponse($data);
+			return new JsonResponse(null);
+
+		}
+		return new JsonResponse(false);
 	}
 }

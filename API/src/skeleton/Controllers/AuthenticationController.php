@@ -31,6 +31,16 @@ class AuthenticationController implements ControllerProviderInterface {
 		return $controllers;
 	}
 
+	public function generateRandomString($length){
+		$chars="AZERTYUIOPQSDFGHJKLMWXCVBNazertyuiopqsdfghjklmwxcvbn1234567890_-+-*/";
+		$charlength = strlen($chars);
+		$result ='';
+		for($i=0; $i< $length; $i++){
+			$result .= $chars[rand(0,$charlength -1)];
+		}
+		return $result;
+	}
+
 	/**
 	 * Returns the action's response
 	 * @param  Application 	$app 	An Application instance
@@ -46,7 +56,9 @@ class AuthenticationController implements ControllerProviderInterface {
 		if (password_verify($password, $user['Password'])) {
 
 				$login['succesLogin'] = true;
-				$login['MasteraccountId'] = $user['Id'];		
+				$login['MasteraccountId'] = $user['Id'];
+				$login['AuthKey'] = $user['AuthKey'];		
+
 		}
 		return new JsonResponse($login);
 		
@@ -63,18 +75,29 @@ class AuthenticationController implements ControllerProviderInterface {
 
 		$user = $app['db.masteraccounts']->findMasteraccount($email);	
 		if($user == false){
-			$data['AuthKey'];
+			$data['AuthKey'] = $this->generateRandomString(13);
 			$data['Email']= $email;
 			$data['Password']= $password;
 			$data['FamilyName']= $familyname;
 			$data['Street_And_Nr'] = $streetnr;
 			$data['ZipCode'] = $zipcode;
 			$data['City'] = $city;
-			$userregister = $app['db.masteraccounts']->insert($data);
-			return new JsonResponse($userregister);
+
+			$userid = $app['db.masteraccounts']->insert($data);
+			if($userid != null){
+				$userData['Id'] = $userid;
+				$userData['AuthKey'] = $data['AuthKey'];
+				return new JsonResponse($userData);
+			}
+			else{
+			return new JsonResponse(null);
+
+			}
 		}
 		return new JsonResponse(false);
 		
 	}
+
+
 
 }

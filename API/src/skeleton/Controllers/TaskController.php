@@ -40,30 +40,45 @@ class TaskController implements ControllerProviderInterface {
 	 */
 	public function completedtask(Application $app, Request $request) 
 	{
-		$subaccountIds = $request->get('subaccountsId');
-		$playgroundId = $request->get('playgroundId');
-		$taskid = $request->get('taskId');
-		$data['Playgrounds_Id']= $playgroundId;
-		$data['Tasks_Id']= $taskid;
+		$AuthKey = $request->headers->get('AuthKey');
+		$masteracc = $app['db.masteraccounts']->findMasteraccountOnAuthKey($AuthKey);
+		if($masteracc != null){
 
-		foreach ($subaccountIds as $value){
-			$data['SubAccounts_Id']= $value;
-			$done = $app['db.tasks']->insert($data);
+			$subaccountIds = $request->get('subaccountsId');
+			$playgroundId = $request->get('playgroundId');
+			$taskid = $request->get('taskId');
+			$data['Playgrounds_Id']= $playgroundId;
+			$data['Tasks_Id']= $taskid;
+
+			foreach ($subaccountIds as $value){
+				$data['SubAccounts_Id']= $value;
+				$done = $app['db.tasks']->insert($data);
+			}
+			return new JsonResponse();
 		}
-		return new JsonResponse();
+		return new JsonResponse(false);
+
 	}
 
 	public function uncompletedtask(Application $app, Request $request) 
 	{
-		$subaccountIds = $request->get('subaccountsId');
-		$playgroundId = $request->get('playgroundId');
-		$taskid = $request->get('taskId');
+		$AuthKey = $request->headers->get('AuthKey');
+		$masteracc = $app['db.masteraccounts']->findMasteraccountOnAuthKey($AuthKey);
+		if($masteracc != null){
+
+			$subaccountIds = $request->get('subaccountsId');
+			$playgroundId = $request->get('playgroundId');
+			$taskid = $request->get('taskId');
 
 
-		foreach ($subaccountIds as $value){
-			$task = $app['db.tasks']->findCompleteTask($taskid, $playgroundId, $value);
-			$data = $app['db.tasks']->delete( array('id' => $task['Id']));
+			foreach ($subaccountIds as $value){
+				$task = $app['db.tasks']->findCompleteTask($taskid, $playgroundId, $value);
+				$data = $app['db.tasks']->delete( array('id' => $task['Id']));
+			}
+			return new JsonResponse();
 		}
-		return new JsonResponse();
+	
+		return new JsonResponse(false);
+
 	}
 }

@@ -97,29 +97,36 @@ class AchievementsController implements ControllerProviderInterface {
 
 	public function getachievement(Application $app, Request $request) 
 	{
-		$subaccountId = $request->get('subaccountId');
-		$achievements = $app['db.achievements_has_subaccounts']->findsubAccAchievements($subaccountId);
-			$achievements2 = [];
-		foreach ($achievements as $achievement) {
-				$photos = null;
-				$di = new \DirectoryIterator($app['achievements.base_path']);
-				foreach ($di as $file) {
+		$AuthKey = $request->headers->get('AuthKey');
+		$masteracc = $app['db.masteraccounts']->findMasteraccountOnAuthKey($AuthKey);
+		if($masteracc != null){
 
-					if ($file->getExtension() == 'png') {
-						if($achievement['Id'] == current(explode('-', $file->getFileName()))){
-							$photos = array(
-								'url' => $app['achievements.base_url'] . '/' . $file,
-								'title' => $file->getFileName()
-							);
-							
+			$subaccountId = $request->get('subaccountId');
+			$achievements = $app['db.achievements_has_subaccounts']->findsubAccAchievements($subaccountId);
+				$achievements2 = [];
+			foreach ($achievements as $achievement) {
+					$photos = null;
+					$di = new \DirectoryIterator($app['achievements.base_path']);
+					foreach ($di as $file) {
+
+						if ($file->getExtension() == 'png') {
+							if($achievement['Id'] == current(explode('-', $file->getFileName()))){
+								$photos = array(
+									'url' => $app['achievements.base_url'] . '/' . $file,
+									'title' => $file->getFileName()
+								);
+								
+							}
 						}
-					}
-				};
-				$achievement['photo']= $photos;
+					};
+					$achievement['photo']= $photos;
 
-				array_push($achievements2, $achievement);
+					array_push($achievements2, $achievement);
 
-			}
-		return new JsonResponse($achievements2);
+				}
+			return new JsonResponse($achievements2);
+		}
+		return new JsonResponse(false);
+
 	}
 }

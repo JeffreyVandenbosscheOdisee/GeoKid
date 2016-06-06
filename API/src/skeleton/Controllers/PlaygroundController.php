@@ -106,29 +106,41 @@ class PlaygroundController implements ControllerProviderInterface {
 
 	public function visit(Application $app, $id, Request $request) 
 	{
-		// $masteraccId = $request->get('masteraccId');
-		$subaccountIds = $request->get('subaccountsId');
+		$AuthKey = $request->headers->get('AuthKey');
+		$masteracc = $app['db.masteraccounts']->findMasteraccountOnAuthKey($AuthKey);
+		if($masteracc != null){
+		
+			$subaccountIds = $request->get('subaccountsId');
 
-		// $data['subaccounts_MasterAccounts_Id'] = $masteraccId;
-		$data['playgrounds_Id'] = $id;
+			// $data['subaccounts_MasterAccounts_Id'] = $masteraccId;
+			$data['playgrounds_Id'] = $id;
 
-		foreach ($subaccountIds as $value){
-			$data['subaccounts_Id']= $value;
-			$InDB = $app['db.playgrounds_has_subaccounts']-> findVisitedPlayground($id, $value);
-			if(!$InDB)
-				$playground = $app['db.playgrounds_has_subaccounts']->insert($data);
+			foreach ($subaccountIds as $value){
+				$data['subaccounts_Id']= $value;
+				$InDB = $app['db.playgrounds_has_subaccounts']-> findVisitedPlayground($id, $value);
+				if(!$InDB)
+					$playground = $app['db.playgrounds_has_subaccounts']->insert($data);
 
+			}
+			return new JsonResponse();
 		}
-		return new JsonResponse();
+		return new JsonResponse(false);
+
 	}
 
 	public function visitedplaygrounds(Application $app, Request $request) 
 	{
-		$subaccId = $request->get('subaccountsId');
+		$AuthKey = $request->headers->get('AuthKey');
+		$masteracc = $app['db.masteraccounts']->findMasteraccountOnAuthKey($AuthKey);
+		if($masteracc != null){
+			$subaccId = $request->get('subaccountsId');
 
 
-		$playground = $app['db.playgrounds_has_subaccounts']->findallVisitedPlayground($subaccId);
-		return new JsonResponse($playground);
+			$playground = $app['db.playgrounds_has_subaccounts']->findallVisitedPlayground($subaccId);
+			return new JsonResponse($playground);
+		}
+		return new JsonResponse(false);
+
 	}
 
 	public function favorite(Application $app, $id, Request $request) 

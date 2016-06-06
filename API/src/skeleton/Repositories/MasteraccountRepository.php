@@ -23,8 +23,13 @@ class MasteraccountRepository extends BaseRepository
 		return $this->db->fetchAssoc('SELECT * FROM '. $this->getTableName() . ' WHERE email = ?', array($email));
 	}
 
-	public function findMasteraccountOnId($id) {
-		return $this->db->fetchAssoc('SELECT * FROM '. $this->getTableName() . ' WHERE id = ?', array($id));
+	public function findMasteraccountOnId($id, $AuthKey) {
+		return $this->db->fetchAssoc('SELECT * FROM '. $this->getTableName() . ' WHERE id = ? AND AuthKey = ?', array($id, $AuthKey));
 	}
+
+	public function findMasteraccountOnAuthKey($AuthKey) {
+		return $this->db->fetchAssoc('SELECT * FROM '. $this->getTableName() . ' WHERE AuthKey = ?', array($AuthKey));
+	}
+
 
 }
