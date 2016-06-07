@@ -75,7 +75,7 @@ mod.controller('MapOverviewCtrl', function($scope, $rootScope, ApiService, Check
 
                 google.maps.event.addListener(marker, 'click', function() {
                     var currentMarker = Map.currentMarker || false;
-                    ApiService.get('/playgrounds/' + info.Id).then(function(result) {
+                    ApiService.get('/playgrounds/' + info.Id + '/').then(function(result) {
                         $scope.playgroundInfo = result;
                         $scope.playgroundactive = true;
                         console.log(result);
@@ -402,7 +402,7 @@ mod.controller('SubAccCtrl', function($document, $state, $scope, $rootScope, Api
 
     } else {
         $rootScope.login = false;
-
+        console.log(localStorage.getItem('AuthKey'));
         localStorage.removeItem("ActivePlayers");
         $scope.Start = false;
 
@@ -410,6 +410,7 @@ mod.controller('SubAccCtrl', function($document, $state, $scope, $rootScope, Api
 
         masteraccId = window.localStorage['masteraccId'];
         $scope.ApiUrl = baseUri;
+
         ApiService.get('/account/' + masteraccId + '/subaccounts/').then(function(result) {
             console.log(result);
             $scope.apiResult = result;
@@ -543,7 +544,7 @@ mod.controller('RegisterCtrl', function($ionicLoading, $scope, ApiService, $stat
                 $ionicLoading.hide();
 
             } else {
-                window.localStorage['masteraccId'] = result;
+                window.localStorage['masteraccId'] = result.Id;
                 window.localStorage['AuthKey'] = result.AuthKey;
 
                 $ionicLoading.hide();
@@ -703,7 +704,8 @@ mod.controller('CreateSubCtrl', function($ionicLoading, $window, $scope, $rootSc
                     $scope.uploadPhoto();
 
                 }
-                $ionicLoading.hide();
+                $ionicLoading.hide()
+                // debugger;
                 $window.location.reload();
                 $state.go('subaccounts');
             });

@@ -186,12 +186,15 @@ class SubAccountController implements ControllerProviderInterface {
 	{
 		$AuthKey = $request->headers->get('AuthKey');
 		$masteracc = $app['db.masteraccounts']->findMasteraccountOnAuthKey($AuthKey);
+
 		if($masteracc != null){
 			$masteraccId = $request->get('masteraccId');
 			$subaccId = $request->get('id');
 			$name = $request->get('name');
+						
 
-			$subaccount = $app['db.subaccounts']->findSubAccount($masteraccId, $subaccId);
+			$subaccount = $app['db.subaccounts']->findSubAccount($subaccId);
+		
 			if($subaccount != null){
 				$subaccount['Name'] = $name;
 
@@ -215,7 +218,8 @@ class SubAccountController implements ControllerProviderInterface {
 			$masteraccId = $request->get('masteraccId');
 			$subaccId = $request->get('id');
 
-			$subaccount = $app['db.subaccounts']->findSubAccount($masteraccId, $subaccId);
+			$subaccount = $app['db.subaccounts']->findSubAccount($subaccId);
+
 			if($subaccount != null){
 				$data = $app['db.playgrounds_has_subaccounts']->delete( array('subaccounts_Id' => $subaccId));
 				$data = $app['db.tasks']->delete( array('SubAccounts_Id' => $subaccId));

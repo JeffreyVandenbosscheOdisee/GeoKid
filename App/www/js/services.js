@@ -4,7 +4,7 @@ var baseUri = 'http://localhost:8000';
 
 var headers = {
     'Accept': 'application/json',
-    'AuthKey': 'lVWxO-wnMAwv8'
+    'AuthKey': localStorage.getItem('AuthKey')
 };
 
 
