@@ -51,7 +51,7 @@ class AuthenticationController implements ControllerProviderInterface {
 		$email = $request->get('email');
 		$password = $request->get('password');
 		$user = $app['db.masteraccounts']->findMasteraccount($email);
-
+		// var_dump($user);
 		$login['succesLogin'] = false;
 		if (password_verify($password, $user['Password'])) {
 

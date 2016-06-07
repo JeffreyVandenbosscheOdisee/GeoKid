@@ -410,7 +410,7 @@ mod.controller('SubAccCtrl', function($document, $state, $scope, $rootScope, Api
 
         masteraccId = window.localStorage['masteraccId'];
         $scope.ApiUrl = baseUri;
-        ApiService.get('/account/' + masteraccId + '/subaccounts').then(function(result) {
+        ApiService.get('/account/' + masteraccId + '/subaccounts/').then(function(result) {
             console.log(result);
             $scope.apiResult = result;
             for (var i = 0; i < result.length; i++) {
@@ -493,6 +493,8 @@ mod.controller('LoginCtrl', function($ionicLoading, $scope, ApiService, CheckInt
                         console.log(result.succesLogin);
                         if (result.succesLogin) {
                             window.localStorage['masteraccId'] = result.MasteraccountId;
+                            window.localStorage['AuthKey'] = result.AuthKey;
+
                             $rootScope.login = false;
                             $window.location.reload();
 
@@ -542,6 +544,8 @@ mod.controller('RegisterCtrl', function($ionicLoading, $scope, ApiService, $stat
 
             } else {
                 window.localStorage['masteraccId'] = result;
+                window.localStorage['AuthKey'] = result.AuthKey;
+
                 $ionicLoading.hide();
 
                 $state.go('subaccounts');

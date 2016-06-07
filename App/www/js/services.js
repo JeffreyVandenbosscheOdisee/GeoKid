@@ -1,9 +1,12 @@
-var baseUri = 'https://api.jeffreyvdb.be';
-// var baseUri = 'http://localhost:8000';
+// var baseUri = 'https://api.jeffreyvdb.be';
+var baseUri = 'http://localhost:8000';
+// 
 
 var headers = {
-    'Accept': 'application/json;'
+    'Accept': 'application/json',
+    'AuthKey': 'lVWxO-wnMAwv8'
 };
+
 
 var mod = angular.module('GeoKidApp.services', []);
 
@@ -41,7 +44,7 @@ mod.service('ApiService', function($q, $http) {
         },
         'get': function(apiUri) {
             var deferred = $q.defer();
-
+            console.log(headers);
             self.call(apiUri, 'GET', headers, null).then(function(result) {
 
                 deferred.resolve(result);
@@ -55,6 +58,7 @@ mod.service('ApiService', function($q, $http) {
 
         'post': function(apiUri, data) {
             var deferred = $q.defer();
+            console.log(headers);
 
             self.call(apiUri, 'POST', headers, data).then(function(result) {
                 deferred.resolve(result);

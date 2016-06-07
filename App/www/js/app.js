@@ -1,6 +1,6 @@
 var app = angular.module('GeoKidApp', ['ionic', 'ngCordova', 'ngMessages', 'GeoKidApp.services', 'GeoKidApp.controllers', 'GeoKidApp.filters', 'GeoKidApp.directives', 'ionic.ion.imageCacheFactory']);
-var baseUri = 'https://api.jeffreyvdb.be';
-// var baseUri = 'http://localhost:8000';
+// var baseUri = 'https://api.jeffreyvdb.be';
+var baseUri = 'http://localhost:8000';
 
 
 // === Basic Setup

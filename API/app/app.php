@@ -45,7 +45,7 @@ $app->before(function(Request $request)
        $response = new Response();
        // $response->headers->set("Access-Control-Allow-Origin","*");
        $response->headers->set("Access-Control-Allow-Methods","GET,POST,PUT,DELETE,OPTIONS");
-       $response->headers->set("Access-Control-Allow-Headers","Content-Type");
+       $response->headers->set("Access-Control-Allow-Headers","Content-Type, AuthKey");
        $response->setStatusCode(200);
        return $response;
    }
