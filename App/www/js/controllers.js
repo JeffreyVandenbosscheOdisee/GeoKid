@@ -191,8 +191,20 @@ mod.controller('NavCtrl', function($scope, $rootScope, CheckInternet, ApiService
                         markerpos.setPosition(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
                         $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
                     }
+                    //"where    φ is latitude, λ is longitude, R is earth’s radius (mean radius = 6,371km);
+                    // note that angles need to be in radians to pass to trig functions!"
+                    //
+                    //
+                    var R = 6371000;
 
-                    if (parseFloat(playground.Latitude) === crd.latitude && parseFloat(playground.Longitude) === crd.longitude) {
+                    var x = (crd.longitude - parseFloat(playground.Longitude)) * Math.cos((parseFloat(playground.Latitude)+ crd.latitude) / 2);
+                    console.log(x);
+
+                    var y = (crd.latitude - parseFloat(playground.Latitude));
+                    var d = Math.sqrt(x * x + y * y) * R;
+
+                    console.log(d);
+                    if (d < 1000) {
                         console.log('Congratulations, you reached the target');
                         navigator.geolocation.clearWatch(id);
                         console
@@ -206,8 +218,8 @@ mod.controller('NavCtrl', function($scope, $rootScope, CheckInternet, ApiService
 
 
                 options = {
-                    enableHighAccuracy: false,
-                    timeout: 5000,
+                    enableHighAccuracy: true,
+                    timeout: 1000,
                     maximumAge: 0
                 };
                 id = navigator.geolocation.watchPosition(success, error, options);
@@ -705,7 +717,6 @@ mod.controller('CreateSubCtrl', function($ionicLoading, $window, $scope, $rootSc
 
                 }
                 $ionicLoading.hide();
-                debugger;
                 // debugger;
                 $window.location.reload();
                 $state.go('subaccounts');
