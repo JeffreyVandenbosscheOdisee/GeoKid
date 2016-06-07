@@ -9,18 +9,18 @@ $config['api.prefix'] = 'api';
 
 
 // // Database Credentials
-// $config['db.dbname'] = 'jeffrwh153_Geo';
-// $config['db.user'] = 'jeffrwh153_root';
-// $config['db.password'] = 'Azerty123';
-// // $config['db.host'] = '10.3.1.103';
-// $config['db.host'] = 'jeffreyvdb.be:3306';
+$config['db.dbname'] = 'jeffrwh153_Geo';
+$config['db.user'] = 'jeffrwh153_root';
+$config['db.password'] = 'Azerty123';
+// $config['db.host'] = '10.3.1.103';
+$config['db.host'] = 'jeffreyvdb.be:3306';
 
 
 // Database Credentials
-$config['db.dbname'] = 'geokid';
-$config['db.user'] = 'root';
-$config['db.password'] = '';
-$config['db.host'] = 'localhost';
+// $config['db.dbname'] = 'geokid';
+// $config['db.user'] = 'root';
+// $config['db.password'] = '';
+// $config['db.host'] = 'localhost';
 
 // Repositories
 $config['repositories'] = array(

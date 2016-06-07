@@ -19,15 +19,6 @@ INSERT INTO `functions` (`Id`, `Name`) VALUES
 
 
 
-INSERT INTO `masteraccounts` (`Id`, `Email`, `Password`, `FamilyName`, `Street_And_Nr`, `ZipCode`, `City`) VALUES
-(3, 'Jeffrey.vandenbossche@gmail.com', '$2y$10$.mFBmNGLq/qHP5ou67bz1u1qc1vvBWpso6.L21T6OC1MWZ.TnFnbi', 'Vandenbossche', 'Hoogstraat 17', 9820, 'Merelbeke'),
-(6, 'jeffreyvdb17@hotmail.com', '$2y$10$CcuXp1RAHDYaBvXzORRRcezeq4gK4eIWIyR/Qfo0VO3ai1TWOEjPi', 'Vandenbossche', '17', 9820, 'Merelbeke'),
-(7, 'elin_jonkers@hotmail.com', '$2y$10$0k/eWnDoUq0lVxGUNf0eoulLq1ADaEqp1UB4uIAalYe.HKCSbwt2e', 'Jonkers', '15', 2990, 'Wuustwezel'),
-(8, 'Jeffreytest@hotmail.com', '$2y$10$9l4AgUPcUmUm3/Pk.z.1s.htJvHZazCSDwmQEwoKEfJV1FXCYheCq', 'VDB', 'Melkweg 1', 9000, 'Gent'),
-(9, 'Jeffrey.vandenbossche12@gmail.com', '$2y$10$hcCm3tPwC3UWcNiMCkfOwOwTBZoy/wnbssc3UPu3eMMZ63nat/jAG', 'Vandenbossche', 'Hoogstraat 17', 9820, 'Merelbeke');
-
-
-
 INSERT INTO `playgrounds` (`Id`, `Name`, `Longitude`, `Latitude`) VALUES
 (1, 'Pastorijdreef woongroen', 3.66938, 51.0215),
 (2, 'Gentstraat woongroen', 3.75825, 51.0848),
@@ -206,21 +197,6 @@ INSERT INTO `tasks` (`Id`, `Name`, `Tag`) VALUES
 (21, 'Spring 20 keer in de lucht', NULL),
 (22, 'Zoen een boom', NULL),
 (23, 'Pluk 20 grassprietjes en sorteer deze van klein naar groot', NULL);
-
-
-
-INSERT INTO `subaccounts` (`Id`, `Name`, `MasterAccounts_Id`) VALUES
-(18, 'Elin', 3),
-(20, 'Jeffrey123', 6),
-(21, 'Elin', 6),
-(22, 'Jeffrey', 3),
-(23, 'Elin', 7),
-(24, 'Jeff', 7);
-
-
-INSERT INTO `playgrounds_has_subaccounts` (`playgrounds_Id`, `subaccounts_Id`) VALUES
-(149, 18),
-(149, 22);
 
 
 INSERT INTO `functions_has_playgrounds` (`Functions_Id`, `PlayGrounds_Id`) VALUES
@@ -551,69 +527,3 @@ INSERT INTO `functions_has_playgrounds` (`Functions_Id`, `PlayGrounds_Id`) VALUE
 (2, 150),
 (7, 150);
 
-
-INSERT INTO `completed_tasks` (`Id`, `SubAccounts_Id`, `Playgrounds_Id`, `Tasks_Id`) VALUES
-(1, 18, 112, 21),
-(4, 21, 122, 1),
-(5, 20, 122, 1),
-(6, 21, 122, 1),
-(7, 20, 122, 1),
-(18, 21, 122, 21),
-(19, 20, 122, 21),
-(20, 21, 122, 19),
-(21, 20, 122, 19),
-(22, 21, 122, 2),
-(23, 20, 122, 2),
-(24, 21, 122, 8),
-(25, 20, 122, 8),
-(26, 21, 122, 21),
-(27, 20, 122, 21),
-(28, 21, 122, 15),
-(29, 20, 122, 15),
-(30, 21, 62, 7),
-(31, 20, 62, 7),
-(32, 21, 62, 1),
-(33, 20, 62, 1),
-(34, 21, 62, 8),
-(35, 20, 62, 8),
-(36, 21, 62, 4),
-(37, 20, 62, 4),
-(38, 21, 62, 5),
-(39, 20, 62, 5),
-(40, 21, 7, 19),
-(41, 20, 7, 19),
-(42, 21, 7, 3),
-(43, 20, 7, 3),
-(44, 21, 7, 18),
-(45, 20, 7, 18),
-(46, 21, 7, 11),
-(47, 20, 7, 11),
-(48, 21, 7, 2),
-(49, 20, 7, 2),
-(50, 21, 135, 10),
-(51, 20, 135, 10),
-(52, 21, 135, 11),
-(53, 20, 135, 11),
-(54, 21, 135, 1),
-(55, 20, 135, 1),
-(56, 21, 135, 16),
-(57, 20, 135, 16),
-(58, 21, 135, 17),
-(59, 20, 135, 17);
-
-
-INSERT INTO `favorite_parks_masteraccount` (`Playgrounds_Id`, `MasterAccounts_Id`, `Favorite_playground`) VALUES
-(3, 6, 0),
-(7, 3, 0),
-(7, 7, 0),
-(55, 3, 0),
-(62, 3, 0),
-(62, 6, 0),
-(65, 3, 0),
-(112, 3, 0),
-(112, 6, 0),
-(113, 3, 0),
-(113, 6, 0),
-(114, 3, 0),
-(122, 6, 0),
-(135, 7, 0);

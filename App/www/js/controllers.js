@@ -704,7 +704,8 @@ mod.controller('CreateSubCtrl', function($ionicLoading, $window, $scope, $rootSc
                     $scope.uploadPhoto();
 
                 }
-                $ionicLoading.hide()
+                $ionicLoading.hide();
+                debugger;
                 // debugger;
                 $window.location.reload();
                 $state.go('subaccounts');

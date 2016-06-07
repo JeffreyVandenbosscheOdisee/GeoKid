@@ -1,5 +1,5 @@
-// var baseUri = 'https://api.jeffreyvdb.be';
-var baseUri = 'http://localhost:8000';
+var baseUri = 'https://api.jeffreyvdb.be';
+// var baseUri = 'http://localhost:8000';
 // 
 
 var headers = {
