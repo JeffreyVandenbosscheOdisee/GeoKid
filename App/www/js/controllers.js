@@ -539,7 +539,7 @@ mod.controller('LogoutCtrl', function($scope, $window, $state, $ionicLoading) {
     $state.go('login');
 
 });
-mod.controller('RegisterCtrl', function($ionicLoading, $scope, ApiService, $state, $rootScope, CheckInternet) {
+mod.controller('RegisterCtrl', function($ionicLoading, $scope, ApiService, $state, $rootScope, CheckInternet, $window) {
 
     $rootScope.login = true;
     CheckInternet.getConnection($rootScope);
@@ -560,6 +560,7 @@ mod.controller('RegisterCtrl', function($ionicLoading, $scope, ApiService, $stat
                 window.localStorage['AuthKey'] = result.AuthKey;
 
                 $ionicLoading.hide();
+                            $window.location.reload();
 
                 $state.go('subaccounts');
             }
